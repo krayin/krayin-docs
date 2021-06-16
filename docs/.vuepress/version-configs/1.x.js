@@ -75,16 +75,16 @@ module.exports = [
             ['translations/change-the-language-of-error-validations-on-your-store', 'Change the language of error validations on your store']
         ])
     },
-    {
-        title: 'User Guides',
-        path: setVersionPrefix('user-guides'),
-        collapsable: true,
-        children: setVersionPrefix([
-            ['user-guides/tax-rates', 'Tax Rates'],
-            ['user-guides/cart-rule', 'Cart rules'],
-            ['user-guides/social-auth', 'Social Authentication']
-        ])
-    }, 
+    // {
+    //     title: 'User Guides',
+    //     path: setVersionPrefix('user-guides'),
+    //     collapsable: true,
+    //     children: setVersionPrefix([
+    //         ['user-guides/tax-rates', 'Tax Rates'],
+    //         ['user-guides/cart-rule', 'Cart rules'],
+    //         ['user-guides/social-auth', 'Social Authentication']
+    //     ])
+    // }, 
     // {
     //     title: 'Bagisto Web API',
     //     path: setVersionPrefix('api'),

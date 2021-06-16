@@ -18,7 +18,7 @@ module.exports = {
         editLinks: true,
         editLinkText: 'Help us improve this page on Github.',
 
-        logo: '/logo.png',
+        logo: '/logo.svg',
         nav: [
             { text: 'Home', link: '/' },
             // { text: 'Extensions', link: 'https://bagisto.com/en/extensions/' },
