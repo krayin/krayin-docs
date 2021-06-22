@@ -1,6 +1,6 @@
 # Bagisto CRM Documentation
 
-You can find the online version of the Bagisto CRM documentation at [https://devdocs-crm.bagisto.com](https://devdocs-crm.bagisto.com).
+You can find the online version of the Bagisto CRM documentation at [https://devdocs.krayincrm.com](https://devdocs.krayincrm.com).
 
 ## Contribution guide
 

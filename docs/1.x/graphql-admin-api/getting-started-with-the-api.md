@@ -4,7 +4,7 @@
 
 ## Introduction
 
-By default the [Bagisto](https://bagisto.com) GraphQL API makes use of the [JWT package](https://jwt.io/) for token-based authentication.  
+By default the [Krayin CRM](https://krayincrm.com) GraphQL API makes use of the [JWT package](https://jwt.io/) for token-based authentication.  
 
 So, let's try to authenticate the Admin by using **JWT**. Please send valid **User Agent** header in your request whether you are using postman, curl or some other clients.
 

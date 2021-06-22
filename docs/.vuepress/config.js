@@ -21,8 +21,6 @@ module.exports = {
         logo: '/logo.svg',
         nav: [
             { text: 'Home', link: '/' },
-            // { text: 'Extensions', link: 'https://bagisto.com/en/extensions/' },
-            // { text: 'Community Forum', link: 'https://forums.bagisto.com/' }
         ],
         sidebar: {
             '/1.x/': require('./version-configs/1.x')
