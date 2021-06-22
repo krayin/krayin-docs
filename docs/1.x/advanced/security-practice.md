@@ -5,7 +5,7 @@
 - Using HTTPS (Google now uses HTTPS as a ranking factor).
 
 - Keep all software on the server up-to-date.
-  - Bagisto
+  - Krayin
   - Database
   - Adminer/phpMyAdmin
   - Apache

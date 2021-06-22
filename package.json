@@ -1,7 +1,7 @@
 {
-  "name": "bagisto-docs",
+  "name": "krayin-docs",
   "version": "1.0.0",
-  "description": "Bagisto Developer Documentation",
+  "description": "Krayin Developer Documentation",
   "main": "index.js",
   "scripts": {
     "docs:dev": "vuepress dev docs",
@@ -9,11 +9,11 @@
     "docs:eject": "vuepress eject docs"
   },
   "keywords": [
-    "bagisto",
+    "krayin",
     "developer",
     "documentation"
   ],
-  "author": "Bagisto",
+  "author": "Krayin",
   "license": "MIT",
   "devDependencies": {
     "@vuepress/plugin-back-to-top": "^1.8.2",

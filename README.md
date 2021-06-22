@@ -1,6 +1,6 @@
-# Bagisto CRM Documentation
+# Krayin CRM Documentation
 
-You can find the online version of the Bagisto CRM documentation at [https://devdocs.krayincrm.com](https://devdocs.krayincrm.com).
+You can find the online version of the Krayin CRM documentation at [https://devdocs.krayincrm.com](https://devdocs.krayincrm.com).
 
 ## Contribution guide
 

@@ -86,7 +86,7 @@ module.exports = [
     //     ])
     // }, 
     // {
-    //     title: 'Bagisto Web API',
+    //     title: 'Krayin Web API',
     //     path: setVersionPrefix('api'),
     //     collapsable: true,
     //     children: setVersionPrefix([
@@ -108,7 +108,7 @@ module.exports = [
     //     ])
     // },
     // {
-    //     title: 'Bagisto GraphQL Admin API',
+    //     title: 'Krayin GraphQL Admin API',
     //     path: setVersionPrefix('graphql-admin-api'),
     //     collapsable: true,
     //     children: setVersionPrefix([
@@ -127,7 +127,7 @@ module.exports = [
     //     ])
     // },
     // {
-    //     title: 'Bagisto GraphQL Shop API',
+    //     title: 'Krayin GraphQL Shop API',
     //     path: setVersionPrefix('graphql-shop-api'),
     //     collapsable: true,
     //     children: setVersionPrefix([
