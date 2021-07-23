@@ -45,7 +45,7 @@ return [
   /**
   * HelloWorldServiceProvider
   *
-  * @copyright 2020 Webkul Software Pvt. Ltd. (http://www.webkul.com)
+  * @copyright 2021 Webkul Software Pvt. Ltd. (http://www.webkul.com)
   */
   class HelloWorldServiceProvider extends ServiceProvider
   {

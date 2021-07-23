@@ -1,77 +1,6 @@
 # Create a new package
 
-There are two ways to create a package.
-
-1. By using Bagisto Package Generator (**Recommended**)
-2. By manually setting up all files (**Expert Level**)
-
-## 1. By using Bagisto Package Generator
-
-- You need to install [Bagisto Package Generator](https://github.com/bagisto/bagisto-package-generator).
-
-- If you have not installed this package then you need to go to the root folder of **Bagisto** and run the following command
-
-  ~~~php
-  composer require bagisto/bagisto-package-generator
-  ~~~
-
-- Now, to generate your package you need to use the following command,
-
-  - If the package directory does not exist,
-
-    ~~~php
-    php artisan package:make ACME/HelloWorld
-    ~~~
-
-  - If somehow the package directory is already present then you can use the force command as well. For that you just need to pass the '**--force**' command.
-
-    ~~~php
-    php artisan package:make ACME/HelloWorld --force
-    ~~~
-
-- Now check your `packages` directory, everything is setup for you.
-
-- After that, you need to register your service provider in `config/app.php`.
-
-  ~~~php
-  <?php
-
-  return [
-      ...
-      'providers' => [
-          ...
-          ACME\HelloWorld\Providers\HelloWorldServiceProvider::class,
-          ...
-      ]
-      ...
-  ];
-  ~~~
-
-- Add you package namespace in `psr-4` key in `composer.json` file for auto loading.
-
-  ~~~json
-  "autoload": {
-      ...
-      "psr-4": {
-          ...
-          "ACME\\HelloWorld\\": "packages/ACME/HelloWorld/src"
-          ...
-      }
-      ...
-  }
-  ~~~
-
-- Run `composer dump-autoload`.
-
-::: details Check output in the browser
-
-![helloworld-admin-browser-output](../../assets/images/package-development/hello-world-package-output.png)
-
-:::
-
-- Now start creating something cool.
-
-## 2. By manually setting up all files
+## By manually setting up all files
 
 By manually setting up package, we assume that you are familiar with packages directory structures and flow. If not then you can find a basic tree structure of package below,
 
@@ -183,7 +112,7 @@ Let's start with first step by creating the packages folder.
   /**
   * HelloWorldServiceProvider
   *
-  * @copyright 2020 Webkul Software Pvt. Ltd. (http://www.webkul.com)
+  * @copyright 2021 Webkul Software Pvt. Ltd. (http://www.webkul.com)
   */
   class HelloWorldServiceProvider extends ServiceProvider
   {
@@ -352,7 +281,7 @@ Let's start with first step by creating the packages folder.
   /**
   * HelloWorldServiceProvider
   *
-  * @copyright 2020 Webkul Software Pvt. Ltd. (http://www.webkul.com)
+  * @copyright 2021 Webkul Software Pvt. Ltd. (http://www.webkul.com)
   */
   class HelloWorldServiceProvider extends ServiceProvider
   {
@@ -460,7 +389,7 @@ Let's start with first step by creating the packages folder.
   /**
   * HelloWorldServiceProvider
   *
-  * @copyright 2020 Webkul Software Pvt. Ltd. (http://www.webkul.com)
+  * @copyright 2021 Webkul Software Pvt. Ltd. (http://www.webkul.com)
   */
   class HelloWorldServiceProvider extends ServiceProvider
   {
@@ -635,7 +564,7 @@ Let's start with first step by creating the packages folder.
   /**
   * HelloWorldServiceProvider
   *
-  * @copyright 2020 Webkul Software Pvt. Ltd. (http://www.webkul.com)
+  * @copyright 2021 Webkul Software Pvt. Ltd. (http://www.webkul.com)
   */
   class HelloWorldServiceProvider extends ServiceProvider
   {
@@ -690,7 +619,7 @@ Let's start with first step by creating the packages folder.
   /**
   * HelloWorldServiceProvider
   *
-  * @copyright 2020 Webkul Software Pvt. Ltd. (http://www.webkul.com)
+  * @copyright 2021 Webkul Software Pvt. Ltd. (http://www.webkul.com)
   */
   class HelloWorldServiceProvider extends ServiceProvider
   {
@@ -779,7 +708,7 @@ Let's start with first step by creating the packages folder.
   /**
   * HelloWorldServiceProvider
   *
-  * @copyright 2020 Webkul Software Pvt. Ltd. (http://www.webkul.com)
+  * @copyright 2021 Webkul Software Pvt. Ltd. (http://www.webkul.com)
   */
   class HelloWorldServiceProvider extends ServiceProvider
   {

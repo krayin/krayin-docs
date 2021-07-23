@@ -60,7 +60,7 @@ Creating a custom configuration ease the task for a developer or any non-develop
   /**
   * HelloWorldServiceProvider
   *
-  * @copyright 2020 Webkul Software Pvt. Ltd. (http://www.webkul.com)
+  * @copyright 2021 Webkul Software Pvt. Ltd. (http://www.webkul.com)
   */
   class HelloWorldServiceProvider extends ServiceProvider
   {

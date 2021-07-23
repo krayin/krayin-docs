@@ -1,6 +1,6 @@
 # Translation based on locale
 
-If you want to make your website easily accessible to customers in multiple languages and expand your business to a global platform then language translation is crucial for your website. It will help you generate more traffic and increase sales.
+If you want to make your website easily accessible to admins in multiple languages and expand your business to a global platform then language translation is crucial for your website. It will help you generate more traffic and increase sales.
 
 By using language translation in Bagisto, you can easily localize your website for many global or regional languages. Your customer can easily translate your whole website just by a single click which also plays a major role in website SEO in the respective region and to show translation as per your locale, you need to follow these below steps:
 

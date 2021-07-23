@@ -37,6 +37,23 @@ module.exports = [
             ['packages/store-data-through-repositories', 'Store data through repositories'],
         ])
     },
+    {
+        title: 'Custom Attributes',
+        path: setVersionPrefix('custom-attributes'),
+        collapsable: true,
+        children: setVersionPrefix([
+            ['custom-attributes/uses', 'How to use custom attribute'],
+            ['custom-attributes/add-lookup', 'Add Lookup'],
+        ])
+    },
+    {
+        title: 'Datagrid',
+        path: setVersionPrefix('datagrid'),
+        collapsable: true,
+        children: setVersionPrefix([
+            ['datagrid/create', 'How to create datagrid'],
+        ])
+    },
     // {
     //     title: 'Advanced Topics',
     //     path: setVersionPrefix('advanced'),
@@ -66,15 +83,15 @@ module.exports = [
     //         ['themes/integrate-image-search-in-theme', 'Integrate image search in theme']
     //     ])
     // },
-    {
-        title: 'Translations',
-        path: setVersionPrefix('translations/translation-based-on-locale'),
-        collapsable: true,
-        children: setVersionPrefix([
-            ['translations/translation-based-on-locale', 'Translation based on locale'],
-            ['translations/change-the-language-of-error-validations-on-your-store', 'Change the language of error validations on your store']
-        ])
-    },
+    // {
+    //     title: 'Translations',
+    //     path: setVersionPrefix('translations/translation-based-on-locale'),
+    //     collapsable: true,
+    //     children: setVersionPrefix([
+    //         ['translations/translation-based-on-locale', 'Translation based on locale'],
+    //         ['translations/change-the-language-of-error-validations-on-your-store', 'Change the language of error validations on your store']
+    //     ])
+    // },
     // {
     //     title: 'User Guides',
     //     path: setVersionPrefix('user-guides'),

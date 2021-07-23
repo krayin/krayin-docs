@@ -40,7 +40,7 @@ After that, we need to merge the ACL config also just like we have done with men
   /**
   * HelloWorldServiceProvider
   *
-  * @copyright 2020 Webkul Software Pvt. Ltd. (http://www.webkul.com)
+  * @copyright 2021 Webkul Software Pvt. Ltd. (http://www.webkul.com)
   */
   class HelloWorldServiceProvider extends ServiceProvider
   {
