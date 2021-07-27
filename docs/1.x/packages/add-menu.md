@@ -1,4 +1,4 @@
-# Add menu in admin
+# Add menu
 
 - In your package's source directory i.e. `packages/ACME/HelloWorld/src`, create the `Config` folder and create a file named `admin-menu.php`.
 
@@ -66,5 +66,3 @@ return [
 - Run this command i.e. `php artisan optimize`.
 
 - Now, the menu will display in the admin panel. You can change the icon according to your needs.
-
-![Admin Menu Output](../../assets/images/package-development/admin-menu-output.png)
