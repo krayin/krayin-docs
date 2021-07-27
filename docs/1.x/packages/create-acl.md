@@ -65,5 +65,3 @@ After that, we need to merge the ACL config also just like we have done with men
 After setting up, just run this command `php artisan optimize` to cached the latest changes.
 
 Now check the latest ACL.
-
-![Admin ACL Output](../../assets/images/package-development/admin-acl-output.png)

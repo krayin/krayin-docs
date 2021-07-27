@@ -30,7 +30,7 @@ module.exports = [
         children: setVersionPrefix([
             ['packages/create-package', 'Create a new package'],
             ['packages/create-migrations', 'Create migrations'],
-            ['packages/add-menu-in-admin', 'Add menu in admin'],
+            ['packages/add-menu', 'Add menu'],
             ['packages/create-acl', 'Access control list'],
             ['packages/create-custom-configuration', 'Create custom configuration'],
             ['packages/create-models', 'Create models'],

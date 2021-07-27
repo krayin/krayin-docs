@@ -90,8 +90,6 @@ Creating a custom configuration ease the task for a developer or any non-develop
 
 - Now, check the configuration,
 
-  ![Admin ACL Output](../../assets/images/package-development/admin-custom-config-output.png)
-
 ## Supported Field Types
 
 There are several field types supported by the Bagisto. Let us know all of them,
