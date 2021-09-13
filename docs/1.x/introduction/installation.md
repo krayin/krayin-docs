@@ -1,17 +1,15 @@
 # Installation
 
-## Install Bagisto using composer:
+## Install Krayin using composer:
 
 ```
-composer create-project bagisto/bagisto-crm
+composer create-project krayin/laravel-crm
 ```
-
-## Install Bagisto using command line:
 
 - Start the installation script
 
 ```sh
-php artisan bagisto-crm:install
+php artisan krayin-crm:install
 ```
 
 ### Features of this command
@@ -48,7 +46,7 @@ It will check if the .env file is already created or not.
 
 - Go to your domain for example:
   - `https://example.com/`
-  - `https://localhost/bagisto-crm/public`
+  - `https://localhost/laravel-crm/public`
   - `https://example.com/public`
 
 ### On your local device
@@ -59,7 +57,7 @@ php artisan serve
 
 ### How to login as admin:
 
-Go to `https://example.com/admin/login`, in case you used `php artisan bagisto:install` use the following credentials
+Go to `https://example.com/admin/login`, use the following credentials
 
 ```
 email: admin@example.com

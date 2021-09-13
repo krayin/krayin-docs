@@ -24,7 +24,7 @@ Proxies as their name state will drive you to the actual model class. The concep
 
 - For creating models, create a file named as `HelloWorld.php` in `packages/ACME/HelloWorld/src/Models`, and copy the below code in file,
 
-  ~~~php
+  ```php
   <?php
 
   namespace ACME\HelloWorld\Models;
@@ -36,13 +36,13 @@ Proxies as their name state will drive you to the actual model class. The concep
   {
       protected $fillable = [];
   }
-  ~~~
+  ```
 
-> Note: If you have created model by using **Bagisto Package Generator**, then you can skip the model proxy and contract creation step.
+> Note: If you have created model by using **Krayin Package Generator**, then you can skip the model proxy and contract creation step.
 
 - Now, at the same location create a model proxy file as `HelloWorldProxy.php`. This Proxy class will extends `Konekt\Concord\Proxies\ModelProxy`. Copy the below code in file,
 
-  ~~~php
+  ```php
   <?php
 
   namespace ACME\HelloWorld\Models;
@@ -53,11 +53,11 @@ Proxies as their name state will drive you to the actual model class. The concep
   {
 
   }
-  ~~~
+  ```
 
 - Now, create a folder named as `Contracts` and create an interface file named as `HelloWorld.php`,
 
-  ~~~php
+  ```php
   <?php
 
   namespace ACME\HelloWorld\Contracts;
@@ -65,11 +65,11 @@ Proxies as their name state will drive you to the actual model class. The concep
   interface HelloWorld
   {
   }
-  ~~~
+  ```
 
 - Create a `Repository` folder and create a file `HelloWorldRepository.php` and create the `model()` method in repository class which returns the path of your contract class.
 
-  ~~~php
+  ```php
   <?php
 
   namespace ACME\HelloWorld\Repositories;
@@ -88,19 +88,19 @@ Proxies as their name state will drive you to the actual model class. The concep
           return 'ACME/HelloWorld/Contracts/HelloWorld';
       }
   }
-  ~~~
+  ```
 
   ::: tip
 
-  - You can use **Bagisto Package Generator** also,
+  - You can use **Krayin Package Generator** also,
 
     `php artisan package:make-repository HelloWorldRepository ACME/HelloWorld`
 
   :::
 
-- After creating all the files stated above, we have to create a provider as  `ModuleServiceProvider.php`. In this file, models which are used in this package are registered. You may check below code,
+- After creating all the files stated above, we have to create a provider as `ModuleServiceProvider.php`. In this file, models which are used in this package are registered. You may check below code,
 
-  ~~~php
+  ```php
   <?php
 
   namespace ACME\HelloWorld\Providers;
@@ -113,18 +113,18 @@ Proxies as their name state will drive you to the actual model class. The concep
           ACME\HelloWorld\Models\HelloWorld::class,
       ];
   }
-  ~~~
+  ```
 
 - Now, Register your `ModuleServiceProvider.php` in `config/concord.php` file,
 
-    ~~~php
-    <?php
+  ```php
+  <?php
 
-    return [
-        'modules' => [
-            ACME\HelloWorld\Providers\ModuleServiceProvider::class
-        ]
-    ];
-    ~~~
+  return [
+      'modules' => [
+          ACME\HelloWorld\Providers\ModuleServiceProvider::class
+      ]
+  ];
+  ```
 
 - Now, you are all set to go.

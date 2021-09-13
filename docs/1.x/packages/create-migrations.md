@@ -2,10 +2,10 @@
 
 You can create migration in two ways,
 
-1. By using Bagisto Package Generator.
+1. By using Krayin Package Generator.
 2. By normal laravel command and then manually copy to the respective folder.
 
-## By using Bagisto Package Generator
+## By using Krayin Package Generator
 
 This command will create a new migration class in `packages/ACME/HelloWorld/src/Database/Migrations` directory.
 
