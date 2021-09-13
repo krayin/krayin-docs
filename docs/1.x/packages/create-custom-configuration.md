@@ -1,6 +1,6 @@
 # Create custom configuration
 
-Creating a custom configuration ease the task for a developer or any non-developer person. Generally, in Bagisto, you can find it in admin panel **Configuration Menu**.
+Creating a custom configuration ease the task for a developer or any non-developer person. Generally, in Krayin, you can find it in admin panel **Configuration Menu**.
 
 ## Steps to create custom configuration
 
@@ -8,7 +8,7 @@ Creating a custom configuration ease the task for a developer or any non-develop
 
 - Inside the file, you can include the code below,
 
-  ~~~php
+  ```php
   <?php
 
   return [
@@ -35,21 +35,21 @@ Creating a custom configuration ease the task for a developer or any non-develop
           ]
       ]
   ];
-  ~~~
+  ```
 
 ### Explanation for the keys
 
-- **key**    : This key accept the unique value and nested with '.' (dot) operator.
+- **key** : This key accept the unique value and nested with '.' (dot) operator.
 
-- **name**   : This key accept the value as a placeholder for your configuration. Generally, in Bagisto, we consider writing it using translation.
+- **name** : This key accept the value as a placeholder for your configuration. Generally, in Krayin, we consider writing it using translation.
 
-- **sort**   : This key accept the sort position for the configuration menu.
+- **sort** : This key accept the sort position for the configuration menu.
 
 - **fields** : This key accept the array for the value of the custom configuration.
 
 - We need to merge these custom config also,
 
-  ~~~php
+  ```php
   <?php
 
   namespace ACME\HelloWorld\Providers;
@@ -84,7 +84,7 @@ Creating a custom configuration ease the task for a developer or any non-develop
           );
       }
   }
-  ~~~
+  ```
 
 - Run this command i.e. `php artisan optimize`.
 
@@ -92,7 +92,7 @@ Creating a custom configuration ease the task for a developer or any non-develop
 
 ## Supported Field Types
 
-There are several field types supported by the Bagisto. Let us know all of them,
+There are several field types supported by the Krayin. Let us know all of them,
 
 - Text Type
 - Number Type
@@ -109,7 +109,7 @@ This field type will give you the input field of type text.
 
 #### Example
 
-~~~php
+```php
 return [
     ...
     [
@@ -127,7 +127,7 @@ return [
     ],
     ...
 ];
-~~~
+```
 
 ### Number Type
 
@@ -135,7 +135,7 @@ This field type will give you the input field of type number.
 
 #### Example
 
-~~~php
+```php
 return [
     ...
     [
@@ -152,7 +152,7 @@ return [
     ],
     ...
 ];
-~~~
+```
 
 ### Boolean Type
 
@@ -160,7 +160,7 @@ This field type will give you the enable/disable switch.
 
 #### Example
 
-~~~php
+```php
 return [
     ...
     [
@@ -177,7 +177,7 @@ return [
     ],
     ...
 ];
-~~~
+```
 
 ### Select Type
 
@@ -185,7 +185,7 @@ This field type will give you the select field with mentioned options.
 
 #### Example
 
-~~~php
+```php
 return [
     ...
     [
@@ -211,7 +211,7 @@ return [
     ],
     ...
 ];
-~~~
+```
 
 ### Textarea Type
 
@@ -219,7 +219,7 @@ This field type will give you the textarea field mostly used for long text.
 
 #### Example
 
-~~~php
+```php
 return [
     ...
     [
@@ -236,7 +236,7 @@ return [
     ],
     ...
 ];
-~~~
+```
 
 ### Image Type
 
@@ -244,7 +244,7 @@ This field type will give you the file upload option for uploading the images.
 
 #### Example
 
-~~~php
+```php
 return [
     ...
     [
@@ -262,4 +262,4 @@ return [
     ],
     ...
 ];
-~~~
+```

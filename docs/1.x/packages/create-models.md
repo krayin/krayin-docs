@@ -1,8 +1,9 @@
 # Create models
 
-## Create model by using Bagisto Package Generator
+## Create model by using Krayin Package Generator
 
 - This command will create a following files,
+
   - New model class in `packages/ACME/HelloWorld/src/Models` directory.
   - New model proxy class in `packages/ACME/HelloWorld/src/Models` directory.
   - New model contract in `packages/ACME/HelloWorld/src/Contracts` directory.
@@ -15,9 +16,9 @@
 
 - The simple way to create a model is executing the command `make:model` artisan command,
 
-    `php artisan make:model User`
+  `php artisan make:model User`
 
 - After creating model, to generate database migration, you may append `--migration or -m option` artisan command as stated below,
 
-    `php artisan make:model User --migration`
-    `php artisan make:model User -m`
+  `php artisan make:model User --migration`
+  `php artisan make:model User -m`

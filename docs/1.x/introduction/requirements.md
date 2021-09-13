@@ -1,6 +1,6 @@
 # Requirements
 
-Before installing Bagisto please make sure your server meets the following requirements,
+Before installing Krayin please make sure your server meets the following requirements,
 
 ## Server configuration
 
@@ -12,28 +12,28 @@ Before installing Bagisto please make sure your server meets the following requi
 
 ## PHP Extensions
 
-Just make sure all mentioned extensions are installed and enabled. You can check by using `phpinfo()` page or  `php -m` command,
+Just make sure all mentioned extensions are installed and enabled. You can check by using `phpinfo()` page or `php -m` command,
 
 - php-intl extension
 
 - php-gd extension
 
   ::: tip
-    Make sure your `php-gd` extension installed properly otherwise the image will not work properly in the project.
+  Make sure your `php-gd` extension installed properly otherwise the image will not work properly in the project.
   :::
 
 ## PHP Configuration
 
-Open your php configuration file **php.ini** and change the following settings.  
+Open your php configuration file **php.ini** and change the following settings.
 
-  ~~~ini
-  memory_limit = 4G
-  max_execution_time = 360
-  date.timezone = Europe/Brussels <- Change this to your own timezone.
-  ~~~
+```ini
+memory_limit = 4G
+max_execution_time = 360
+date.timezone = Europe/Brussels <- Change this to your own timezone.
+```
 
 ::: tip Restart your web server
-  Everytime you make changes to PHP configuration file you will need to restart Apache or NGINX.
+Everytime you make changes to PHP configuration file you will need to restart Apache or NGINX.
 :::
 
 ## Supported Database Servers
