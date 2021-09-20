@@ -10,7 +10,7 @@ module.exports = {
     themeConfig: {
         smoothScroll: true,
         lastUpdated: 'Last Updated',
-        repo: 'krayin/krayin-crm',
+        repo: 'krayin/laravel-crm',
         repoLabel: 'Contribute to Krayin CRM',
         docsRepo: 'krayin/krayin-crm-docs',
         docsDir: 'docs',
