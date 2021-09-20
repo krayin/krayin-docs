@@ -12,7 +12,7 @@ module.exports = {
         lastUpdated: 'Last Updated',
         repo: 'krayin/laravel-crm',
         repoLabel: 'Contribute to Krayin CRM',
-        docsRepo: 'krayin/krayin-crm-docs',
+        docsRepo: 'krayin/krayin-docs',
         docsDir: 'docs',
         docsBranch: 'master',
         editLinks: true,
