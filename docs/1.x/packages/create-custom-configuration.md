@@ -80,7 +80,7 @@ Creating a custom configuration ease the task for a developer or any non-develop
           );
 
           $this->mergeConfigFrom(
-              dirname(__DIR__) . '/Config/system.php', 'core'
+              dirname(__DIR__) . '/Config/system.php', 'core_config'
           );
       }
   }
