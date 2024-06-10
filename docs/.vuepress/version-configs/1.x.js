@@ -1,14 +1,14 @@
-/* set version */
 let version = '1.x';
 
-/* version prefix setter */
 function setVersionPrefix(children) {
     if (children.constructor === Array) {
         return children.map(child => {
             child[0] = `/${version}/${child[0]}`;
+
             return child;
         });
     }
+
     return `/${version}/${children}`;
 }
 
@@ -21,7 +21,7 @@ module.exports = [
         children: setVersionPrefix([
             ['introduction/requirements', 'Requirements'],
             ['introduction/installation', 'Installation'],
-        ])
+        ]),
     },
     {
         title: 'Architecture concepts',
@@ -33,7 +33,7 @@ module.exports = [
             ['architecture/theme', 'Theme'],
             ['architecture/repository-pattern', 'Repository Pattern'],
             ['architecture/modular-design', 'Modular Design']
-        ])
+        ]),
     },
     {
         title: 'Package Development',
@@ -54,7 +54,7 @@ module.exports = [
             ['packages/validation', 'Validation'],
             ['packages/datagrid', 'DataGrid'],
             ['packages/create-acl', 'Access Control List'],
-        ])
+        ]),
     },
     {
         title: 'Custom Attributes',
@@ -63,14 +63,6 @@ module.exports = [
         children: setVersionPrefix([
             ['custom-attributes/uses', 'How to use custom attribute'],
             ['custom-attributes/add-lookup', 'Add Lookup'],
-        ])
+        ]),
     },
-    {
-        title: 'Datagrid',
-        path: setVersionPrefix('datagrid'),
-        collapsable: true,
-        children: setVersionPrefix([
-            ['datagrid/create', 'How to create datagrid'],
-        ])
-    },
-]
+];

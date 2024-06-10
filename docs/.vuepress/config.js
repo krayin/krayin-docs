@@ -23,11 +23,11 @@ module.exports = {
             { text: 'Home', link: '/' },
         ],
         sidebar: {
-            '/1.x/': require('./version-configs/1.x')
-        }
+            '/1.x/': require('./version-configs/1.x'),
+        },
     },
     markdown: {
-        lineNumbers: false
+        lineNumbers: false,
     },
-    plugins: ['@vuepress/pwa', 'copy-code', '@vuepress/back-to-top']
+    plugins: ['@vuepress/pwa', 'copy-code', '@vuepress/back-to-top'],
 };
