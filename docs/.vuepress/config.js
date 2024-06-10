@@ -21,7 +21,11 @@ module.exports = {
         logo: '/logo.svg',
         nav: [
             { text: 'Home', link: '/' },
+            { text: 'Community Forum', link: 'https://forums.krayincrm.com/' },
         ],
+
+        contactUs: { text: 'Contact Us', link: 'https://krayincrm.com/contacts/' },
+        
         sidebar: {
             '/1.x/': require('./version-configs/1.x'),
         },

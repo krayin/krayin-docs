@@ -7,7 +7,7 @@
 To ensure the security of your system, follow these best practices:
 
 - Use HTTPS to encrypt communication. Google now considers HTTPS as a ranking factor.
-- Keep all software on the server up-to-date, including Bagisto, the database, Adminer/phpMyAdmin, Apache, Redis, etc.
+- Keep all software on the server up-to-date, including Krayin, the database, Adminer/phpMyAdmin, Apache, Redis, etc.
 - Regularly update the server operating system to apply available security patches.
 - Manage files only through secure communication protocols like SSH, SFTP, or HTTPS. Disable FTP.
 - Use the **`.htaccess`** file to protect system files when using the Apache web server.
@@ -26,7 +26,7 @@ To limit the exposure of sensitive information in error messages, follow these s
 
 :::details Screenshot
 
-![limiting-error-messages](../../assets/images/advanced-topics/limiting-error-messages.png)
+![limiting-error-messages](../../assets/images/advanced-topics/limiting-error-messages.jpg)
 
 :::
 
@@ -61,7 +61,7 @@ Consider using a Web Application Firewall (WAF) to analyze traffic and detect su
 To restrict PHP execution inside the storage directory, modify your Apache configuration file:
 
 ```apacheconf
-<Directory "~/www/bagisto/public/storage/">
+<Directory "~/www/krayin/public/storage/">
     <FilesMatch "\.php$">
         Require all denied
     </FilesMatch>
@@ -84,7 +84,7 @@ Take the following measures to harden your server:
 
 ## Strong Passwords
 
-Ensure the use of strong and unique passwords and encourage periodic password changes. You can use a password generator tool ([Password Generator](https://passwords-generator.org/)) to create strong passwords. Limit access to the Bagisto admin
+Ensure the use of strong and unique passwords and encourage periodic password changes. You can use a password generator tool ([Password Generator](https://passwords-generator.org/)) to create strong passwords. Limit access to the Krayin admin
 
  panel by updating the whitelist with authorized IP addresses.
 

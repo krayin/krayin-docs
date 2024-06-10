@@ -126,7 +126,8 @@ export default {
     flex-wrap wrap
     align-items flex-start
     align-content stretch
-    justify-content space-between
+    justify-content center
+    gap 2.5rem
   .feature
     flex-grow 1
     flex-basis 30%

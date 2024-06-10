@@ -64,7 +64,6 @@ module.exports = [
             ['advanced/helpers', 'Helpers'],
             ['advanced/override-core-model', 'Override Core Models'],
             ['advanced/render-event', 'View Render Event'],
-            ['advanced/change-email-template.md', 'Email Template'],
             ['advanced/security-practice', 'Best Security Practices'],
         ])
     },
