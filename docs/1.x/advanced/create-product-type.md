@@ -1,37 +1,80 @@
-# Create your own product type
+# Product Type
 
-By default Krayin provides the following product types: simple, configurable, virtual, grouped, downloadable, bundled and bookings.  
-If the default product types do not meet your requirements, you can create your own product type.
+[[TOC]]
 
-## Steps to create your own product-types
+## Introduction
 
-You may access this super-functionality of creating your own product-types by following the points listed below.
+Bagisto provides several default product types, including simple, configurable, virtual, grouped, downloadable, and bundled. However, if these default product types do not meet your requirements, you can create your own custom product types.
 
-**Note**: To demonstrate the process here, we will be creating a new product-type say "`coupon`"
+## Creating a New Product Type
 
-1. Create your own package, you can check out the [Package Development](../packages/create.md) section if you need help with this.
-2. Within the Config folder of your package, create a file `product_types.php`
-3. Write the below piece of code in it, which is used to add product-type in your project when merged in app/config.php in the root directory. Todo so, you need to refer to further steps.
+To create a new product type in Bagisto, follow these steps:
 
-    ```php
-    <?php
+**Note**: In this example, we will create a new product type called "coupon".
 
-    return [
-        'coupon' => [
-            'key' => 'Coupon',
-            'name' => 'Coupon',
-            'class' => 'Webkul\Coupon\Type\Coupon',
-            'sort' => 7
-        ],
-    ];
-    ```
+1. Create your own package. If you need assistance with package development, you can refer to the [Package Development](../packages) section.
 
-4. Below piece of code, let you merge your package config files to the project root "`config`" folder.
+2. Inside the **Config** folder of your package, create a file named **`product_types.php`**.
 
-    ```php
-        $this->mergeConfigFrom(
-            dirname(__DIR__) . '/Config/product_types.php', 'product_types'
-        );
-    ```
+3. Add the following code to the **`product_types.php`** file. This code will define the new product type and its properties:
 
-5. Create "`Type`" folder within your package, inside the "`type`" folder create a file with your product-type name "`Coupon.php`". Basic functions that a product will make use of are declared in "product" package `type/AbstractType.php` file. Besides, the user needs some extra functionality then they can define their functions in "`Coupon.php`" file.
+   ```php
+   <?php
+
+   return [
+       'coupon' => [
+           'key'   => 'coupon',
+           'name'  => 'Coupon',
+           'class' => 'Webkul\Blog\Type\Coupon',
+           'sort'  => 7
+       ],
+   ];
+   ```
+
+### Merging the Configuration
+
+4. To merge the **`Config/product_types.php`** with the core product types configuration, use the **`mergeConfigFrom()`** method in the **`register()`** method of your service provider. For example, in the **`CouponServiceProvider.php`** file:
+
+   ```php
+   <?php
+
+   namespace Webkul\Blog\Providers;
+
+   use Illuminate\Support\ServiceProvider;
+
+   class CouponServiceProvider extends ServiceProvider
+   {
+      /**
+       * Register services.
+       *
+       * @return void
+       */
+       public function register()
+       {
+           //...
+
+           $this->mergeConfigFrom(
+               dirname(__DIR__) . '/Config/product_types.php', 'product_types'
+           );
+       }
+   }
+   ```
+
+5. In the code snippet above, notice the **`class`** key mentioned in step 3. This key specifies the class that loads the coupon product type. Create a file named **`Coupon.php`** within your package under the **`src/Type`** folder, and add the following code:
+
+   ```php
+   <?php
+
+   namespace Webkul\Blog\Type;
+
+   use Webkul\Product\Type\AbstractType;
+
+   class Coupon extends AbstractType
+   {
+
+   }
+   ```
+
+6. After completing the above steps, your product type will be created. However, the **`Type/Coupon.php`** file does not have any code specific to the coupon type product yet. To inherit the basic functionality of any product type, you need to extend the classes from the Product package, specifically the **`type/AbstractType.php`** file.
+
+    By extending the **`AbstractType.php`** class in your product type (**`Type/Coupon.php`**), you can provide the core functionality of a product. Additionally, if you need to define custom methods for your product type, you can do so within the **`Coupon.php`** file.

@@ -35,9 +35,7 @@ In Krayin, we have created numerous packages located at **`packages/Webkul/`**. 
             ├── Events
             ├── Http
             │   ├── Controllers
-            │   │   ├── Admin
-            │   │   │   └── PostController.php
-            │   │   └── Shop
+            │   │   └── Admin
             │   │       └── PostController.php
             │   ├── Middleware
             │   └── Requests
@@ -50,8 +48,7 @@ In Krayin, we have created numerous packages located at **`packages/Webkul/`**. 
             │   ├── BlogServiceProvider.php
             │   └── ModuleServiceProvider.php
             ├── Routes
-            │   ├── admin-routes.php
-            │   └── shop-routes.php
+            │   └── admin-routes.php
             ├── Repositories
             │   └── PostRepository.php
             └── Resources
@@ -72,17 +69,5 @@ In Krayin, we have created numerous packages located at **`packages/Webkul/`**. 
                     │       └── style.blade.php
                     ├── index.blade.php
                     ├── create.blade.php
-                    ├── edit.blade.php
-                    ├── shop
-                    │   └── default
-                    │       └── layouts
-                    │           └── style.blade.php
-                    │       ├── index.blade.php
-                    │       └── blog-details.blade.php
-                    └── velocity
-                        └── layouts
-                            └── style.blade.php
-                        ├── index.blade.php
-                        └── blog-details.blade.php
-
+                    └── edit.blade.php
 ~~~

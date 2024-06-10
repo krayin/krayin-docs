@@ -56,12 +56,33 @@ module.exports = [
         ]),
     },
     {
+        title: 'Digging Deeper',
+        path: setVersionPrefix('advanced'),
+        collapsable: true,
+        children: setVersionPrefix([
+            ['advanced/events', 'Events Listeners'],
+            ['advanced/helpers', 'Helpers'],
+            ['advanced/override-core-model', 'Override Core Models'],
+            ['advanced/render-event', 'View Render Event'],
+            ['advanced/change-email-template.md', 'Email Template'],
+            ['advanced/security-practice', 'Best Security Practices'],
+        ])
+    },
+    {
         title: 'Custom Attributes',
         path: setVersionPrefix('custom-attributes'),
         collapsable: true,
         children: setVersionPrefix([
             ['custom-attributes/uses', 'How to use custom attribute'],
             ['custom-attributes/add-lookup', 'Add Lookup'],
+        ]),
+    },
+    {
+        title: 'Krayin APIs',
+        path: setVersionPrefix('api'),
+        collapsable: true,
+        children: setVersionPrefix([
+            ['api/getting-started-with-the-api', 'Rest API'],
         ]),
     },
 ];

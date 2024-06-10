@@ -1,269 +1,220 @@
-# Create a new payment method
+# Payment Method
 
-We hope that now you know how to create a package, if not refer to [Package Development](../packages/create.md).
+[[TOC]]
 
-Krayin eases the task of creating payment methods. So, a novice developer or a professional developer can easily create payment methods.
+## Introduction
 
-As the diversity of payment methods provide the options to customer for payment when they proceed to checkout.
+Bagisto eases the task of creating payment methods, making it simple for both novice and professional developers.
 
-On another perspective, multiple payment methods are a great strategy to reach out to the global marketplace.
+The diversity of payment methods provides customers with various options for payment when they proceed to checkout. Moreover, offering multiple payment methods is a great strategy to reach out to the global marketplace.
 
-In this section, we will explain how to create a payment method. You can create a payment method in two ways.
+## Using Bagisto Package Generator
 
-1. By using Krayin Package Generator (**Recommended**)
-2. By manually setting up all files (**Expert Level**)
+To create a payment method package, follow these commands in the Bagisto root directory:
 
-## 1. By using Krayin Package Generator
+- If the package directory is not present:
 
-- For creating payment method package, you need to use these commands in Krayin root directory,
+  ```sh
+  php artisan package:make-payment-method Webkul/Blog
+  ```
 
-  - If package directory not present,
+- If the package directory is already present, you can use the force command to overwrite it. Simply add the **`--force`** flag:
 
-    ```php
-    php artisan package:make-payment-method ACME/Stripe
+  ```sh
+  php artisan package:make-payment-method Webkul/Blog --force
+  ```
+
+  These commands will generate the entire directory structure automatically, saving you from manual setup.
+
+## Manually Setting Up All Files
+
+1. To create your payment method, follow these steps to set up the respective directory structure:
+
+    ```
+    - Webkul/
+      └── Blog/
+          └── src/
+              ├── ...
+              ├── Config/
+              │   ├── system.php
+              │   └── paymentmethods.php
+              ├── Payment/
+              │   └── Stripe.php
+              └── Providers/
+                  └── StripeServiceProvider.php
     ```
 
-  - If somehow package directory already present then you can use force command as well. For that you just need to pass the '**--force**' command.
+2. The **`Config`** folder contains application configuration files. Create two files, **`system.php`** and **`paymentmethods.php`**, within the **`Config`** folder. In the **`system.php`** file, include the following array keys:
 
     ```php
-    php artisan package:make-payment-method ACME/Stripe --force
+    <?php
+
+    return [
+        [
+            'key'    => 'sales.payment_methods.stripe',
+            'name'   => 'Stripe',
+            'sort'   => 1,
+            'fields' => [
+                [
+                    'name'          => 'title',
+                    'title'         => 'admin::app.admin.system.title',
+                    'type'          => 'text',
+                    'validation'    => 'required',
+                    'channel_based' => false,
+                    'locale_based'  => true,
+                ], [
+                    'name'          => 'description',
+                    'title'         => 'admin::app.admin.system.description',
+                    'type'          => 'textarea',
+                    'channel_based' => false,
+                    'locale_based'  => true,
+                ], [
+                    'name'          => 'active',
+                    'title'         => 'admin::app.admin.system.status',
+                    'type'          => 'boolean',
+                    'validation'    => 'required',
+                    'channel_based' => false,
+                    'locale_based'  => true,
+                ]
+            ]
+        ]
+    ];
+    ```
+    - **`key`**: A unique value for the configuration, concatenated with a dot (`.`) operator.
+    - **`name`**: The placeholder value for the configuration. It is recommended to use translations in Bagisto.
+    - **`sort`**: The position of the configuration menu.
+    - **`fields`**: An array containing the custom configurations and fields for the payment method. The example includes three arrays for **`title`**, **`description`**, and **`status`**. You can add more arrays for additional settings.
+
+3. In the **`paymentmethods.php`** file, add the following content:
+
+    ```php
+    <?php
+
+    return [
+        'stripe'  => [
+            'code'        => 'stripe',
+            'title'       => 'Stripe',
+            'description' => 'Stripe',
+            'class'       => 'Webkul\Blog\Payment\Stripe',
+            'active'      => true,
+            'sort'        => 1,
+        ],
+    ];
+    ```
+    - **`code`**: A text representing the payment method.
+    - **`title`**: The name of the payment method.
+    - **`description`**: A brief description of the payment method.
+    - **`class`**: The namespace of the class where the payment method functions are defined.
+    - **`active`**: A boolean value (`true` or `false`) to enable or disable the module.
+    - **`sort`**: The position of the payment method.
+
+4. In the **`Stripe.php`** file within the **`Payment`** directory, add the following code:
+
+    ```php
+    <?php
+
+    namespace Webkul\Blog\Payment;
+
+    use Webkul\Payment\Payment\Payment;
+
+    class Stripe extends Payment
+    {
+       /**
+        * Payment method code
+        *
+        * @var string
+        */
+        protected $code  = 'stripe';
+
+       /**
+        * Get redirect url.
+        *
+        * @var string
+        */
+        public function getRedirectUrl()
+        {
+            // Implementation code goes here
+        }
+    }
+    ```
+## Merge Configuration
+
+1. To merge the configuration, create the provider in **`StripeServiceProvider.php`**:
+
+    ```php
+    <?php
+
+    namespace Webkul\Blog\Providers;
+
+    use Illuminate\Support\ServiceProvider;
+
+    class StripeServiceProvider extends ServiceProvider
+    {
+        /**
+         * Register services.
+         *
+         * @return void
+         */
+        public function register()
+        {
+            $this->registerConfig();
+        }
+
+        /**
+         * Register package config.
+         *
+         * @return void
+         */
+        protected function registerConfig()
+        {
+            $this->mergeConfigFrom(
+                dirname(__DIR__) . '/Config/paymentmethods.php', 'payment_methods'
+            );
+
+            $this->mergeConfigFrom(
+                dirname(__DIR__) . '/Config/system.php', 'core'
+            );
+        }
+    }
     ```
 
-  - This will generate whole directory structures. You don't need to do manually.
+2. Next, add your payment method namespace to the **`psr-4`** key in the **`composer.json`** file located in the Bagisto root directory:
 
-- After that, you need to register your service provider in `config/app.php`.
+    ```json
+    "autoload": {
+        ...
+        "psr-4": {
+            // Other PSR-4 namespaces
+            "Webkul\\Blog\\": "packages/Webkul/Blog/src"
+        }
+    }
+    ```
 
-  ```php
-  <?php
+3. Register your service provider in the **`config/app.php`** file, also located in the Bagisto root directory:
 
-  return [
-      ...
-      'providers' => [
-          ...
-          ACME\Stripe\Providers\StripeServiceProvider::class,
-          ...
-      ]
-      ...
-  ];
-  ```
+    ```php
+    <?php
 
-- After that, add you payment method namespace in `psr-4` key in `composer.json` file for auto loading.
+    return [
+        // Other configuration options
 
-  ```json
-  "autoload": {
-      ...
-      "psr-4": {
-          ...
-          "ACME\\Stripe\\": "packages/ACME/Stripe/src"
-          ...
-      }
-      ...
-  }
-  ```
+        'providers' => ServiceProvider::defaultProviders()->merge([
+            // Other service providers
+            Webkul\Blog\Providers\StripeServiceProvider::class,
+        ])->toArray(),
+        
+        // Other configuration options
+    ];
+    ```
 
-- Run `composer dump-autoload`.
+4. After making these changes, run the following commands:
 
-- After that run `php artisan config:cache`.
+    ```sh
+    composer dump-autoload
+    ```
 
-- This will setup the configuration in the admin panel. Now start creating routes, controllers and make some cool stuff.
+    ```sh
+    php artisan config:cache
+    ```
 
-## 2. By manually setting up all files
-
-### Steps to create a payment method
-
-- Create respective directory structure to create your payment method.
-
-  ```file-structure
-  - ACME/Stripe/src/
-    - Config/
-      - system.php
-      - paymentmethods.php
-    - Payment/
-      - Stripe.php
-    - Providers/
-      - StripeServiceProvider.php
-  ```
-
-- Within `Config` folder, it contains application's configuration files. Let's just create two files i.e. `system.php` and `paymentmethods.php`. In `system.php` file, you have to include the array keys in the file as shown below,
-
-  ```php
-  <?php
-
-  return [
-      [
-          'key'    => 'sales.paymentmethods.stripe',
-          'name'   => 'Stripe',
-          'sort'   => 1,
-          'fields' => [
-              [
-                  'name'          => 'title',
-                  'title'         => 'admin::app.admin.system.title',
-                  'type'          => 'text',
-                  'validation'    => 'required',
-                  'channel_based' => false,
-                  'locale_based'  => true,
-              ], [
-                  'name'          => 'description',
-                  'title'         => 'admin::app.admin.system.description',
-                  'type'          => 'textarea',
-                  'channel_based' => false,
-                  'locale_based'  => true,
-              ], [
-                  'name'          => 'active',
-                  'title'         => 'admin::app.admin.system.status',
-                  'type'          => 'boolean',
-                  'validation'    => 'required',
-                  'channel_based' => false,
-                  'locale_based'  => true,
-              ]
-          ]
-      ]
-  ];
-  ```
-
-  - Let's discuss what these keys are,
-
-    - `key`: Value which is provided in this key should be unique and concatenated with '.' (dot) operator.
-
-    - `name`: This key accept the value as a placeholder for your configuration. Generally, in Krayin, we consider writing it using translation.
-
-    - `sort`: This key accept the sort position for your configuration menu.
-
-    - `fields`: This key accept the list of arrays representing your custom configurations and fields. Right now you are seeing that it only holding 3 array i.e. title, description and status. If you need some other settings than you can add one more array to this.
-
-- Similarly in `paymentmethods.php`,
-
-  ```php
-  <?php
-
-  return [
-      'stripe'  => [
-          'code'        => 'stripe',
-          'title'       => 'Stripe',
-          'description' => 'Stripe',
-          'class'       => 'ACME\Stripe\Payment\Stripe',
-          'active'      => true,
-          'sort'        => 1,
-      ],
-  ];
-  ```
-
-  - Now, let's look into this what these keys are,
-    - `code`: A text to represent payment method.
-    - `title`: Name of the payment method.
-    - `description`: A brief description of the payment method.
-    - `class`: This key includes the class namespace where all functions of payment method are written.
-    - `active`: This key accepts true/false to enable or disable the module.
-    - `sort`: This key accept the sort position of the payment.
-
-- If you check the above point, we have discussed the key `class` which includes the class namespace. So let's create that class in the respective file. In `Stripe.php`, add the below code,
-
-  ```php
-  <?php
-
-  namespace ACME\Stripe\Payment;
-
-  use Webkul\Payment\Payment\Payment;
-
-  class Stripe extends Payment
-  {
-      /**
-      * Payment method code
-      *
-      * @var string
-      */
-      protected $code  = 'stripe';
-
-      public function getRedirectUrl()
-      {
-      }
-  }
-  ```
-
-- Now we need to create the provider, in `StripeServiceProvider.php` add the below code,
-
-  ```php
-  <?php
-
-  namespace ACME\Stripe\Providers;
-
-  use Illuminate\Support\ServiceProvider;
-
-  class StripeServiceProvider extends ServiceProvider
-  {
-      /**
-      * Bootstrap services.
-      *
-      * @return void
-      */
-      public function boot()
-      {
-      }
-
-      /**
-      * Register services.
-      *
-      * @return void
-      */
-      public function register()
-      {
-          $this->registerConfig();
-      }
-
-      /**
-      * Register package config.
-      *
-      * @return void
-      */
-      protected function registerConfig()
-      {
-          $this->mergeConfigFrom(
-              dirname(__DIR__) . '/Config/paymentmethods.php', 'paymentmethods'
-          );
-
-          $this->mergeConfigFrom(
-              dirname(__DIR__) . '/Config/system.php', 'core'
-          );
-      }
-  }
-  ```
-
-- After that, you need to register your service provider in `config/app.php`.
-
-  ```php
-  <?php
-
-  return [
-      ...
-      'providers' => [
-          ...
-          ACME\Stripe\Providers\StripeServiceProvider::class,
-          ...
-      ]
-      ...
-  ];
-  ```
-
-- After that, add you payment method namespace in `psr-4` key in `composer.json` file for auto loading.
-
-  ```json
-  "autoload": {
-      ...
-      "psr-4": {
-          ...
-          "ACME\\Stripe\\": "packages/ACME/Stripe/src"
-          ...
-      }
-      ...
-  }
-  ```
-
-- Run `composer dump-autoload`.
-
-- After that run `php artisan config:cache`.
-
-::: tip
-
-If `composer dump-autoload` giving some error than in that case delete all files from the `bootstrap/cache` and again run `composer dump-autoload`.
-
-:::
+    If you encounter any issues with **`composer dump-autoload`**, delete all files from the **`bootstrap/cache`** directory and run **`composer dump-autoload`** again.

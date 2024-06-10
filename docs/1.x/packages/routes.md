@@ -6,7 +6,7 @@ To learn in detail about Routes, you can visit the Laravel documentation [here](
 
 ## Directory Structure
 
-- Create a **`Routes`** folder inside **`packages/Webkul/Blog/src`** and create two files named **`admin-routes.php`** and **`shop-routes.php`**. The updated directory structure will look like this:
+- Create a **`Routes`** folder inside **`packages/Webkul/Blog/src`** and create two files named **`admin-routes.php`**. The updated directory structure will look like this:
 
     ```
     └── packages
@@ -15,8 +15,7 @@ To learn in detail about Routes, you can visit the Laravel documentation [here](
                 └── src
                     ├── ...
                     └── Routes
-                        ├── admin-routes.php
-                        └── shop-routes.php
+                        └── admin-routes.php
     ```
 
 - **`admin-routes.php`**: This file is for admin routes. Add the following code to this file:
@@ -29,19 +28,6 @@ To learn in detail about Routes, you can visit the Laravel documentation [here](
 
   Route::group(['middleware' => ['web', 'admin'], 'prefix' => config('app.admin_url')], function () {
       Route::get('/blog', [PostController::class, 'index']);
-  });
-  ```
-
-- **`shop-routes.php`**: This file is for shop routes. Add the following code to this file:
-
-  ```php
-  <?php
-
-  use Illuminate\Support\Facades\Route;
-  use Webkul\Blog\Http\Controllers\Shop\PostController;
-
-  Route::group(['middleware' => ['web', 'theme', 'locale', 'currency']], function () {
-      Route::get('/blogs', [PostController::class, 'index']);
   });
   ```
 
@@ -73,8 +59,6 @@ To learn in detail about Routes, you can visit the Laravel documentation [here](
           //... 
           
           $this->loadRoutesFrom(__DIR__ . '/../Routes/admin-routes.php');
-
-          $this->loadRoutesFrom(__DIR__ . '/../Routes/shop-routes.php');
       }
   }
   ```
