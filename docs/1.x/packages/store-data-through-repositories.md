@@ -1,130 +1,78 @@
-# Store data through Repository
+# Repository
 
-## Contracts, Repositories and Proxies
+[[TOC]]
 
-### Contracts
+## Introduction
 
-Laravel's Contracts are a set of interfaces that define the core services provided by the framework. For example, an `Illuminate\Contracts\Queue\Queue` contract defines the methods needed for queueing jobs, while the `Illuminate\Contracts\Mail\Mailer` contract defines the methods needed for sending an e-mail.
+In traditional development, application logic is often written directly in the controller. However, there is an alternative approach that abstracts some of these calls into PHP classes called Repositories. The purpose of repositories is to decouple models from controllers and provide readable names for complex queries.
 
-Each contract has a corresponding implementation provided by the framework. For example, Laravel provides a queue implementation with a variety of drivers, and a mailer implementation that is powered by SwiftMailer.
+This file defines our Repository class. Instances of this class have a model property that is bound to an Eloquent model. With this binding in the constructor, we can call Eloquent methods such as findOrFail, update, or all from the class methods.
 
-All of the Laravel contracts live in their own GitHub repository. This provides a quick reference point for all available contracts, as well as a single, decoupled package that may be utilized by package developers.
+We are using the Prettus Repository package. You can find all available methods in the Prettus repository [here](https://github.com/andersao/l5-repository). Here are some examples:
 
-### Repositories
+Examples:
 
-Generally, we wrote all of our application logic in the controller. There’s an alternative approach of development that abstracts some calls into PHP classes called Repositories. The idea is that we can decouple models from controllers and assign a readable name's to complicated queries.
+| Sl. no. | Method              | Description                               |
+| ------- | ------              | -----------                               |
+| 1       | all                 | Find all results in the Repository         |
+| 2       | paginate            | Find all results in the Repository with pagination  |
+| 3       | find                | Find a result by ID                        |
+| 4       | with(['table_name'])| Load the model relationships               |
+| 5       | findWhereIn         | Find results by multiple values in one field|
 
-This file defines our Repository class. Instances of this class have a model property that we tie to an Eloquent model. Once this is bound in the constructor we can call Eloquent methods like findOrFail, update or all from the class methods.
+```php
+// Bound in constructor
+public function __construct(protected PostRepository $postRepository) {}
+```
 
-### Proxies
+```php
+// Find all results in the Repository
+$posts = $this->postRepository->all();
+```
 
-Proxies as their name state will drive you to the actual model class. The concept of model proxies has been introduced to override the functionality of the existing Model. It is a type of model inheritance without creating a new table in the database.
+## Using Krayin Package Generator
 
-## Steps to store data through repository
+- This command creates a new Repository class in the **`packages/Webkul/Blog/src/Repository`** directory.
 
-- For creating models, create a file named as `HelloWorld.php` in `packages/ACME/HelloWorld/src/Models`, and copy the below code in file,
-
-  ```php
-  <?php
-
-  namespace ACME\HelloWorld\Models;
-
-  use Illuminate\Database\Eloquent\Model;
-  use ACME\HelloWorld\Contracts\HelloWorld as HelloWorldContract;
-
-  class HelloWorld extends Model implements HelloWorldContract
-  {
-      protected $fillable = [];
-  }
+  ```sh
+  php artisan package:make-repository PostRepository Webkul/Blog
   ```
 
-> Note: If you have created model by using **Krayin Package Generator**, then you can skip the model proxy and contract creation step.
+## Manual Setup of Files
 
-- Now, at the same location create a model proxy file as `HelloWorldProxy.php`. This Proxy class will extends `Konekt\Concord\Proxies\ModelProxy`. Copy the below code in file,
+- Create a **`Repository`** folder inside **`Webkul/Blog/src/`** and create a file named **`PostRepository.php`**. In the repository class, create the **`model()`** method that returns the path of your contract class.
 
-  ```php
-  <?php
-
-  namespace ACME\HelloWorld\Models;
-
-  use Konekt\Concord\Proxies\ModelProxy;
-
-  class HelloWorldProxy extends ModelProxy
-  {
-
-  }
+  ```
+  └── packages
+      └── Webkul
+          └── Blog
+              └── src
+                  ├── ...
+                  └── Repository
+                      └── PostRepository.php
   ```
 
-- Now, create a folder named as `Contracts` and create an interface file named as `HelloWorld.php`,
+- Copy the following code into your newly created repository file.
 
   ```php
   <?php
 
-  namespace ACME\HelloWorld\Contracts;
-
-  interface HelloWorld
-  {
-  }
-  ```
-
-- Create a `Repository` folder and create a file `HelloWorldRepository.php` and create the `model()` method in repository class which returns the path of your contract class.
-
-  ```php
-  <?php
-
-  namespace ACME\HelloWorld\Repositories;
+  namespace Webkul\Blog\Repository;
 
   use Webkul\Core\Eloquent\Repository;
 
-  class HelloWorldRepository extends Repository
+  class PostRepository extends Repository
   {
       /**
-      * Specify Model class name
+      * Specify the Model class name
       *
-      * @return mixed
+      * @return string
       */
-      function model()
+      function model(): string
       {
-          return 'ACME/HelloWorld/Contracts/HelloWorld';
+          return 'Webkul\Blog\Contracts\Post';
       }
   }
   ```
 
-  ::: tip
-
-  - You can use **Krayin Package Generator** also,
-
-    `php artisan package:make-repository HelloWorldRepository ACME/HelloWorld`
-
-  :::
-
-- After creating all the files stated above, we have to create a provider as `ModuleServiceProvider.php`. In this file, models which are used in this package are registered. You may check below code,
-
-  ```php
-  <?php
-
-  namespace ACME\HelloWorld\Providers;
-
-  use Konekt\Concord\BaseModuleServiceProvider;
-
-  class ModuleServiceProvider extends BaseModuleServiceProvider
-  {
-      protected $models = [
-          ACME\HelloWorld\Models\HelloWorld::class,
-      ];
-  }
-  ```
-
-- Now, Register your `ModuleServiceProvider.php` in `config/concord.php` file,
-
-  ```php
-  <?php
-
-  return [
-      'modules' => [
-          ACME\HelloWorld\Providers\ModuleServiceProvider::class
-      ]
-  ];
-  ```
-
-- Now, you are all set to go.
+- Now, your **`PostRepository`** is ready to use.

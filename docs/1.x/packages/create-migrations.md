@@ -1,26 +1,112 @@
-# Create migrations
+# Migrations
 
-You can create migration in two ways,
+[[TOC]]
 
-1. By using Krayin Package Generator.
-2. By normal laravel command and then manually copy to the respective folder.
+To understand Migrations in detail, you can visit the Laravel documentation [here](https://laravel.com/docs/10.x/migrations).
 
-## By using Krayin Package Generator
+## Using Krayin Package Generator
 
-This command will create a new migration class in `packages/ACME/HelloWorld/src/Database/Migrations` directory.
+This command creates a new migration class in the **`packages/Webkul/Blog/src/Database/Migrations`** directory.
 
-`php artisan package:make-migration CreateUsersTable ACME/HelloWorld`
+```sh
+php artisan package:make-migration CreatePostsTable Webkul/Blog
+```
 
-## By normal laravel command and then manually copy to the respective folder
+## Using Laravel Artisan Command
 
-To create a migration, use the `make:migration` artisan command:
+- Create a **`Database`** folder in the **`packages/Webkul/Blog/src`** path. Inside the **`Database`** folder, create **`Migrations`** and **`Seeders`** folders.
 
-`php artisan make:migration create_users_table`
+    ```
+    └── packages
+        └── Webkul
+            └── Blog
+                └── src
+                    ├── ...
+                    └── Database
+                        ├── Migrations
+                        └── Seeders
+    ```
 
-The new migration will be placed in your `database/migrations` directory. Each migration file name contains a timestamp which allows Laravel to determine the order of the migrations.
+- Run the following command with the **`--path`** option to specify where your migration file will be placed.
 
-The --table and --create options may also be used to indicate the name of the table and whether the migration will be creating a new table.
+  ```sh
+  php artisan make:migration create_posts_table --path=packages/Webkul/Blog/src/Database/Migrations
+  ```
 
-You may also specify a --path option when creating the migration. The path should be relative to the root directory of your installation:
+- Copy the code provided here and paste it into your migration file.
 
-`php artisan make:migration create_demo_table --path=packages/ACME/HelloWorld/src/Database/Migrations`
+  ```php
+  <?php
+
+  use Illuminate\Database\Migrations\Migration;
+  use Illuminate\Database\Schema\Blueprint;
+  use Illuminate\Support\Facades\Schema;
+
+  return new class extends Migration
+  {
+     /**
+      * Run the migrations.
+      *
+      * @return void
+      */
+      public function up()
+      {
+          Schema::create('posts', function (Blueprint $table) {
+              $table->id();
+              $table->string('title')->nullable();
+              $table->longText('description')->nullable();
+              $table->integer('user_id');
+              $table->tinyInteger('status')->default(1);
+              $table->timestamps();
+          });
+      }
+
+     /**
+      * Reverse the migrations.
+      *
+      * @return void
+      */
+      public function down()
+      {
+          Schema::dropIfExists('posts');
+      }
+  };
+  ```
+
+### Loading Migration from Package
+
+- We need to add the migrations to our service provider to load them.
+
+  ```php
+  <?php
+
+  namespace Webkul\Blog\Providers;
+
+  use Illuminate\Support\ServiceProvider;
+
+  /**
+  * BlogServiceProvider
+  *
+  * @copyright 2023 Webkul Software Pvt. Ltd. (http://www.webkul.com)
+  */
+  class BlogServiceProvider extends ServiceProvider
+  {
+     /**
+      * Bootstrap services.
+      *
+      * @return void
+      */
+      public function boot()
+      {          
+          $this->loadMigrationsFrom(__DIR__ .'/../Database/Migrations');
+      }
+  }
+  ```
+
+### Creating Tables from Migrations
+
+- Run the following command to create the **`posts`** table in your database.
+
+  ```sh
+  php artisan migrate
+  ```
