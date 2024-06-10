@@ -288,7 +288,7 @@ You can also filter your store products by using filterable attributes query par
   
   `GET http(s)://example.com/api/products?category_id=2&size=6,7&limit=10&page=1`
 
-  ![Krayin Product Size](../../assets/images/api/Krayin_prod_size.jpg)
+  ![Krayin Product Size](../../assets/images/api/krayinprod_size.jpg)
 
 #### 3. You can also filter the Krayin product catalog with the help of `color` filter. `color` filter will work only on the category layout. You can pass the multiple attribute's values to the color`s filterable attributes as a query parameter in API URL. Suppose you want to filter men's T-Shirt with white and red color, then you can pass the id of both white & red
 
@@ -314,7 +314,7 @@ You can also filter your store products by using filterable attributes query par
 
   `GET http(s)://example.com/api/products?category_id=2&color=1,2&limit=10&page=1`
 
-  ![Krayin Product Color](../../assets/images/api/Krayin_prod_color.jpg)
+  ![Krayin Product Color](../../assets/images/api/krayinprod_color.jpg)
 
 #### 5. In the case of a simple product, You can set a range of a minimum price and maximum price. Same as `size` and `color`, the `price` filter will also work on the category layout only. Suppose you want to filter products those are having price between price range from 50 to 100, then you have to pass value like `price=10,50` as the query parameter in API URL
 
@@ -340,7 +340,7 @@ You can also filter your store products by using filterable attributes query par
 
   `GET http(s)://example.com/api/products?category_id=2&price=50,100&limit=10&page=1`
 
-  ![Krayin Product Price Simple](../../assets/images/api/Krayin_prod_price_simple.jpg)
+  ![Krayin Product Price Simple](../../assets/images/api/krayinprod_price_simple.jpg)
 
 #### 7. In the case of a configurable product, the `price` filter will also work with the product's variants. Suppose you want to filter products with the 40$ min and 100$ max price range. And there is a configurable product named men's T-shirts having a price 30$ and there is any variant of the same product having 45$ price, then men's T-shirts product will show you in the filtered product's list
 
@@ -354,7 +354,7 @@ You can also filter your store products by using filterable attributes query par
 
   `GET http(s)://example.com/api/products?category_id=2&price=30,100`
 
-  ![Krayin Product Price Config](../../assets/images/api/Krayin_prod_price_config.jpg)
+  ![Krayin Product Price Config](../../assets/images/api/krayinprod_price_config.jpg)
 
 ::: tip
 
@@ -428,7 +428,7 @@ If you want the record of any specific product, then you have to provide the pro
 
 Additional information relates to all the attributes and their values for which admin sets the `Yes` value for the `Visible on Product View Page on Front-end`. The product's additional information means those attributes which describe the product's specification.
 
-![Krayin Attribute](../../assets/images/api/Krayin_attribute.jpg)
+![Krayin Attribute](../../assets/images/api/krayinattribute.jpg)
 
 - Headers
 
@@ -442,7 +442,7 @@ Additional information relates to all the attributes and their values for which 
 
 ::: details Response
 
-  ![Krayin Additional Info](../../assets/images/api/Krayin_add_info.jpg)
+  ![Krayin Additional Info](../../assets/images/api/krayinadd_info.jpg)
 
 :::
 
@@ -452,7 +452,7 @@ You can get all the configurable attributes of a product by using `product-confi
 
 Admin can set the `Yes` value for the `Use To Create Configurable Product` field under the attribute panel to make that attribute as variant.
 
-![Krayin Config](../../assets/images/api/Krayin_config.jpg)
+![Krayin Config](../../assets/images/api/krayinconfig.jpg)
 
 - Headers
 
@@ -503,6 +503,6 @@ Admin can set the `Yes` value for the `Use To Create Configurable Product` field
   }
   ~~~
 
-  ![Krayin Config Attributes](../../assets/images/api/Krayin_config_attr.jpg)
+  ![Krayin Config Attributes](../../assets/images/api/krayinconfig_attr.jpg)
 
 :::

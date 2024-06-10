@@ -137,7 +137,7 @@ By using this API call you can add new products to the cart and also you can add
   }
   ~~~
 
-  ![Krayin_cart_add](../../assets/images/api/Krayin_cart_add.jpg)
+  ![krayincart_add](../../assets/images/api/krayincart_add.jpg)
 
 :::
 
@@ -192,7 +192,7 @@ In, Krayin guest cart is handled by session, and Laravel handles session by cook
   | Key    | Value                       |
   | ------ | --------------------------- |
   | Accept | application/json            |
-  | Cookie | Krayin_session=key         |
+  | Cookie | krayinsession=key         |
 
 - Request
 
@@ -227,7 +227,7 @@ In, Krayin guest cart is handled by session, and Laravel handles session by cook
   }
   ~~~
 
-  ![Krayin_cart_guest](../../assets/images/api/Krayin_cart_guest.jpg)
+  ![krayincart_guest](../../assets/images/api/krayincart_guest.jpg)
 
 :::
 
@@ -276,7 +276,7 @@ In the case of the logged-in user, no need for cookies as the cart is in the dat
   }
   ~~~
 
-  ![Krayin_cart](../../assets/images/api/Krayin_cart.jpg)
+  ![krayincart](../../assets/images/api/krayincart.jpg)
 
 :::
 
@@ -398,7 +398,7 @@ By using this API call you can update the cart's product(s) quantity. To do this
   }
   ~~~
 
-  ![Krayin Cart Update](../../assets/images/api/Krayin_cart_update.jpg)
+  ![Krayin Cart Update](../../assets/images/api/krayincart_update.jpg)
 
 :::
 
@@ -558,7 +558,7 @@ You can remove any particular product from the cart. To do this task, you have t
   }
   ~~~
 
-  ![Krayin_cart_remove_item](../../assets/images/api/Krayin_cart_remove_item.jpg){:class="screenshot-dimension center"}
+  ![krayincart_remove_item](../../assets/images/api/krayincart_remove_item.jpg){:class="screenshot-dimension center"}
 
 :::
 
@@ -618,7 +618,7 @@ You can move a product from cart to wishlist. To do this task, you have to use t
   }
   ~~~
 
-  ![Krayin_move_to_wishlist](../../assets/images/api/Krayin_move_to_wishlist.jpg)
+  ![krayinmove_to_wishlist](../../assets/images/api/krayinmove_to_wishlist.jpg)
 
 :::
 
@@ -749,7 +749,7 @@ At the checkout step, customers can create new addresses or select from the exis
   }
   ~~~
 
-  ![Krayin_save_address](../../assets/images/api/Krayin_save_address.jpg)
+  ![krayinsave_address](../../assets/images/api/krayinsave_address.jpg)
 
 :::
 
@@ -827,7 +827,7 @@ After saving the customer's addresses to the cart, you have to select a shipping
   }
   ~~~
 
-  ![Krayin_save_shipping](../../assets/images/api/Krayin_save_shipping.jpg)
+  ![krayinsave_shipping](../../assets/images/api/krayinsave_shipping.jpg)
 
 :::
 
@@ -904,7 +904,7 @@ After applying the shipping method to the cart, you have to select a payment met
   }
   ~~~
 
-  ![Krayin_save_payment](../../assets/images/api/Krayin_save_payment.jpg)
+  ![krayinsave_payment](../../assets/images/api/krayinsave_payment.jpg)
 
 :::
 
@@ -961,6 +961,6 @@ After applying shipping addresses, shipping methods, and payment methods to the 
   }
   ~~~
 
-  ![Krayin_save_order](../../assets/images/api/Krayin_save_order.jpg)
+  ![krayinsave_order](../../assets/images/api/krayinsave_order.jpg)
 
 :::

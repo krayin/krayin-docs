@@ -61,7 +61,7 @@ You can also get all the wishlists of store's customers. To get the wishlists, c
 
 ::: details Response (Example 1 & 2)
 
-  ![Krayin_wishlist_page](../../assets/images/api/Krayin_wishlist_page.jpg)
+  ![krayinwishlist_page](../../assets/images/api/krayinwishlist_page.jpg)
 
 :::
 

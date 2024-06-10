@@ -157,7 +157,7 @@ You can also get all the orders at once from the Krayin store without pagination
   }
   ~~~
 
-  ![Krayin_orders_no_pag](../../assets/images/api/Krayin_orders_no_pag.jpg){:class="screenshot-dimension center"}
+  ![krayinorders_no_pag](../../assets/images/api/krayinorders_no_pag.jpg){:class="screenshot-dimension center"}
 
 :::
 
@@ -228,7 +228,7 @@ Let's fetch specific order,
   }
   ~~~
 
-  ![Krayin_orders_id](../../assets/images/api/Krayin_orders_id.jpg)
+  ![krayinorders_id](../../assets/images/api/krayinorders_id.jpg)
 
 :::
 

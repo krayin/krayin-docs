@@ -86,7 +86,7 @@ You can get all the shipments of the Krayin store. To get the shipments of the s
   }
   ~~~
 
-  ![Krayin_shipments](../../assets/images/api/Krayin_shipments.jpg)
+  ![krayinshipments](../../assets/images/api/krayinshipments.jpg)
 
 :::
 
@@ -227,7 +227,7 @@ To get the details of a  specific order's shipment, you have to pass an `order_i
 
 ::: details Response
 
-  ![Krayin_ship_order_id](../../assets/images/api/Krayin_ship_order_id.jpg)
+  ![krayinship_order_id](../../assets/images/api/krayinship_order_id.jpg)
 
 :::
 
