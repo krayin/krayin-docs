@@ -4,7 +4,7 @@
 
 ## Using Krayin Package Generator
 
-To facilitate package development, you can use the [Krayin Package Generator](https://github.com/bagisto/bagisto-package-generator). Follow the steps below to install it:
+To facilitate package development, you can use the [Krayin Package Generator](https://github.com/krayin/krayin-package-generator). Follow the steps below to install it:
 
 1. Install the Krayin Package Generator by running the following command in the root folder of your Krayin application:
 
@@ -128,7 +128,7 @@ If you prefer to set up your package manually, follow these steps assuming you a
    /**
     * BlogServiceProvider
     *
-    * @copyright 2023 Webkul Software Pvt. Ltd.
+    * @copyright 2024 Webkul Software PVT. LTD.
     */
    class BlogServiceProvider extends ServiceProvider
    {

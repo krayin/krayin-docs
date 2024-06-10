@@ -70,11 +70,11 @@ For detailed information about validation in Vue.js using VeeValidate, refer to 
 
 ### Installation
 
-Bagisto already comes with the VeeValidate library, so there is no need to install it separately.
+Krayin already comes with the VeeValidate library, so there is no need to install it separately.
 
 ### Configuration
 
-Bagisto includes the configuration for **`vee-validate`**. For example, you can find the configuration in the following path: **`bagisto/packages/Webkul/Admin/src/Resources/assets/js/app.js`**.
+Krayin includes the configuration for **`vee-validate`**. For example, you can find the configuration in the following path: **`krayin/packages/Webkul/Admin/src/Resources/assets/js/app.js`**.
 
 ```js
 import Vue from 'vue';

@@ -131,7 +131,7 @@ You can also use **`npm run watch`**, which watches for changes in your assets a
     /**
      * BlogServiceProvider
     *
-    * @copyright 2023 Webkul Software Pvt. Ltd.
+    * @copyright 2024 Webkul Software PVT. LTD.
     */
     class BlogServiceProvider extends ServiceProvider
     {
@@ -178,7 +178,7 @@ To link the stylesheets to the layouts, follow these steps:
     /**
      * BlogServiceProvider
     *
-    * @copyright 2023 Webkul Software Pvt. Ltd.
+    * @copyright 2024 Webkul Software PVT. LTD.
     */
     class BlogServiceProvider extends ServiceProvider
     {

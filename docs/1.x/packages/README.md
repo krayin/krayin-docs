@@ -1,10 +1,10 @@
 ## Package Development
 
-If you are looking to extend the functionalities of Bagisto eCommerce platform, creating a package is the way to go. A package is a self-contained module that adds specific features to the platform. It allows developers to add custom functionality to the platform without modifying the core codebase.
+If you are looking to extend the functionalities of Krayin eCommerce platform, creating a package is the way to go. A package is a self-contained module that adds specific features to the platform. It allows developers to add custom functionality to the platform without modifying the core codebase.
 
-This guide will walk you through the process of developing a package for Bagisto.
+This guide will walk you through the process of developing a package for Krayin.
 
-In Bagisto, we have created numerous packages located at **`packages/Webkul/`**. Below is a basic tree structure of a package:
+In Krayin, we have created numerous packages located at **`packages/Webkul/`**. Below is a basic tree structure of a package:
 
 ~~~directory-structure
 └── Webkul

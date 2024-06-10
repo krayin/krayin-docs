@@ -4,7 +4,7 @@
 
 ## Introduction
 
-A DataGrid is a concept of displaying your database records in a tabular format. It is a powerful tool that helps you present large amounts of data in an organized way. At Bagisto, we have implemented this feature, which allows you to use it to display data in a tabular format or write code from scratch to display data. In addition to the basic functionality of DataGrid, we have also implemented additional features such as sorting, filtering, and mass action, which are explained in detail below.
+A DataGrid is a concept of displaying your database records in a tabular format. It is a powerful tool that helps you present large amounts of data in an organized way. At Krayin, we have implemented this feature, which allows you to use it to display data in a tabular format or write code from scratch to display data. In addition to the basic functionality of DataGrid, we have also implemented additional features such as sorting, filtering, and mass action, which are explained in detail below.
 
 ## Global Properties of DataGrid
 

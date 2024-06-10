@@ -4,7 +4,7 @@
 
 ## Introduction
 
-In addition to providing authentication services out of the box, Bagisto also offers an Access Control List (ACL) functionality. This feature allows administrators to control user access to different parts of Bagisto.
+In addition to providing authentication services out of the box, Krayin also offers an Access Control List (ACL) functionality. This feature allows administrators to control user access to different parts of Krayin.
 
 ## Directory Structure
 
@@ -107,4 +107,4 @@ To check roles and permissions, follow these steps:
 
    Replace `$permission` with the actual permission you want to check.
 
-By following these steps, you can configure and manage the Access Control List (ACL) in Bagisto.
+By following these steps, you can configure and manage the Access Control List (ACL) in Krayin.
