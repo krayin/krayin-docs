@@ -4,11 +4,11 @@
 
 ## Introduction
 
-Bagisto provides several default product types, including simple, configurable, virtual, grouped, downloadable, and bundled. However, if these default product types do not meet your requirements, you can create your own custom product types.
+Krayin provides several default product types, including simple, configurable, virtual, grouped, downloadable, and bundled. However, if these default product types do not meet your requirements, you can create your own custom product types.
 
 ## Creating a New Product Type
 
-To create a new product type in Bagisto, follow these steps:
+To create a new product type in Krayin, follow these steps:
 
 **Note**: In this example, we will create a new product type called "coupon".
 

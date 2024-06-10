@@ -2,9 +2,9 @@
 
 [[TOC]]
 
-## Using Bagisto Package Generator
+## Using Krayin Package Generator
 
-To create a shipping method package using the Bagisto package generator, follow these steps in the Bagisto root directory:
+To create a shipping method package using the Krayin package generator, follow these steps in the Krayin root directory:
 
 1. Run the following command:
 
@@ -247,7 +247,7 @@ Alternatively, you can manually set up all the files for your shipping method pa
     }
     ```
 
-2. Add the namespace for your shipment method in the **`psr-4`** key of the **`composer.json`** file in the Bagisto root directory:
+2. Add the namespace for your shipment method in the **`psr-4`** key of the **`composer.json`** file in the Krayin root directory:
 
      ```json
    "autoload": {
@@ -259,7 +259,7 @@ Alternatively, you can manually set up all the files for your shipping method pa
    }
    ```
 
-3. Register your service provider in the **`config/app.php`** file located in the Bagisto root directory:
+3. Register your service provider in the **`config/app.php`** file located in the Krayin root directory:
 
     ```php
     <?php

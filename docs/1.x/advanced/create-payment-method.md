@@ -4,13 +4,13 @@
 
 ## Introduction
 
-Bagisto eases the task of creating payment methods, making it simple for both novice and professional developers.
+Krayin eases the task of creating payment methods, making it simple for both novice and professional developers.
 
 The diversity of payment methods provides customers with various options for payment when they proceed to checkout. Moreover, offering multiple payment methods is a great strategy to reach out to the global marketplace.
 
-## Using Bagisto Package Generator
+## Using Krayin Package Generator
 
-To create a payment method package, follow these commands in the Bagisto root directory:
+To create a payment method package, follow these commands in the Krayin root directory:
 
 - If the package directory is not present:
 
@@ -81,7 +81,7 @@ To create a payment method package, follow these commands in the Bagisto root di
     ];
     ```
     - **`key`**: A unique value for the configuration, concatenated with a dot (`.`) operator.
-    - **`name`**: The placeholder value for the configuration. It is recommended to use translations in Bagisto.
+    - **`name`**: The placeholder value for the configuration. It is recommended to use translations in Krayin.
     - **`sort`**: The position of the configuration menu.
     - **`fields`**: An array containing the custom configurations and fields for the payment method. The example includes three arrays for **`title`**, **`description`**, and **`status`**. You can add more arrays for additional settings.
 
@@ -178,7 +178,7 @@ To create a payment method package, follow these commands in the Bagisto root di
     }
     ```
 
-2. Next, add your payment method namespace to the **`psr-4`** key in the **`composer.json`** file located in the Bagisto root directory:
+2. Next, add your payment method namespace to the **`psr-4`** key in the **`composer.json`** file located in the Krayin root directory:
 
     ```json
     "autoload": {
@@ -190,7 +190,7 @@ To create a payment method package, follow these commands in the Bagisto root di
     }
     ```
 
-3. Register your service provider in the **`config/app.php`** file, also located in the Bagisto root directory:
+3. Register your service provider in the **`config/app.php`** file, also located in the Krayin root directory:
 
     ```php
     <?php

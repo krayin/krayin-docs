@@ -4,7 +4,7 @@
 
 ## Introduction
 
-Bagisto utilizes Concord, a Laravel extension, for building modules on top of Laravel's built-in service providers. Concord introduces the concept of model proxies, which allow you to override and extend core models in a modular way.
+Krayin utilizes Concord, a Laravel extension, for building modules on top of Laravel's built-in service providers. Concord introduces the concept of model proxies, which allow you to override and extend core models in a modular way.
 
 Concord requires the existence of an interface, such as **Product**, which serves as a contract that can be bound to a concrete class using Concord's **registerModel()** method.
 
@@ -63,4 +63,4 @@ For more details, you can visit the [Concord GitHub repository](https://github.c
   }
   ```
 
-By following this approach, you can override core models in Bagisto using Concord's module system.
+By following this approach, you can override core models in Krayin using Concord's module system.
