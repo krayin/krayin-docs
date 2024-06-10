@@ -4,7 +4,7 @@ In this section, we will check all the shipments' API.
 
 ## Get shipments from all orders
 
-You can get all the shipments of the Bagisto store. To get the shipments of the store, the customer must be logged in to the Bagisto store. You can achieve this job by using the `shipments` API call resource.
+You can get all the shipments of the Krayin store. To get the shipments of the store, the customer must be logged in to the Krayin store. You can achieve this job by using the `shipments` API call resource.
 
 - Headers
 
@@ -86,7 +86,7 @@ You can get all the shipments of the Bagisto store. To get the shipments of the 
   }
   ~~~
 
-  ![bagisto_shipments](../../assets/images/api/bagisto_shipments.jpg)
+  ![Krayin_shipments](../../assets/images/api/Krayin_shipments.jpg)
 
 :::
 
@@ -227,7 +227,7 @@ To get the details of a  specific order's shipment, you have to pass an `order_i
 
 ::: details Response
 
-  ![bagisto_ship_order_id](../../assets/images/api/bagisto_ship_order_id.jpg)
+  ![Krayin_ship_order_id](../../assets/images/api/Krayin_ship_order_id.jpg)
 
 :::
 

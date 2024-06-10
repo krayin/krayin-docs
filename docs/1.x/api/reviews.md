@@ -4,7 +4,7 @@ In this section, we will check all the reviews' API based on customers as well a
 
 ## Get all reviews
 
-You can get all the reviews of the Bagisto store. You can achieve this job by using `reviews` API call resource. There is no need of customer authentication.
+You can get all the reviews of the Krayin store. You can achieve this job by using `reviews` API call resource. There is no need of customer authentication.
 
 - Headers
 
@@ -288,7 +288,7 @@ This request will fetch all the reviews by customer's id.
 
 #### 2. Get all customer's reviews without pagination
 
-You can also get all customer's reviews of Bagisto Store in a single API call without using pagination. For this you have to pass `pagination=0` in the query parameter with the `reviews?customer_id={id}` resource in the API URL.
+You can also get all customer's reviews of Krayin Store in a single API call without using pagination. For this you have to pass `pagination=0` in the query parameter with the `reviews?customer_id={id}` resource in the API URL.
 
 - Headers
 

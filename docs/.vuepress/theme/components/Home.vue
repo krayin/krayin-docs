@@ -45,6 +45,7 @@
         class="feature"
       >
         <h2>{{ feature.title }}</h2>
+
         <p>{{ feature.details }}</p>
       </div>
     </div>

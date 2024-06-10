@@ -1,7 +1,7 @@
 # Override core model
 
 Concord is a Laravel Extension that helps building modules on top of Laravel's built-in Service Providers.
-Bagisto uses Concord for managing their modules.
+Krayin uses Concord for managing their modules.
 The concept of model proxies has been introduced. Proxies, as the name suggests will drive you to the actual model class.
 
 Concord's concept also requires to have an interface **_Product_** and this way it's possible to freely bind a concrete class to it using Concord's **registerModel()** method.

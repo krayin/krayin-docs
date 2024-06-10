@@ -4,7 +4,7 @@ In this section, we will see all the APIs which are related to Customer Cart.
 
 ## Get Cart
 
-You can get all the  Cart from the Bagisto store. You can achieve this job by using the `Cart` API call.
+You can get all the  Cart from the Krayin store. You can achieve this job by using the `Cart` API call.
 
 - Headers
 
@@ -1160,7 +1160,7 @@ You can get all the  Cart from the Bagisto store. You can achieve this job by us
 
 ## Get Cart Items
 
-You can get all the Cart Items from the Bagisto store. You can achieve this job by using the `Cart Items` API call.
+You can get all the Cart Items from the Krayin store. You can achieve this job by using the `Cart Items` API call.
 
 - Headers
 
@@ -2250,7 +2250,7 @@ You can get all the Cart Items from the Bagisto store. You can achieve this job 
 
 ## Get Cart Item By Id
 
-You can get the Specific Cart Items from the Bagisto store by passing the `id` field with the request. You can achieve this job by using the `Cart Items` API call.
+You can get the Specific Cart Items from the Krayin store by passing the `id` field with the request. You can achieve this job by using the `Cart Items` API call.
 
 - Headers
 
@@ -3748,7 +3748,7 @@ Let's take an example,
 
 ## Move To Wishlist
 
-You can move a cart item from cart to wishlist from the Bagisto store. You can achieve this job by using the `Move To Wishlist` API call.
+You can move a cart item from cart to wishlist from the Krayin store. You can achieve this job by using the `Move To Wishlist` API call.
 
 - Headers
 

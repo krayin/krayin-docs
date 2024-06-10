@@ -4,7 +4,7 @@ In this section, we will see all the APIs which are related to locales.
 
 ### 1. Get all locales
 
-You can get all the locales from the Bagisto store. You can achieve this job by using the `locales` API call.
+You can get all the locales from the Krayin store. You can achieve this job by using the `locales` API call.
 
 - Headers
 
@@ -405,7 +405,7 @@ In this section, we will see all the APIs which are related to Currencies.
 
 ### 1. Get all Currencies
 
-You can get all the Currencies from the Bagisto store. You can achieve this job by using the `Currencies` API call.
+You can get all the Currencies from the Krayin store. You can achieve this job by using the `Currencies` API call.
 
 - Headers
 
@@ -800,7 +800,7 @@ In this section, we will see all the APIs which are related to Exchange Rates.
 
 ### 1. Get all Exchange Rates
 
-You can get all the Exchange Rates from the Bagisto store. You can achieve this job by using the `Exchange Rates` API call.
+You can get all the Exchange Rates from the Krayin store. You can achieve this job by using the `Exchange Rates` API call.
 
 - Headers
 
@@ -1174,7 +1174,7 @@ In this section, we will see all the APIs which are related to Inventory Sources
 
 ### 1. Get all Inventory Sources
 
-You can get all the Inventory Sources from the Bagisto store. You can achieve this job by using the `invetory-sources` API call.
+You can get all the Inventory Sources from the Krayin store. You can achieve this job by using the `invetory-sources` API call.
 
 - Headers
 
@@ -1647,7 +1647,7 @@ In this section, we will see all the APIs which are related to channels.
 
 ### 1. Get all channels
 
-You can get all the channels from the Bagisto store. You can achieve this job by using the `channels` API call.
+You can get all the channels from the Krayin store. You can achieve this job by using the `channels` API call.
 
 - Headers
 
@@ -2227,7 +2227,7 @@ In this section, we will see all the APIs which are related to Slider.
 
 ### 1. Get all Slider
 
-You can get all the Slider from the Bagisto store. You can achieve this job by using the `slider` API call.
+You can get all the Slider from the Krayin store. You can achieve this job by using the `slider` API call.
 
 - Headers
 
@@ -2447,7 +2447,7 @@ In this section, we will see all the APIs which are related to User Roles.
 
 ### 1. Get all User Roles
 
-You can get all the User Roles from the Bagisto store. You can achieve this job by using the `user roles` API call.
+You can get all the User Roles from the Krayin store. You can achieve this job by using the `user roles` API call.
 
 - Headers
 
@@ -2809,7 +2809,7 @@ In this section, we will see all the APIs which are related to Tax Rates.
 
 ### 1. Get all Tax Rates
 
-You can get all the Tax Rates from the Bagisto store. You can achieve this job by using the `tax rates` API call.
+You can get all the Tax Rates from the Krayin store. You can achieve this job by using the `tax rates` API call.
 
 - Headers
 
@@ -3210,7 +3210,7 @@ In this section, we will see all the APIs which are related to Tax Categories.
 
 ### 1. Get all Tax Categories
 
-You can get all the Tax Categories from the Bagisto store. You can achieve this job by using the `tax categories` API call.
+You can get all the Tax Categories from the Krayin store. You can achieve this job by using the `tax categories` API call.
 
 - Headers
 

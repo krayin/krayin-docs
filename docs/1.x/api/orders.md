@@ -4,7 +4,7 @@ In this section, we will see all the APIs which are related to order. As after o
 
 ## Get all orders
 
-You can get all the orders of the Bagisto store. To get the orders of the store, the customer must be logged in to the Bagisto Store. You can achieve this job by using `orders` API call resource.
+You can get all the orders of the Krayin store. To get the orders of the store, the customer must be logged in to the Krayin Store. You can achieve this job by using `orders` API call resource.
 
 - Headers
 
@@ -130,7 +130,7 @@ You can get all the orders of the Bagisto store. To get the orders of the store,
 
 #### 3. Get all orders without pagination,
 
-You can also get all the orders at once from the Bagisto store without pagination. To get the orders, the customer must be logged in to the Bagisto store. For this, you have to pass `pagination=0` in the query parameter with the `orders` resource in the API URL.
+You can also get all the orders at once from the Krayin store without pagination. To get the orders, the customer must be logged in to the Krayin store. For this, you have to pass `pagination=0` in the query parameter with the `orders` resource in the API URL.
 
 - Headers
 
@@ -157,7 +157,7 @@ You can also get all the orders at once from the Bagisto store without paginatio
   }
   ~~~
 
-  ![bagisto_orders_no_pag](../../assets/images/api/bagisto_orders_no_pag.jpg){:class="screenshot-dimension center"}
+  ![Krayin_orders_no_pag](../../assets/images/api/Krayin_orders_no_pag.jpg){:class="screenshot-dimension center"}
 
 :::
 
@@ -228,7 +228,7 @@ Let's fetch specific order,
   }
   ~~~
 
-  ![bagisto_orders_id](../../assets/images/api/bagisto_orders_id.jpg)
+  ![Krayin_orders_id](../../assets/images/api/Krayin_orders_id.jpg)
 
 :::
 

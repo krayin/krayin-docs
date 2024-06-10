@@ -24,6 +24,18 @@ module.exports = [
         ])
     },
     {
+        title: 'Architecture concepts',
+        path: setVersionPrefix('architecture'),
+        collapsable: true,
+        children: setVersionPrefix([
+            ['architecture/packages', 'Packages'],
+            ['architecture/frontend', 'Frontend'],
+            ['architecture/theme', 'Theme'],
+            ['architecture/repository-pattern', 'Repository Pattern'],
+            ['architecture/modular-design', 'Modular Design']
+        ])
+    },
+    {
         title: 'Package Development',
         path: setVersionPrefix('packages'),
         collapsable: true,

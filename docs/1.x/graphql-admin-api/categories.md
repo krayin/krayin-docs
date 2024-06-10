@@ -4,7 +4,7 @@ In this section, we will see all the APIs which are related to Categories.
 
 ##  Get All Categories
 
-You can get all the Categories from the Bagisto store. You can achieve this job by using the `Categories` API call.
+You can get all the Categories from the Krayin store. You can achieve this job by using the `Categories` API call.
 
 - Headers
 
@@ -475,7 +475,7 @@ Let's take an example,
 
 ##  Get All Filterable Attributes
 
-You can get all the Filterable Attributes from the Bagisto store. You can achieve this job by using the `Filterable Attributes` API call.
+You can get all the Filterable Attributes from the Krayin store. You can achieve this job by using the `Filterable Attributes` API call.
 
 - Headers
 

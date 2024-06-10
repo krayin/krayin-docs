@@ -4,7 +4,7 @@ In this section, we will see all the APIs which are related to Attribute Groups.
 
 ##  Get All Attribute Groups
 
-You can get all the Attribute Groups from the Bagisto store. You can achieve this job by using the `Attribute Groups` API call.
+You can get all the Attribute Groups from the Krayin store. You can achieve this job by using the `Attribute Groups` API call.
 
 - Headers
 

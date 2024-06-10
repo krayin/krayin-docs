@@ -22,7 +22,7 @@ To activate the **JWT** authentication, you just need to pass one extra key-valu
   | ----- | ----- |
   | token | true  |
 
-This will tell the Bagisto api to use the **JWT API guard**. If you are not passing this, the normal **customer guard** will be activated.  
+This will tell the Krayin api to use the **JWT API guard**. If you are not passing this, the normal **customer guard** will be activated.  
 
 So, let's try to authenticate the user by using **JWT**. Please send valid **User Agent** header in your request whether you are using postman, curl or some other clients.
 

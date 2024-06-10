@@ -4,12 +4,12 @@ With the help of `view_render_event()`, you can inject anything before or after 
 ```php
     @section('content-wrapper')
 
-        {!! view_render_event('bagisto.shop.home.content.before') !!}
+        {!! view_render_event('Krayin.shop.home.content.before') !!}
 
         {!! DbView::make($channel)->field('home_page_content')
         ->with(['sliderData' => $sliderData])->render() !!}
 
-        {!! view_render_event('bagisto.shop.home.content.after') !!}
+        {!! view_render_event('Krayin.shop.home.content.after') !!}
 
     @endsection
 ```
@@ -22,15 +22,15 @@ You can define any event view_render_event() in the template by following steps:
 - Create an event in the blade file in which you want to render any content before or after any content of that template:
 
 ```php
-    { !! view_render_event('bagisto.shop.test.before') !! }
+    { !! view_render_event('Krayin.shop.test.before') !! }
 ```
 
-As you can see, `bagisto.shop.test` is the event name here that is defined in a random blade file of the project.
+As you can see, `Krayin.shop.test` is the event name here that is defined in a random blade file of the project.
 
 - Now you have to listen to the event at **_EventServiceProvider.php_** file and in the boot method like:
 
 ```php
-    Event::listen('bagisto.shop.test.before', function($viewRenderEventManager) {
+    Event::listen('Krayin.shop.test.before', function($viewRenderEventManager) {
         $viewRenderEventManager->addTemplate('template file path that you want to inject');
     });
 ```

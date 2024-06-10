@@ -1,9 +1,9 @@
 # Events
-Events are an implementation of observer pattern such that whenever an event takes place, then one or more listener(s) associated with that event responds. Imagine something like making an announcement to your application, and then actions being taken due to that announcement. All the event classes in Bagisto are stored in the **Providers** folder and the listeners are stored in the **Listeners** folder.
+Events are an implementation of observer pattern such that whenever an event takes place, then one or more listener(s) associated with that event responds. Imagine something like making an announcement to your application, and then actions being taken due to that announcement. All the event classes in Krayin are stored in the **Providers** folder and the listeners are stored in the **Listeners** folder.
 
 ## How to create Event Class?
 
-If you have the Bagisto Package Generator installed, then you can use the following command which will create a new event class in `packages/ACME/TestPackage/src/Events` directory.
+If you have the Krayin Package Generator installed, then you can use the following command which will create a new event class in `packages/ACME/TestPackage/src/Events` directory.
 
 `php artisan package:make-event TestEvent ACME/TestPackage`
 
@@ -15,7 +15,7 @@ Or if you don't have package generator then, you can create file manually also.
 
 ## How to create Listener Class?
 
-If you have the Bagisto Package Generator installed, then you can use the following command which will create a new listener class in `packages/ACME/TestPackage/src/Listeners` directory.
+If you have the Krayin Package Generator installed, then you can use the following command which will create a new listener class in `packages/ACME/TestPackage/src/Listeners` directory.
 
 `php artisan package:make-listener TestListener ACME/TestPackage`
 
@@ -27,7 +27,7 @@ Or if you don't have package generator then, you can create file manually also.
 
 ## Manually Registering Events
 
-For the sake of simplicity, in bagisto, we register events manually in the boot method of your **_EventServiceProvider.php_** as below:
+For the sake of simplicity, in Krayin, we register events manually in the boot method of your **_EventServiceProvider.php_** as below:
 
 ~~~php
 /**
@@ -67,9 +67,9 @@ class EventServiceProvider extends ServiceProvider
 
 In most of **CRUD** operation, we had fired an event before and after the execution of function. So, that if some one want to perform any operation after or before product create/update/delete can perform by simply calling a listener function in event registration
 
-## Events Fired in Bagisto
+## Events Fired in Krayin
 
-Events fired in bagisto but not listened such that if any user wants to perform any action on event fire, then they may create listener file and perform the respective operation.
+Events fired in Krayin but not listened such that if any user wants to perform any action on event fire, then they may create listener file and perform the respective operation.
 
 | Events name                  | Functionality|
 | ------------------------------- | ------------- |
@@ -203,7 +203,7 @@ Events fired in bagisto but not listened such that if any user wants to perform 
 |user.admin.delete.before|This event will be fired before user gets deleted. The user gets created from admin panel and you may create a listener file and perform the respective operation when that event fires|
 |user.admin.delete.after|This event will be fired after user gets deleted. The user gets created from admin panel and you may create a listener file and perform the respective operation when that event fires|
 
-## Events Listen in Bagisto
+## Events Listen in Krayin
 
 | Events name                     | functionality |
 | ------------------------------- | ------------- |
@@ -219,7 +219,7 @@ Events fired in bagisto but not listened such that if any user wants to perform 
 
 ## Listen Existing Event
 
-As above, all events used in bagisto are listed here so you may change or edit the listener function such as- `sendNewOrderMail` that is defined in `productFlat` listener file, so you can edit and perform the required operation
+As above, all events used in Krayin are listed here so you may change or edit the listener function such as- `sendNewOrderMail` that is defined in `productFlat` listener file, so you can edit and perform the required operation
 
 ~~~php
 class EventServiceProvider extends ServiceProvider

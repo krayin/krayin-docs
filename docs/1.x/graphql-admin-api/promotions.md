@@ -4,7 +4,7 @@ In this section, we will see all the APIs which are related to Catalog Rules.
 
 ### 1. Get All Catalog Rules
 
-You can get all the Catalog Rules from the Bagisto store. You can achieve this job by using the `Catalog Rules` API call.
+You can get all the Catalog Rules from the Krayin store. You can achieve this job by using the `Catalog Rules` API call.
 
 - Headers
 
@@ -810,7 +810,7 @@ Let's take an example,
 
 ### 4. Get Catalog Rule Products
 
-You can get the Catalog Rule Products from the Bagisto store. You can achieve this job by using the `Catalog Rules` API call.
+You can get the Catalog Rule Products from the Krayin store. You can achieve this job by using the `Catalog Rules` API call.
 
 - Headers
 
@@ -918,7 +918,7 @@ You can get the Catalog Rule Products from the Bagisto store. You can achieve th
 
 ### 5. Get Catalog Rule Product By Id
 
-You can get the Catalog Rule Products By Id from the Bagisto store. You can achieve this job by using the `Catalog Rule Product` API call.
+You can get the Catalog Rule Products By Id from the Krayin store. You can achieve this job by using the `Catalog Rule Product` API call.
 
 - Headers
 
@@ -1009,7 +1009,7 @@ You can get the Catalog Rule Products By Id from the Bagisto store. You can achi
 
 ### 6. Get Catalog Rule Products Prices
 
-You can get the Catalog Rule Products Prices from the Bagisto store. You can achieve this job by using the `Catalog Rule Products Price` API call.
+You can get the Catalog Rule Products Prices from the Krayin store. You can achieve this job by using the `Catalog Rule Products Price` API call.
 
 - Headers
 
@@ -1116,7 +1116,7 @@ You can get the Catalog Rule Products Prices from the Bagisto store. You can ach
 
 ### 7. Get Catalog Rule Product Prices By Id
 
-You can get the Catalog Rule Product Prices By Id from the Bagisto store. You can achieve this job by using the `Catalog Rule Product Price` API call.
+You can get the Catalog Rule Product Prices By Id from the Krayin store. You can achieve this job by using the `Catalog Rule Product Price` API call.
 
 - Headers
 
@@ -1381,7 +1381,7 @@ In this section, we will see all the APIs which are related to Catalog Rules.
 
 ### 1. Get All Cart Rules
 
-You can get all the Cart Rules from the Bagisto store. You can achieve this job by using the `Cart Rules` API call.
+You can get all the Cart Rules from the Krayin store. You can achieve this job by using the `Cart Rules` API call.
 
 - Headers
 

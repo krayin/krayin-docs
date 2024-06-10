@@ -17,7 +17,7 @@ Let's take an example of the user section, we have some response in which we got
 
 ## 1. Count Object `count`
 
-In the count object key, you will find the count of many objects which represent the Bagisto admin users.
+In the count object key, you will find the count of many objects which represent the Krayin admin users.
 
 ## 2. CurrentPage Object `currentPage`
 

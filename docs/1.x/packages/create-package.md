@@ -646,7 +646,7 @@ Let's start with first step by creating the packages folder.
               __DIR__ . '/../../publishable/assets' => public_path('vendor/webkul/helloworld/assets'),
           ], 'public');
 
-          Event::listen('bagisto.admin.layout.head', function($viewRenderEventManager) {
+          Event::listen('Krayin.admin.layout.head', function($viewRenderEventManager) {
               $viewRenderEventManager->addTemplate('helloworld::admin.layouts.style');
           });
       }
@@ -728,7 +728,7 @@ Let's start with first step by creating the packages folder.
               __DIR__ . '/../../publishable/assets' => public_path('vendor/webkul/helloworld/assets'),
           ], 'public');
 
-          Event::listen('bagisto.admin.layout.head', function($viewRenderEventManager) {
+          Event::listen('Krayin.admin.layout.head', function($viewRenderEventManager) {
               $viewRenderEventManager->addTemplate('helloworld::helloworld.layouts.style');
           });
 

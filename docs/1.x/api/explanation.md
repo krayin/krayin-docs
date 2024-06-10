@@ -14,7 +14,7 @@ Let's take an example of the categories section, we have some response in which 
 
 ## 1. Data Object `data`
 
-In the data object key, you will find the collection of many objects which represent the Bagisto store's categories.
+In the data object key, you will find the collection of many objects which represent the Krayin store's categories.
 
 ## 2. Links Object `links`
 

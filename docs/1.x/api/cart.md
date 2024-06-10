@@ -137,7 +137,7 @@ By using this API call you can add new products to the cart and also you can add
   }
   ~~~
 
-  ![bagisto_cart_add](../../assets/images/api/bagisto_cart_add.jpg)
+  ![Krayin_cart_add](../../assets/images/api/Krayin_cart_add.jpg)
 
 :::
 
@@ -185,14 +185,14 @@ To get the current cart details, you have to use the `checkout/cart` resource in
 
 #### 1. In case of guest customer
 
-In, Bagisto guest cart is handled by session, and Laravel handles session by cookies. So you need to save the cookies for the guest cart when you are adding product to the cart and then send it as a header when you want to fetch.
+In, Krayin guest cart is handled by session, and Laravel handles session by cookies. So you need to save the cookies for the guest cart when you are adding product to the cart and then send it as a header when you want to fetch.
 
 - Headers
 
   | Key    | Value                       |
   | ------ | --------------------------- |
   | Accept | application/json            |
-  | Cookie | bagisto_session=key         |
+  | Cookie | Krayin_session=key         |
 
 - Request
 
@@ -227,7 +227,7 @@ In, Bagisto guest cart is handled by session, and Laravel handles session by coo
   }
   ~~~
 
-  ![bagisto_cart_guest](../../assets/images/api/bagisto_cart_guest.jpg)
+  ![Krayin_cart_guest](../../assets/images/api/Krayin_cart_guest.jpg)
 
 :::
 
@@ -276,7 +276,7 @@ In the case of the logged-in user, no need for cookies as the cart is in the dat
   }
   ~~~
 
-  ![bagisto_cart](../../assets/images/api/bagisto_cart.jpg)
+  ![Krayin_cart](../../assets/images/api/Krayin_cart.jpg)
 
 :::
 
@@ -398,7 +398,7 @@ By using this API call you can update the cart's product(s) quantity. To do this
   }
   ~~~
 
-  ![Bagisto Cart Update](../../assets/images/api/bagisto_cart_update.jpg)
+  ![Krayin Cart Update](../../assets/images/api/Krayin_cart_update.jpg)
 
 :::
 
@@ -558,7 +558,7 @@ You can remove any particular product from the cart. To do this task, you have t
   }
   ~~~
 
-  ![bagisto_cart_remove_item](../../assets/images/api/bagisto_cart_remove_item.jpg){:class="screenshot-dimension center"}
+  ![Krayin_cart_remove_item](../../assets/images/api/Krayin_cart_remove_item.jpg){:class="screenshot-dimension center"}
 
 :::
 
@@ -618,7 +618,7 @@ You can move a product from cart to wishlist. To do this task, you have to use t
   }
   ~~~
 
-  ![bagisto_move_to_wishlist](../../assets/images/api/bagisto_move_to_wishlist.jpg)
+  ![Krayin_move_to_wishlist](../../assets/images/api/Krayin_move_to_wishlist.jpg)
 
 :::
 
@@ -749,7 +749,7 @@ At the checkout step, customers can create new addresses or select from the exis
   }
   ~~~
 
-  ![bagisto_save_address](../../assets/images/api/bagisto_save_address.jpg)
+  ![Krayin_save_address](../../assets/images/api/Krayin_save_address.jpg)
 
 :::
 
@@ -827,7 +827,7 @@ After saving the customer's addresses to the cart, you have to select a shipping
   }
   ~~~
 
-  ![bagisto_save_shipping](../../assets/images/api/bagisto_save_shipping.jpg)
+  ![Krayin_save_shipping](../../assets/images/api/Krayin_save_shipping.jpg)
 
 :::
 
@@ -904,7 +904,7 @@ After applying the shipping method to the cart, you have to select a payment met
   }
   ~~~
 
-  ![bagisto_save_payment](../../assets/images/api/bagisto_save_payment.jpg)
+  ![Krayin_save_payment](../../assets/images/api/Krayin_save_payment.jpg)
 
 :::
 
@@ -961,6 +961,6 @@ After applying shipping addresses, shipping methods, and payment methods to the 
   }
   ~~~
 
-  ![bagisto_save_order](../../assets/images/api/bagisto_save_order.jpg)
+  ![Krayin_save_order](../../assets/images/api/Krayin_save_order.jpg)
 
 :::

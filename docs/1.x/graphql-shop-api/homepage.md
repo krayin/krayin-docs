@@ -4,7 +4,7 @@ In this section, we will see all the APIs which are related to Home Page Content
 
 ## Get New Products
 
-You can get New Products of home page from the Bagisto store by passing the count of products. You can achieve this job by using the `newProducts` API call.
+You can get New Products of home page from the Krayin store by passing the count of products. You can achieve this job by using the `newProducts` API call.
 
 - Headers
 
@@ -208,7 +208,7 @@ You can get New Products of home page from the Bagisto store by passing the coun
 
 ## Get Featured Products
 
-You can get Featured Products Products of home page from the Bagisto store by passing the count of products. You can achieve this job by using the `featuredProducts` API call.
+You can get Featured Products Products of home page from the Krayin store by passing the count of products. You can achieve this job by using the `featuredProducts` API call.
 
 - Headers
 

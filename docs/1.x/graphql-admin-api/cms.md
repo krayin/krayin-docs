@@ -4,7 +4,7 @@ In this section, we will see all the APIs which are related to CMS Pages.
 
 ### 1. Get all CMS Page
 
-You can get all the CMS Page from the Bagisto store. You can achieve this job by using the `CMS Page` API call.
+You can get all the CMS Page from the Krayin store. You can achieve this job by using the `CMS Page` API call.
 
 - Headers
 
@@ -490,7 +490,7 @@ Let's take an example,
 
 ### 4. Get CMS Translations 
 
-You can get  the CMS Page Translations from the Bagisto store. You can achieve this job by using the `CMS Page Translations` API call.
+You can get  the CMS Page Translations from the Krayin store. You can achieve this job by using the `CMS Page Translations` API call.
 
 - Headers
 

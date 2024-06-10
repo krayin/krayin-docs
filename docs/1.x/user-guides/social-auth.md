@@ -3,7 +3,7 @@
 [[toc]]
 
 ## Introduction
-In addition to the default authentication, Bagisto also provide a convenient way to authenticate with multiple OAuth providers.  
+In addition to the default authentication, Krayin also provide a convenient way to authenticate with multiple OAuth providers.  
 The following social networks are provided out of the box: [Facebook](https://facebook.com) [GitHub](https://github.com) [Google](https://google.com) [LinkedIn](https://linkedin.com) and [Twitter](https://twitter.com)
 
 Once you configured one of the social networks, your customers can authenticate by one of these social networks by just a single buttons, there is no need to fill various fields.

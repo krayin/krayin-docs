@@ -4,7 +4,7 @@ In this section, we will see how wishlists' API works.
 
 ## Get all wishlists
 
-You can also get all the wishlists of store's customers. To get the wishlists, customer must be logged-in to the Bagisto store.
+You can also get all the wishlists of store's customers. To get the wishlists, customer must be logged-in to the Krayin store.
 
 - Headers
 
@@ -61,7 +61,7 @@ You can also get all the wishlists of store's customers. To get the wishlists, c
 
 ::: details Response (Example 1 & 2)
 
-  ![bagisto_wishlist_page](../../assets/images/api/bagisto_wishlist_page.jpg)
+  ![Krayin_wishlist_page](../../assets/images/api/Krayin_wishlist_page.jpg)
 
 :::
 

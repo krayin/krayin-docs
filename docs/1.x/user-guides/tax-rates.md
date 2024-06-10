@@ -2,7 +2,7 @@
 
 In e-commerce, there are various taxes involved while purchasing the product. These taxes and the rate of taxes differ from country to country.
 
-In this section, we will focus only on the tax configuration. If you want to know more details about tax categories, tax rates, then feel free to check out out this [blog](https://bagisto.com/en/taxes-in-bagisto/).
+In this section, we will focus only on the tax configuration. If you want to know more details about tax categories, tax rates, then feel free to check out out this [blog](https://Krayin.com/en/taxes-in-Krayin/).
 
 ## Pricing
 

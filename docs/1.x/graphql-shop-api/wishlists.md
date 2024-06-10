@@ -4,7 +4,7 @@ In this section, we will see all the APIs which are related to Customer Product 
 
 ## Get Wishlists
 
-You can get all the  Wishlists from the Bagisto store. You can achieve this job by using the `Wishlists` API call.
+You can get all the  Wishlists from the Krayin store. You can achieve this job by using the `Wishlists` API call.
 
 - Headers
 
@@ -578,7 +578,7 @@ Let's take an example,
 
 ## Move To Cart From Wishlist
 
-You can move a product from wishlist to cart from the Bagisto store. You can achieve this job by using the `Move To Cart From Wishlist` API call.
+You can move a product from wishlist to cart from the Krayin store. You can achieve this job by using the `Move To Cart From Wishlist` API call.
 
 - Headers
 

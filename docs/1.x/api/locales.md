@@ -4,7 +4,7 @@ In this section, we will see all the APIs which are related to locales.
 
 ## Get all locales
 
-You can get all the locales from the Bagisto store. You can achieve this job by using the `locales` API call resource.
+You can get all the locales from the Krayin store. You can achieve this job by using the `locales` API call resource.
 
 - Headers
 
@@ -125,7 +125,7 @@ You can get all the locales from the Bagisto store. You can achieve this job by 
 
 #### 2. Get all locales without pagination
 
-You can also get all the locales at once from the Bagisto store without pagination. For this, you have to pass `pagination=0` in the query parameter with the `locales` resource in the API URL.
+You can also get all the locales at once from the Krayin store without pagination. For this, you have to pass `pagination=0` in the query parameter with the `locales` resource in the API URL.
 
 - Headers
 

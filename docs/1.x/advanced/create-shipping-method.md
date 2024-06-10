@@ -6,12 +6,12 @@ In this section, we will understand how to create a shipping method.
 
 You can create a shipping method in two ways.
 
-1. By using Bagisto Package Generator (**Recommended**)
+1. By using Krayin Package Generator (**Recommended**)
 2. By manually setting up all files (**Expert Level**)
 
-## 1. By using Bagisto Package Generator
+## 1. By using Krayin Package Generator
 
-For creating shipping method package, you need to use this command in bagisto root directory,
+For creating shipping method package, you need to use this command in Krayin root directory,
 
 ~~~php
 php artisan package:make-shipping-method ACME/FedEx
@@ -74,7 +74,7 @@ This will generate whole directory structures. You don't need to do manually.
   - To render the shipping methods in checkout process, you need to define `calculate()` within your `Fedex.php` and return shipping rate, shipping title, shipping description within an object.
 
     ::: tip
-    May refer [FlatRate](https://github.com/bagisto/bagisto/blob/master/packages/Webkul/Shipping/src/Carriers/FlatRate.php#L28) `calculate()` method.
+    May refer [FlatRate](https://github.com/Krayin/Krayin/blob/master/packages/Webkul/Shipping/src/Carriers/FlatRate.php#L28) `calculate()` method.
     :::
 
 - After creating all the necessary files and configurations, you need to create the form which will appear on the config section. So for that create file `system.php` in `src/Config`. Add below code to following file,

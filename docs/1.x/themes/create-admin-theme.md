@@ -4,7 +4,7 @@ title: Create a admin theme
 
 # Create an new admin theme
 
-In the Bagisto root directory go to the **config** folder and open `themes.php`.  
+In the Krayin root directory go to the **config** folder and open `themes.php`.  
 Now search for the keys `admin-default` and `admin-themes`. It will look like this,
   
 ```php

@@ -3,7 +3,7 @@ title: Create a store theme
 ---
 
 # Create a store theme
-Please follow the steps mentioned below that how to create a custom theme in Bagisto.
+Please follow the steps mentioned below that how to create a custom theme in Krayin.
 
 Go to your project’s root directory and check for **config** folder.  
 Inside **config** folder, you will find a file called **_themes.php_** like directory below:
@@ -49,9 +49,9 @@ Let’s go through the parameters of **_themes.php_** file. Because understandin
 
 ##### An Explanation For These Parameters:
 
-- default: Declared at the top signifies the currently active or default theme in Bagisto. It is assigned with the value 'default’. The default(string) indicates the name of the currently active theme.
+- default: Declared at the top signifies the currently active or default theme in Krayin. It is assigned with the value 'default’. The default(string) indicates the name of the currently active theme.
 
-- themes: This parameter is where you’ve to define all essentials for your own custom theme. Multiple themes can also be created and used at the same time in Bagisto.
+- themes: This parameter is where you’ve to define all essentials for your own custom theme. Multiple themes can also be created and used at the same time in Krayin.
 
     - Inside 'themes’ there is another array by name 'default' which is your currently active theme containing some key-value pairs.
 
@@ -61,9 +61,9 @@ Let’s go through the parameters of **_themes.php_** file. Because understandin
 
            - <b>assets_path:</b> Responsible for your assets i.e. images, CSS and javascript files, etc.
 
-           - <b>name:</b> Defines a global name for your theme inside Bagisto.
+           - <b>name:</b> Defines a global name for your theme inside Krayin.
 
-           - <b>parent:</b> This is a magic parameter that you can find in the commented code below the sub-array 'default'. Using            this parameter you can make use of existing themes inside Bagisto and just customize them even further. This        parameter will take the value of the 'name’ parameter listed in the 3rd point above.
+           - <b>parent:</b> This is a magic parameter that you can find in the commented code below the sub-array 'default'. Using            this parameter you can make use of existing themes inside Krayin and just customize them even further. This        parameter will take the value of the 'name’ parameter listed in the 3rd point above.
 
 <!-- ![bliss-theme](../../assets/images//theme/bliss-array.png) -->
 

@@ -4,7 +4,7 @@ In this section, we will see all the APIs which are related to Attributes.
 
 ##  Get All Attributes
 
-You can get all the Attributes from the Bagisto store. You can achieve this job by using the `Attributes` API call.
+You can get all the Attributes from the Krayin store. You can achieve this job by using the `Attributes` API call.
 
 - Headers
 
@@ -1248,7 +1248,7 @@ API call will delete a Attribute, only if the admin has logged in.
 
 ##  Get All Attribute Options
 
-You can get all the Attribute Options from the Bagisto store. You can achieve this job by using the `Attribute Options` API call.
+You can get all the Attribute Options from the Krayin store. You can achieve this job by using the `Attribute Options` API call.
 
 - Headers
 

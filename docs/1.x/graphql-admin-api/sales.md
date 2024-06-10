@@ -4,7 +4,7 @@ In this section, we will see all the APIs which are related to Orders.
 
 ##  Get All Orders
 
-You can get all the Orders from the Bagisto store. You can achieve this job by using the `Orders` API call.
+You can get all the Orders from the Krayin store. You can achieve this job by using the `Orders` API call.
 
 - Headers
 
@@ -757,7 +757,7 @@ Let's take an example,
 
 ##  Get All Invoices
 
-You can get all the Invoices from the Bagisto store. You can achieve this job by using the `Invoices` API call.
+You can get all the Invoices from the Krayin store. You can achieve this job by using the `Invoices` API call.
 
 - Headers
 
@@ -1080,7 +1080,7 @@ Let's take an example,
 
 ##  Get All Shipments
 
-You can get all the Shipments from the Bagisto store. You can achieve this job by using the `Shipments` API call.
+You can get all the Shipments from the Krayin store. You can achieve this job by using the `Shipments` API call.
 
 - Headers
 
@@ -1393,7 +1393,7 @@ Let's take an example,
 
 ##  Get All Refunds
 
-You can get all the Refunds from the Bagisto store. You can achieve this job by using the `Refunds` API call.
+You can get all the Refunds from the Krayin store. You can achieve this job by using the `Refunds` API call.
 
 - Headers
 

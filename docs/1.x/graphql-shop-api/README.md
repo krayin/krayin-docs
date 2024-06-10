@@ -1,12 +1,12 @@
-# Bagisto GraphQL Shop APIs
+# Krayin GraphQL Shop APIs
 
-Bagisto GraphQL Shop API is a medium to use the features of the core Bagisto Shop System. By using Bagisto GraphQL Shop API, you can integrate your application to serve the default content of Bagisto.
+Krayin GraphQL Shop API is a medium to use the features of the core Krayin Shop System. By using Krayin GraphQL Shop API, you can integrate your application to serve the default content of Krayin.
 
 
 
 ## Key Features
 
-- Bagisto GraphQL API provides a complete and understandable description of the data.
+- Krayin GraphQL API provides a complete and understandable description of the data.
 - Authentication: Customer Authentication with Login Details.
 - Authentication: Admin Authentication with Login Details.
 - Provide access to performed CRUD operations.
@@ -18,13 +18,13 @@ Bagisto GraphQL Shop API is a medium to use the features of the core Bagisto Sho
 
 - `http(s)://example.com/graphql`
 
-## Where can I use Bagisto GraphQL APIs?
+## Where can I use Krayin GraphQL APIs?
 
-We can use the Bagisto GraphQL APIs in different areas. Some of them are:
+We can use the Krayin GraphQL APIs in different areas. Some of them are:
 
 - To build a PWA (Progressive Web Application) application, which uses modern web capabilities to deliver an application like experience to the users and provide more user friendly experience than a web application.
 
-- Use to integrate an Online-Shopping Mobile Application with the Bagisto Store to help the customers make purchase.
+- Use to integrate an Online-Shopping Mobile Application with the Krayin Store to help the customers make purchase.
 
 - Use to integrate with CRM (Customer Relationship Management) systems Like: HubSpot, Salesforce etc. which allows you to manage the business relationships with your customers to help you grow your business.
 

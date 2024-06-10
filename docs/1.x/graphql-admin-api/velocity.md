@@ -4,7 +4,7 @@ In this section, we will see all the APIs which are related to Velocity Meta Dat
 
 ### 1. Get MetaData
 
-You can get all the MetaData from the Bagisto store. You can achieve this job by using the `MetaData` API call.
+You can get all the MetaData from the Krayin store. You can achieve this job by using the `MetaData` API call.
 
 - Headers
 
@@ -200,16 +200,16 @@ API call will update a Meta Data, only if the admin has logged in.
           headerContentCount: 9,
           images: {
           advertisementFour: [
-            "https://demo.bagisto.com/bagisto-182-75-44-194/cache/large/product/157/tnyNbLh4GDwMy0P3qwbP5OcFU0nr9g9j0zhNyFiA.jpeg"
-            "https://demo.bagisto.com/bagisto-182-75-44-194/cache/large/product/157/tnyNbLh4GDwMy0P3qwbP5OcFU0nr9g9j0zhNyFiA.jpeg"
+            "https://demo.Krayin.com/Krayin-182-75-44-194/cache/large/product/157/tnyNbLh4GDwMy0P3qwbP5OcFU0nr9g9j0zhNyFiA.jpeg"
+            "https://demo.Krayin.com/Krayin-182-75-44-194/cache/large/product/157/tnyNbLh4GDwMy0P3qwbP5OcFU0nr9g9j0zhNyFiA.jpeg"
           ]
           advertisementThree: [
-            "https://demo.bagisto.com/bagisto-182-75-44-194/cache/large/product/157/tnyNbLh4GDwMy0P3qwbP5OcFU0nr9g9j0zhNyFiA.jpeg"
-            "https://demo.bagisto.com/stripe-common/themes/velocity/assets/images/big-sale-banner.png"
+            "https://demo.Krayin.com/Krayin-182-75-44-194/cache/large/product/157/tnyNbLh4GDwMy0P3qwbP5OcFU0nr9g9j0zhNyFiA.jpeg"
+            "https://demo.Krayin.com/stripe-common/themes/velocity/assets/images/big-sale-banner.png"
           ]
           advertisementTwo: [
-            "https://demo.bagisto.com/bagisto-182-75-44-194/cache/large/product/157/tnyNbLh4GDwMy0P3qwbP5OcFU0nr9g9j0zhNyFiA.jpeg"
-            "https://demo.bagisto.com/bagisto-182-75-44-194/cache/large/product/157/tnyNbLh4GDwMy0P3qwbP5OcFU0nr9g9j0zhNyFiA.jpeg"
+            "https://demo.Krayin.com/Krayin-182-75-44-194/cache/large/product/157/tnyNbLh4GDwMy0P3qwbP5OcFU0nr9g9j0zhNyFiA.jpeg"
+            "https://demo.Krayin.com/Krayin-182-75-44-194/cache/large/product/157/tnyNbLh4GDwMy0P3qwbP5OcFU0nr9g9j0zhNyFiA.jpeg"
           ]
         }
         }) {
@@ -268,7 +268,7 @@ In this section, we will see all the APIs which are related to Velocity Meta Dat
 
 ### 1. Get Header Content
 
-You can get all the Header Content from the Bagisto store. You can achieve this job by using the `Header Content` API call.
+You can get all the Header Content from the Krayin store. You can achieve this job by using the `Header Content` API call.
 
 - Headers
 

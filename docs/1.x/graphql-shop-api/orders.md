@@ -4,7 +4,7 @@ In this section, we will see all the APIs which are related to Customer Orders.
 
 ## Get Customer Orders
 
-You can get all the Customer Orders from the Bagisto store. You can achieve this job by using the `Customer Orders` API call.
+You can get all the Customer Orders from the Krayin store. You can achieve this job by using the `Customer Orders` API call.
 
 - Headers
 
@@ -895,7 +895,7 @@ Let's take an example,
 
 ## Get Customer Invoices
 
-You can get all the Customer Invoices from the Bagisto store. You can achieve this job by using the `Customer Invoices` API call.
+You can get all the Customer Invoices from the Krayin store. You can achieve this job by using the `Customer Invoices` API call.
 
 - Headers
 
@@ -1386,7 +1386,7 @@ Let's take an example,
 
 ## Get Customer Shipments
 
-You can get all the Customer Shipments from the Bagisto store. You can achieve this job by using the `Customer Shipments` API call.
+You can get all the Customer Shipments from the Krayin store. You can achieve this job by using the `Customer Shipments` API call.
 
 - Headers
 
@@ -2053,7 +2053,7 @@ Let's take an example,
 
 ## Get Customer Refunds
 
-You can get all the Customer Refunds from the Bagisto store. You can achieve this job by using the `Customer Refunds` API call.
+You can get all the Customer Refunds from the Krayin store. You can achieve this job by using the `Customer Refunds` API call.
 
 - Headers
 

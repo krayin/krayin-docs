@@ -1,5 +1,5 @@
 ---
-title: Cart Rules | Bagisto
+title: Cart Rules | Krayin
 ---
 
 # Cart Rules

@@ -1,13 +1,13 @@
-# Upgrade to the latest version of Bagisto
+# Upgrade to the latest version of Krayin
 
-To upgrade your current version to the latest version of Bagisto, you need to follow some steps,
+To upgrade your current version to the latest version of Krayin, you need to follow some steps,
 
-- First, you need to download the latest version of Bagisto.
+- First, you need to download the latest version of Krayin.
 
-- You can download Bagisto from the following links,
+- You can download Krayin from the following links,
 
-  - [Download From Official Bagisto Site](https://bagisto.com/en/download/)
-  - [Download From Github](https://github.com/bagisto/bagisto)
+  - [Download From Official Krayin Site](https://Krayin.com/en/download/)
+  - [Download From Github](https://github.com/Krayin/Krayin)
 
 - After downloading the latest version, run the specified commands in the terminal,
 
@@ -15,7 +15,7 @@ To upgrade your current version to the latest version of Bagisto, you need to fo
   composer create-project
   ~~~
 
-- After the command has been executed, now go to your `.env` file, provide your old project database credentials for which you want to upgrade Bagisto, and run the following command,
+- After the command has been executed, now go to your `.env` file, provide your old project database credentials for which you want to upgrade Krayin, and run the following command,
 
   ~~~sh
   php artisan optimize

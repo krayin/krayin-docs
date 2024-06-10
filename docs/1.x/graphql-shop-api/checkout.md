@@ -6,7 +6,7 @@ In this section, we will see all the APIs which are related to Checkout Process.
 
 ## Get Checkout addresses
 
-You can get all the  Checkout addresses from the Bagisto store. You can achieve this job by using the `checkoutAddresses` API call.
+You can get all the  Checkout addresses from the Krayin store. You can achieve this job by using the `checkoutAddresses` API call.
 
 - Headers
 

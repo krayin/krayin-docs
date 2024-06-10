@@ -1,10 +1,10 @@
 # Change email template
 
-In this section, we are explaining how to change the email templates in Bagisto. As we all know, everyone wants some customization according to their own taste that's why knowing about changing the email template is also quite helpful for some users.
+In this section, we are explaining how to change the email templates in Krayin. As we all know, everyone wants some customization according to their own taste that's why knowing about changing the email template is also quite helpful for some users.
 
 ## Email template flow
 
-Before diving into template change first we should know how the email template works in the Bagisto.
+Before diving into template change first we should know how the email template works in the Krayin.
 
 There are several mail notification classes like `CancelOrderAdminNotification`, `NewCustomerNotification`, and many more present in the `Webkul\Admin\Mail` namespace. Let's check one of these files, we are taking `CancelOrderAdminNotification` class as an example.
 
@@ -67,7 +67,7 @@ Now, we are changing the template. The recommended way to change the template is
 
 Let's override the view of the same file which we explained above i.e. `view('shop::emails.sales.order-cancel-admin')`.
 
-As this is a Laravel stuff, Bagisto also registers two locations for your views i.e. the application's `resources/themes` directory mentioned in the `config/themes.php` and the directory you specify. So, if you are using the `default` theme i.e. `shop` package, then Bagisto will first check if a custom version of the view has been placed in the `resources/themes/default` directory. Then, if the view has not been customized, Bagisto will search the package view directory.
+As this is a Laravel stuff, Krayin also registers two locations for your views i.e. the application's `resources/themes` directory mentioned in the `config/themes.php` and the directory you specify. So, if you are using the `default` theme i.e. `shop` package, then Krayin will first check if a custom version of the view has been placed in the `resources/themes/default` directory. Then, if the view has not been customized, Krayin will search the package view directory.
 
 Now, for overriding we are creating the same structure in the application's `resources/themes/default` directory.
 

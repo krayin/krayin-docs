@@ -6,7 +6,7 @@ Let's start with registration first,
 
 ## Registration
 
-You can create/register a new customer in the Bagisto store. To achieve this task, you can use the `customer/register` API call resource.
+You can create/register a new customer in the Krayin store. To achieve this task, you can use the `customer/register` API call resource.
 
 - Headers
 
@@ -62,7 +62,7 @@ You can create/register a new customer in the Bagisto store. To achieve this tas
 
 :::
 
-#### 2. If customer is already in the Bagisto store with the same email address
+#### 2. If customer is already in the Krayin store with the same email address
 
 Now, hit the above request one more time.
 
@@ -81,7 +81,7 @@ Now, hit the above request one more time.
 
 ## Authentication
 
-To authenticate at the Bagisto store, the customer needs a valid email address and password.
+To authenticate at the Krayin store, the customer needs a valid email address and password.
 
 - Headers
 
@@ -411,7 +411,7 @@ To update the current logged in customer's account information, you need to use 
 
 ## Logout
 
-You can logout the customer from the Bagisto store with the help of `customer/logout` resources. No need to provide any request payload in the API call.
+You can logout the customer from the Krayin store with the help of `customer/logout` resources. No need to provide any request payload in the API call.
 
 - Headers
 
@@ -442,7 +442,7 @@ You can logout the customer from the Bagisto store with the help of `customer/lo
 
 ## Reset password
 
-You can also use the API to reset the customer's password by providing the valid customer's email address. In this API request, you have to use the `customer/forgot-password` resource with `email` as a request payload. An email will be sent on the provided email address, only if the same email address exists in the Bagisto store.
+You can also use the API to reset the customer's password by providing the valid customer's email address. In this API request, you have to use the `customer/forgot-password` resource with `email` as a request payload. An email will be sent on the provided email address, only if the same email address exists in the Krayin store.
 
 - Headers
 

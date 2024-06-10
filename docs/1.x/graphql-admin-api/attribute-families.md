@@ -4,7 +4,7 @@ In this section, we will see all the APIs which are related to Attribute Familie
 
 ##  Get All Attribute Families
 
-You can get all the Attribute Families from the Bagisto store. You can achieve this job by using the `Attribute Families` API call.
+You can get all the Attribute Families from the Krayin store. You can achieve this job by using the `Attribute Families` API call.
 
 - Headers
 

@@ -15,7 +15,7 @@ This compose configuration file mounts the application directory `app` and datab
 ## Installation & Setup
 
 ### First steps
-Before you can launch Bagisto in a docker environment you need to install the latest version of Docker and Docker Compose.  
+Before you can launch Krayin in a docker environment you need to install the latest version of Docker and Docker Compose.  
 
 - [Docker](https://docs.docker.com/install/)
 - [Docker-compose](https://docs.docker.com/compose/install/)
@@ -39,10 +39,10 @@ In the `database_server` service block, assign mysql database name, mysql databa
 #### Clone configuration from Github
 You can make use of our repository from Github by cloning this in your new directory
 ```shell
-git clone https://github.com/bagisto/bagisto-docker.git .
+git clone https://github.com/Krayin/Krayin-docker.git .
 ```
 #### Configure manually
-- Create a new folder for example **bagisto-docker** and create **docker-compose.yml** manually inside it.
+- Create a new folder for example **Krayin-docker** and create **docker-compose.yml** manually inside it.
 - Add the following content to **docker-compose.yml**
 ```yml
 version: '3'
@@ -59,7 +59,7 @@ services:
     environment:
       USER_UID: 'mention your system user ID here. ex: 1001, 1000, 33, etc'
     networks:
-      - bagisto-network
+      - Krayin-network
     ports:
       - '80:80'
     expose:
@@ -80,7 +80,7 @@ services:
       MYSQL_ROOT_PASSWORD: 'mention mysql root password here. ex: mysqlstrongpass'
       MYSQL_ROOT_HOST: '%'
     networks:
-      - bagisto-network
+      - Krayin-network
     ports:
       - '3306:3306'
     expose:
@@ -93,7 +93,7 @@ volumes:
   app:
 
 networks:
-  bagisto-network:
+  Krayin-network:
   ```
 
 #### Download the docker image
@@ -121,12 +121,12 @@ CONTAINER ID   IMAGE                      COMMAND                  CREATED      
 90a0a2e0e46b   mysql:5.7                  "docker-entrypoint.s…"   About an hour ago   Up About an hour   0.0.0.0:3306->3306/tcp, 33060/tcp   mysql
 ```
 
-## Configuring Bagisto
-Once our environment is ready we can start installing Bagisto. You can either install Bagisto from [Github](#install-without-composer) or with [composer](#install-with-composer)
+## Configuring Krayin
+Once our environment is ready we can start installing Krayin. You can either install Krayin from [Github](#install-without-composer) or with [composer](#install-with-composer)
 
 ### Install without composer 
-Download the [latest release](https://bagisto.com/en/download) inside `app/bagisto` directory.  
-Open the `.env` file inside **app/bagisto** and set the following environment variables listed below:
+Download the [latest release](https://Krayin.com/en/download) inside `app/Krayin` directory.  
+Open the `.env` file inside **app/Krayin** and set the following environment variables listed below:
 
 ```editorconfig
 APP_URL=https://127.0.0.1
@@ -138,13 +138,13 @@ DB_USERNAME=
 DB_PASSWORD=
 ```
 
-Run the following commands to install Bagisto.
+Run the following commands to install Krayin.
 ```shell
-docker exec -i apache2 bash -c "su - www-data -s /bin/bash -c 'php bagisto/artisan migrate'" 
-docker exec -i apache2 bash -c "su - www-data -s /bin/bash -c 'php bagisto/artisan db:seed'"
-docker exec -i apache2 bash -c "su - www-data -s /bin/bash -c 'php bagisto/artisan vendor:publish'"
-docker exec -i apache2 bash -c "su - www-data -s /bin/bash -c 'php bagisto/artisan storage:link'"
-docker exec -i apache2 bash -c "su - www-data -s /bin/bash -c 'composer dump-autoload -d bagisto'"
+docker exec -i apache2 bash -c "su - www-data -s /bin/bash -c 'php Krayin/artisan migrate'" 
+docker exec -i apache2 bash -c "su - www-data -s /bin/bash -c 'php Krayin/artisan db:seed'"
+docker exec -i apache2 bash -c "su - www-data -s /bin/bash -c 'php Krayin/artisan vendor:publish'"
+docker exec -i apache2 bash -c "su - www-data -s /bin/bash -c 'php Krayin/artisan storage:link'"
+docker exec -i apache2 bash -c "su - www-data -s /bin/bash -c 'composer dump-autoload -d Krayin'"
 ```
 
 Mention the database details same as docker-compose.yml and admin details.
@@ -153,10 +153,10 @@ Mention the database details same as docker-compose.yml and admin details.
 ### Install with composer
 The following commands will be exexcuted within the docker container
 ```shell
-docker exec -i apache2 bash -c "su - www-data -s /bin/bash -c 'composer create-project bagisto/bagisto'"
+docker exec -i apache2 bash -c "su - www-data -s /bin/bash -c 'composer create-project Krayin/Krayin'"
 ```
 
-Open the .env file inside `app/bagisto` directory and set the following environment variables listed below:
+Open the .env file inside `app/Krayin` directory and set the following environment variables listed below:
 
 ```editorconfig
 APP_URL=https://127.0.0.1
@@ -168,30 +168,30 @@ DB_USERNAME=
 DB_PASSWORD=
 ```
 
-Run the following commands to install Bagisto.
+Run the following commands to install Krayin.
 ```shell
-docker exec -i apache2 bash -c "su - www-data -s /bin/bash -c 'php bagisto/artisan migrate'" 
-docker exec -i apache2 bash -c "su - www-data -s /bin/bash -c 'php bagisto/artisan db:seed'"
-docker exec -i apache2 bash -c "su - www-data -s /bin/bash -c 'php bagisto/artisan vendor:publish'"
-docker exec -i apache2 bash -c "su - www-data -s /bin/bash -c 'php bagisto/artisan storage:link'"
-docker exec -i apache2 bash -c "su - www-data -s /bin/bash -c 'composer dump-autoload -d bagisto'"
+docker exec -i apache2 bash -c "su - www-data -s /bin/bash -c 'php Krayin/artisan migrate'" 
+docker exec -i apache2 bash -c "su - www-data -s /bin/bash -c 'php Krayin/artisan db:seed'"
+docker exec -i apache2 bash -c "su - www-data -s /bin/bash -c 'php Krayin/artisan vendor:publish'"
+docker exec -i apache2 bash -c "su - www-data -s /bin/bash -c 'php Krayin/artisan storage:link'"
+docker exec -i apache2 bash -c "su - www-data -s /bin/bash -c 'composer dump-autoload -d Krayin'"
 ```
 
-Bagisto has been installed and is ready. Browse your server IP address or domain name on the web browser.
+Krayin has been installed and is ready. Browse your server IP address or domain name on the web browser.
 
 ### Configure Apache
 The Apache documentroot is by default assigned to **/var/www/html/public_html**. while the **app** directory on host is mapped with the **html** directory inside the container.
-We need to create a symlink of `bagisto/public` in `app` directory to `/var/www/html/public_html`.
+We need to create a symlink of `Krayin/public` in `app` directory to `/var/www/html/public_html`.
 
 Run the following command on Linux or MacOS 
 ```bash
-cd app; ln -snf bagisto/public public_html
+cd app; ln -snf Krayin/public public_html
 ```
 
 Run the following command on Windows
 ```command-line
 cd app
-mklink bagisto/public public_html
+mklink Krayin/public public_html
 ```
 ### Ready
 

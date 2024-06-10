@@ -69,7 +69,7 @@ RewriteRule ^(.*)\$ - [R=403,L]
 - Edit your apache configuration file
 
   ~~~
-  <Directory "~/www/bagisto/public/storage/">
+  <Directory "~/www/Krayin/public/storage/">
       <FilesMatch "\.php\$">
           Require all denied
       </FilesMatch>
@@ -107,7 +107,7 @@ RewriteRule ^(.*)\$ - [R=403,L]
   
   :::
 
-- Limit access to the Bagisto admin by updating the whitelist with the IP address of each computer that is authorized to use the admin.
+- Limit access to the Krayin admin by updating the whitelist with the IP address of each computer that is authorized to use the admin.
 
 ## Implementation of HTTP Security Headers
 

@@ -1,6 +1,6 @@
 # Transactions
 
-In this section, we will see all the APIs which are related to transactions. In Bagisto, we save all the transactions done by the customers using the Paypal Smart Button option.
+In this section, we will see all the APIs which are related to transactions. In Krayin, we save all the transactions done by the customers using the Paypal Smart Button option.
 
 ::: warning
 
@@ -10,7 +10,7 @@ These are all transactions that are saved in the database after the payment done
 
 ## Get all transactions
 
-You can get all the transaction data from the Bagisto store. To get the data from the store, the customer must be authenticated. You can achieve this job by using the `transactions` API call resource.
+You can get all the transaction data from the Krayin store. To get the data from the store, the customer must be authenticated. You can achieve this job by using the `transactions` API call resource.
 
 - Headers
 
@@ -115,7 +115,7 @@ You can get all the transaction data from the Bagisto store. To get the data fro
 
 #### 2. Get all transactions without pagination
 
-You can also get all the transaction data at once from the Bagisto store without pagination. To get the data, the customer must be authenticated. For this, you have to pass `pagination=0` in the query parameter with the `transactions` resource in the API URL.
+You can also get all the transaction data at once from the Krayin store without pagination. To get the data, the customer must be authenticated. For this, you have to pass `pagination=0` in the query parameter with the `transactions` resource in the API URL.
 
 - Headers
 

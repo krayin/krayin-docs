@@ -1,6 +1,6 @@
 # DataGrid
 
-DataGrid is just a concept of displaying your database records in tabular format. We have implemented this in Bagisto either you can use it to display data in tabular format or write code from scratch to display data in tabular format. In addition to DataGrid, we have implemented additional features such as sorting, filtering, mass action. You may refer to the table below for detailed information about the features.
+DataGrid is just a concept of displaying your database records in tabular format. We have implemented this in Krayin either you can use it to display data in tabular format or write code from scratch to display data in tabular format. In addition to DataGrid, we have implemented additional features such as sorting, filtering, mass action. You may refer to the table below for detailed information about the features.
 
 Let us take a sample of one DataGrid,
 
@@ -191,10 +191,10 @@ As you see the above sample Datagrid, now let us discuss some properties,
 
 You can create a DataGrid in two ways.
 
-1. By using Bagisto Package Generator (**Recommended**)
+1. By using Krayin Package Generator (**Recommended**)
 2. By manually setting up all files (**Expert Level**)
 
-### 1. By using Bagisto Package Generator
+### 1. By using Krayin Package Generator
 
 This command will create a new data grid class in `packages/ACME/TestPackage/src/Datagrids` directory.,
 

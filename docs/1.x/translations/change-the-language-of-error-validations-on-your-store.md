@@ -4,7 +4,7 @@ If you want to make your website easily accessible to customers in multiple lang
 
 This will help you get more traffic and further generate sales.  
 
-By using language translation in Bagisto, you can easily localize your website for many global or regional languages.  
+By using language translation in Krayin, you can easily localize your website for many global or regional languages.  
 
 Your customer can easily translate your whole website just by a single click which also plays a major role in website SEO in the respective region and to show validation messages as per your locale, you need to follow these below steps:
 

@@ -4,7 +4,7 @@ In this section, we will see all the APIs which are related to Customer's.
 
 ### 1. Get All Customer's
 
-You can get all the Customer's from the Bagisto store. You can achieve this job by using the `Customers` API call.
+You can get all the Customer's from the Krayin store. You can achieve this job by using the `Customers` API call.
 
 - Headers
 
@@ -765,7 +765,7 @@ In this section, we will see all the APIs which are related to Customer's Addres
 
 ### 1. Get All Customer's Addresses
 
-You can get all the Customer's Addresses from the Bagisto store. You can achieve this job by using the `Customer's Addresses` API call.
+You can get all the Customer's Addresses from the Krayin store. You can achieve this job by using the `Customer's Addresses` API call.
 
 - Headers
 
@@ -1224,7 +1224,7 @@ In this section, we will see all the APIs which are related to Customer Groups.
 
 ### 1. Get All Customer Groups
 
-You can get all the Customer Groups from the Bagisto store. You can achieve this job by using the `Customer Groups` API call.
+You can get all the Customer Groups from the Krayin store. You can achieve this job by using the `Customer Groups` API call.
 
 - Headers
 
@@ -1570,7 +1570,7 @@ In this section, we will see all the APIs which are related to Subscribers.
 
 ### 1. Get All Newsletter Subscribers
 
-You can get all the Newsletter Subscribers from the Bagisto store. You can achieve this job by using the `Newsletter Subscribers` API call.
+You can get all the Newsletter Subscribers from the Krayin store. You can achieve this job by using the `Newsletter Subscribers` API call.
 
 - Headers
 

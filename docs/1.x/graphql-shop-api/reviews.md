@@ -4,7 +4,7 @@ In this section, we will see all the APIs which are related to Customer Reviews.
 
 ## Get Customer Reviews
 
-You can get all the Customer Reviews from the Bagisto store. You can achieve this job by using the `Customer Reviews` API call.
+You can get all the Customer Reviews from the Krayin store. You can achieve this job by using the `Customer Reviews` API call.
 
 - Headers
 

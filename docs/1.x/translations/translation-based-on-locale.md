@@ -2,7 +2,7 @@
 
 If you want to make your website easily accessible to admins in multiple languages and expand your business to a global platform then language translation is crucial for your website. It will help you generate more traffic and increase sales.
 
-By using language translation in Bagisto, you can easily localize your website for many global or regional languages. Your customer can easily translate your whole website just by a single click which also plays a major role in website SEO in the respective region and to show translation as per your locale, you need to follow these below steps:
+By using language translation in Krayin, you can easily localize your website for many global or regional languages. Your customer can easily translate your whole website just by a single click which also plays a major role in website SEO in the respective region and to show translation as per your locale, you need to follow these below steps:
 
 ## Steps to apply Translation Based on Locale
 
@@ -18,7 +18,7 @@ Kindly follow the steps as needed on the admin dashboard.
 
 **Step 2:-** Enter the code and Name of locale (here I am taking an example of Arabic language or you can select as per your choice) and click on Save Locale.
 
-![add-locale-bagisto](../../assets/images/user-guide/add-locale-bagisto.png)
+![add-locale-Krayin](../../assets/images/user-guide/add-locale-Krayin.png)
 
 Next, you need to change locale in the below main section: Products, Categories, and Attributes
 
@@ -44,7 +44,7 @@ Default Locale:- You have to set your default Locale so that if the Customer wil
 
 Once the settings have been done, click on Save Channels.
 
-![channel-setting-in-bagisto](../../assets/images/user-guide/channel-setting-in-bagisto.png)
+![channel-setting-in-Krayin](../../assets/images/user-guide/channel-setting-in-Krayin.png)
 
 **_Steps To Perform On The Front End_**
 

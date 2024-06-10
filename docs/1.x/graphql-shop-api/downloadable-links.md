@@ -4,7 +4,7 @@ In this section, we will see all the APIs which are related to Customer Download
 
 ## Get All Downloadable Links
 
-You can get all the  Downloadable Links from the Bagisto store. You can achieve this job by using the `Downloadable Links` API call.
+You can get all the  Downloadable Links from the Krayin store. You can achieve this job by using the `Downloadable Links` API call.
 
 - Headers
 

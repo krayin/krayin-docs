@@ -1,6 +1,6 @@
 # Create your own product type
 
-By default Bagisto provides the following product types: simple, configurable, virtual, grouped, downloadable, bundled and bookings.  
+By default Krayin provides the following product types: simple, configurable, virtual, grouped, downloadable, bundled and bookings.  
 If the default product types do not meet your requirements, you can create your own product type.
 
 ## Steps to create your own product-types

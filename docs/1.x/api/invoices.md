@@ -4,7 +4,7 @@ In this section, we will check all the invoices' API.
 
 ## Get invoices from all orders
 
-You can get all the invoices for the Bagisto store's orders. To get the invoices of the store, the customer must be logged-in to the Bagisto store. You can achieve this job by using the `invoices` API call resource.
+You can get all the invoices for the Krayin store's orders. To get the invoices of the store, the customer must be logged-in to the Krayin store. You can achieve this job by using the `invoices` API call resource.
 
 - Headers
 
