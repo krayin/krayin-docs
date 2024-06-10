@@ -69,7 +69,7 @@ RewriteRule ^(.*)\$ - [R=403,L]
 - Edit your apache configuration file
 
   ~~~
-  <Directory "~/www/Krayin/public/storage/">
+  <Directory "~/www/krayin/public/storage/">
       <FilesMatch "\.php\$">
           Require all denied
       </FilesMatch>

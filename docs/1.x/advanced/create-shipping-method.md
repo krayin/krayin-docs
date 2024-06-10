@@ -74,7 +74,7 @@ This will generate whole directory structures. You don't need to do manually.
   - To render the shipping methods in checkout process, you need to define `calculate()` within your `Fedex.php` and return shipping rate, shipping title, shipping description within an object.
 
     ::: tip
-    May refer [FlatRate](https://github.com/Krayin/Krayin/blob/master/packages/Webkul/Shipping/src/Carriers/FlatRate.php#L28) `calculate()` method.
+    May refer [FlatRate](https://github.com/krayin/Krayin/blob/master/packages/Webkul/Shipping/src/Carriers/FlatRate.php#L28) `calculate()` method.
     :::
 
 - After creating all the necessary files and configurations, you need to create the form which will appear on the config section. So for that create file `system.php` in `src/Config`. Add below code to following file,

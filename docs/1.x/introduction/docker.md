@@ -39,7 +39,7 @@ In the `database_server` service block, assign mysql database name, mysql databa
 #### Clone configuration from Github
 You can make use of our repository from Github by cloning this in your new directory
 ```shell
-git clone https://github.com/Krayin/Krayin-docker.git .
+git clone https://github.com/krayin/Krayin-docker.git .
 ```
 #### Configure manually
 - Create a new folder for example **Krayin-docker** and create **docker-compose.yml** manually inside it.

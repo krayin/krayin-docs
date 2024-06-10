@@ -9,7 +9,7 @@ There is a revamping of cart & catalog rule at the code level. The user needs to
 
 1. Initially, the user needs to take a backup of their project database.
 
-2. Take a pull from [Krayin v0.1.9](https://github.com/Krayin/Krayin/tree/v0.1.9){: target="\_blank" .link-color}. There may be some conflicts, you need to resolve it by own.
+2. Take a pull from [Krayin v0.1.9](https://github.com/krayin/Krayin/tree/v0.1.9){: target="\_blank" .link-color}. There may be some conflicts, you need to resolve it by own.
 
 3. Run `php artisan migrate` and `php artisan db:seed` command.
 
