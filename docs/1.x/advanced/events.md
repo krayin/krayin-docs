@@ -75,40 +75,38 @@ In most CRUD operations, events are fired before and after the execution of a fu
     | activity.create.after | This event will be fired after activity gets created. |
     | activity.update.before | This event will be fired before activity gets updated. |
     | activity.update.after | This event will be fired after activity gets updated. |
-    | activity.update.before | This event will be fired before activity gets deleted. |
-    | activity.update.after | This event will be fired after activity gets deleted. |
     | activities.file.create.before | This event will be fired before file gets uploaded. |
     | activities.file.create.after | This event will be fired after file gets uploaded. |
-    | activity.delete.before | This event will be fired after activity gets deleted. |
-    | activity.delete.after | This event will be fired before activity gets deleted. |
+    | activity.delete.before | This event will be fired before activity gets deleted. |
+    | activity.delete.after | This event will be fired after activity gets deleted. |
     | core.configuration.save.before | This event will be fired before configuration gets created. |
     | core.configuration.save.after | This event will be fired after configuration gets created. |
     | contacts.organization.create.before | This event will be fired before organization created. |
     | contacts.organization.create.after | This event will be fired after organization created . | 
     | contacts.organization.update.before | This event will be fired before organization gets updated. |
     | contacts.organization.update.after | This event will be fired after organization gets updated. |
-    | contact.organization.delete.before | This event will be fired after organization get deleted. |
-    | contact.organization.delete.after | This event will be fired before organization get deleted. |
+    | contact.organization.delete.before | This event will be fired before organization get deleted. |
+    | contact.organization.delete.after | This event will be fired after organization get deleted. |
     | contacts.person.create.before | This events will be fired before contact person gets created. |
     | contacts.person.create.after | This events will be fired after contact person gets created. |
     | contacts.person.updated.before | This events will be fired before contact person gets updated. |
     | contacts.person.updated.after | This events will be fired after contact person gets updated. |
     | contacts.person.delete.before | This events will be fired before contact person gets deleted. |
     | contacts.person.delete.after | This events will be fired after contact person gets deleted. |
-    | lead.create.before | This event will be fired after leads gets created. |
-    | lead.create.after | This event will be fired before leads gets created. |
+    | lead.create.before | This event will be fired before leads gets created. |
+    | lead.create.after | This event will be fired after leads gets created. |
     | lead.update.before | This event will be fired before leads gets updated. |
-    | lead.update.after | This event will be fired before leads gets updated. |
+    | lead.update.after | This event will be fired after leads gets updated. |
     | lead.delete.before | This event will be fired before leads gets deleted. |
-    | lead.delete.after | This event will be fired before leads gets deleted. |
+    | lead.delete.after | This event will be fired after leads gets deleted. |
     | leads.quote.create.before | This event will be fired before quotes leads gets created |
     | leads.quote.create.after | This event will be fired after quotes leads gets created |
     | leads.quote.delete.before | This event will be fired before quotes leads gets deleted |
     | leads.quote.delete.after | This event will be fired after quotes leads gets deleted |
     | leads.tag.create.before | This event will be fired before tag leads created |
-    | leads.tag.create.before | This event will be fired after tag leads created |
+    | leads.tag.create.after | This event will be fired after tag leads created |
     | leads.tag.delete.before | This event will be fired before tag leads deleted |
-    | leads.tag.delete.before | This event will be fired after tag leads deleted |
+    | leads.tag.delete.after | This event will be fired after tag leads deleted |
     | email.create.before | This event will be fired before email gets created |
     | email.create.after | This event will be fired after email gets created |
     | email.update.before | This event will be fired before email gets updated |
