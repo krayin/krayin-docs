@@ -16,7 +16,7 @@ To use the **`validate`** method, you can follow this example:
 
 ```php
 /**
- * Store a new blog post.
+ * Store a new category post.
  */
 public function store(Request $request)
 {
@@ -38,10 +38,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
     
-class PostController extends Controller
+class CategoryController extends Controller
 {
     /**
-     * Store a new blog post.
+     * Store a new category post.
      */
     public function store(Request $request)
     {

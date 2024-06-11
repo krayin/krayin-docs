@@ -6,11 +6,11 @@
 
 To ensure that the admin menu includes the necessary configuration, follow these steps:
 
-1. In your package's source directory, which is typically located at **`packages/Webkul/Blog/src`**, create a new folder named **`Config`** if it doesn't already exist.
+1. In your package's source directory, which is typically located at **`packages/Webkul/Category/src`**, create a new folder named **`Config`** if it doesn't already exist.
    ```
     └── packages
         └── Webkul
-            └── Blog
+            └── Category
                 └── src
                     ├── ...
                     └── Config
@@ -26,19 +26,19 @@ To ensure that the admin menu includes the necessary configuration, follow these
 
     return [
         [
-            'key'        => 'blogs',
-            'name'       => 'Blogs',
-            'route'      => 'blog.admin.index',
+            'key'        => 'categories',
+            'name'       => 'Categorys',
+            'route'      => 'category.admin.index',
             'sort'       => 2,
-            'icon-class' => 'blog-icon',
+            'icon-class' => 'category-icon',
         ],
     ];
     ```
 
-4. In your **`admin-routes.php`** file (located in the same package's source directory), add the named route **`blog.admin.index`** as follows:
+4. In your **`admin-routes.php`** file (located in the same package's source directory), add the named route **`category.admin.index`** as follows:
 
     ```php
-    Route::get('/blog', [PostController::class, 'index'])->name('blog.admin.index');
+    Route::get('/categories', [CategoryController::class, 'index'])->name('category.admin.index');
     ```
 
     In this step, we define the route that corresponds to the menu item added in the previous step.
@@ -48,8 +48,8 @@ To ensure that the admin menu includes the necessary configuration, follow these
 5. To add the menu icon styling, open the **`assets/scss/admin.scss`** file within your package and add the following code:
 
     ```css
-    .blog-icon {
-        background-image: url("../images/blog.png");
+    .category-icon {
+        background-image: url("../images/category.png");
         width: 45px;
         height: 45px;
         opacity: 0.6;
@@ -57,25 +57,25 @@ To ensure that the admin menu includes the necessary configuration, follow these
     }
 
     .active {
-        .blog-icon {
+        .category-icon {
             opacity: 1;
-            background-image: url("../images/blog-active.png");
+            background-image: url("../images/category-active.png");
         }
     }
     ```
 
-    Ensure that you have the necessary **`.png`** image files (**`blog.png`** and **`blog-active.png`**) and manually place them inside the **`assets/images`** folder of your package.
+    Ensure that you have the necessary **`.png`** image files (**`category.png`** and **`category-active.png`**) and manually place them inside the **`assets/images`** folder of your package.
 
 6. To merge the **`admin-menu.php`** configuration with the core menu file, use the **`mergeConfigFrom()`** method in the **`register()`** method of your package's service provider. Here's an example:
 
     ```php
     <?php
 
-    namespace Webkul\Blog\Providers;
+    namespace Webkul\Category\Providers;
 
     use Illuminate\Support\ServiceProvider;
 
-    class BlogServiceProvider extends ServiceProvider
+    class CategoryServiceProvider extends ServiceProvider
     {
         /**
          * Register services.
@@ -101,6 +101,6 @@ To ensure that the admin menu includes the necessary configuration, follow these
 
     ::: details Admin Menu Output
 
-    ![Admin Menu Output](../../assets/images/package-development/blog-package-output.png)
+    ![Admin Menu Output](../../assets/images/package-development/category-package-output.png)
 
     :::

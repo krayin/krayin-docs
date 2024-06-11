@@ -15,7 +15,7 @@ Here's the updated directory structure:
 ```
 └── packages
     └── Webkul
-        └── Blog
+        └── Category
             └── src
                 ├── ...
                 └── Resources
@@ -33,7 +33,7 @@ Here's the updated directory structure:
 
 To compile the assets, perform the following steps:
 
-1. Create a **`package.json`** and **`webpack.mix.js`** file inside the root of your package (**`packages/Webkul/Blog`**).
+1. Create a **`package.json`** and **`webpack.mix.js`** file inside the root of your package (**`packages/Webkul/Category`**).
 
 2. Copy the following code into the **`package.json`** file:
 
@@ -73,7 +73,7 @@ To compile the assets, perform the following steps:
     if (mix.inProduction()) {
       var publicPath = "publishable/assets";
     } else {
-      var publicPath = "../../../public/vendor/webkul/blog/assets";
+      var publicPath = "../../../public/vendor/webkul/category/assets";
     }
 
     mix.setPublicPath(publicPath).mergeManifest();
@@ -81,22 +81,14 @@ To compile the assets, perform the following steps:
     mix.disableNotifications();
 
     mix
-      .js([__dirname + "/src/Resources/assets/js/app.js"], "js/blog.js")
       .copyDirectory(
         __dirname + "/src/Resources/assets/images",
         publicPath + "/images"
       )
+      .js([__dirname + "/src/Resources/assets/js/app.js"], "js/category.js")
       .sass(
         __dirname + "/src/Resources/assets/sass/app.scss",
-        "css/admin.css"
-      )
-      .sass(
-        __dirname + '/src/Resources/assets/sass/default.scss',
-        'css/default.css'
-      )
-      .sass(
-        __dirname + '/src/Resources/assets/sass/velocity.scss',
-        'css/velocity.css'
+        "css/category.css"
       )
       .options({
         processCssUrls: false,
@@ -107,11 +99,11 @@ To compile the assets, perform the following steps:
     }
     ```
 
-4. Run **`npm install`** in the root of your package (**`packages/Webkul/Blog`**) to install all the dependencies.
+4. Run **`npm install`** in the root of your package (**`packages/Webkul/Category`**) to install all the dependencies.
 
 Now, your **`scss`** and **`js`** files are ready to use. You can write all your CSS and JS code here.
 
-To compile the assets, run **`npm run prod`**. This will compile all your CSS, JS, and images into the publishable folder. Finally, make sure to register your publishable in the **`BlogServiceProvider`**.
+To compile the assets, run **`npm run prod`**. This will compile all your CSS, JS, and images into the publishable folder. Finally, make sure to register your publishable in the **`CategoryServiceProvider`**.
 
 ::: tip
 You can also use **`npm run watch`**, which watches for changes in your assets and automatically updates the public path. When you're done making changes, run **`npm run prod`** to compile all your changes and move them to the publishable folder.
@@ -119,21 +111,21 @@ You can also use **`npm run watch`**, which watches for changes in your assets a
 
 ## Load Assets From Package
 
-- To load the assets from your package, add the following code to the **`BlogServiceProvider.php`** file:
+- To load the assets from your package, add the following code to the **`CategoryServiceProvider.php`** file:
 
     ```php
     <?php
 
-    namespace Webkul\Blog\Providers;
+    namespace Webkul\Category\Providers;
 
     use Illuminate\Support\ServiceProvider;
 
     /**
-     * BlogServiceProvider
+     * CategoryServiceProvider
     *
     * @copyright 2024 Webkul Software PVT. LTD.
     */
-    class BlogServiceProvider extends ServiceProvider
+    class CategoryServiceProvider extends ServiceProvider
     {
         /**
          * Bootstrap services.
@@ -145,7 +137,7 @@ You can also use **`npm run watch`**, which watches for changes in your assets a
             //... 
 
             $this->publishes([
-                __DIR__ . '/../../publishable/assets' => public_path('vendor/webkul/blog/assets'),
+                __DIR__ . '/../../publishable/assets' => public_path('vendor/webkul/category/assets'),
             ], 'public');
         }
     }
@@ -160,27 +152,27 @@ To link the stylesheets to the layouts, follow these steps:
 2. Copy the following code into the **`admin/layouts/style.blade.php`** file:
 
     ```html
-    <link rel="stylesheet" href="{{ asset('vendor/webkul/blog/assets/css/admin.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('vendor/webkul/category/assets/css/admin.css') }}"/>
     ```
 
 ### Event Listener
 
-- To ensure that the admin layouts include our CSS, we should add an event listener. You can add the following code to the **`BlogServiceProvider.php`** file:
+- To ensure that the admin layouts include our CSS, we should add an event listener. You can add the following code to the **`CategoryServiceProvider.php`** file:
 
     ```php
     <?php
 
-    namespace Webkul\Blog\Providers;
+    namespace Webkul\Category\Providers;
 
     use Illuminate\Support\ServiceProvider;
     use Illuminate\Support\Facades\Event;
 
     /**
-     * BlogServiceProvider
+     * CategoryServiceProvider
     *
     * @copyright 2024 Webkul Software PVT. LTD.
     */
-    class BlogServiceProvider extends ServiceProvider
+    class CategoryServiceProvider extends ServiceProvider
     {
         /**
          * Bootstrap services.
@@ -192,11 +184,11 @@ To link the stylesheets to the layouts, follow these steps:
             //... 
 
             $this->publishes([
-                __DIR__ . '/../../publishable/assets' => public_path('vendor/webkul/blog/assets'),
+                __DIR__ . '/../../publishable/assets' => public_path('vendor/webkul/category/assets'),
             ], 'public');
 
             Event::listen('admin.layout.head', function($viewRenderEventManager) {
-                $viewRenderEventManager->addTemplate('blog::admin.layouts.style');
+                $viewRenderEventManager->addTemplate('category::admin.layouts.style');
             });
         }
 

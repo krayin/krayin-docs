@@ -6,55 +6,84 @@ To learn in detail about Views, you can visit the Laravel documentation [here](h
 
 ## Directory Structure
 
-- Create a **`Resources`** folder in the **`packages/Webkul/Blog/src`** path. Inside the **`Resources`** folder, create another folder named **`views`**. Now, inside the **`views`** folder, we need to create folders, named **`admin`**. The updated directory structure will look like this:
+- Create a **`Resources`** folder in the **`packages/Webkul/Category/src`** path. Inside the **`Resources`** folder, create another folder named **`views`**. Now, inside the **`views`** folder, we need to create folders, named **`category`**. The updated directory structure will look like this:
 
   ```
   └── packages
       └── Webkul
-          └── Blog
+          └── Category
               └── src
                   ├── ...
                   └── Resources
                       └── views
-                          └── admin
+                          └── category
   ```
 
-- Inside this folder, **`admin`**, create a file named **`index.blade.php`** and add some HTML to it.
+- Inside this folder, **`category`**, create a file named **`index.blade.php`** and add some HTML to it.
 
   ```
   └── packages
       └── Webkul
-          └── Blog
+          └── Category
               └── src
                   ├── ...
                   └── Resources
                       └── views
-                          └── admin
-                              └── index.blade.php
+                          └── category
+                              ├── index.blade.php
+                              ├── create.blade.php
+                              └── edit.blade.php
   ```
 
-  - **`admin/index.blade.php`**
+  - **`category/index.blade.php`**
 
     ```html
-    <h2>Blog Admin Page</h2>
+        @extends('admin::layouts.master')
+
+        @section('page_title')
+            {{ __('Category') }}
+        @stop
+
+        @section('content-wrapper')
+            <div class="content full-page">
+                <table-component data-src="{{ route('admin.categories.index') }}">
+                    <template v-slot:table-header>
+                        <h1>
+                            {!! view_render_event('admin.products.index.header.before') !!}
+
+                            {{ Breadcrumbs::render('categories') }}
+
+                            {{ __('Category') }}
+
+                            {!! view_render_event('admin.products.index.header.after') !!}
+                        </h1>
+
+                    </template>
+
+                    <template v-slot:table-action>
+                        <a href="{{ route('admin.categories.create') }}" class="btn btn-md btn-primary">{{ __('Create Category') }}</a>
+                    </template>
+                <table-component>
+            </div>
+        @stop
     ```
 ## Load Views from Package
 
-- Now, we need to register our views in the service provider's `boot` method. Open the file **`packages/Webkul/Blog/src/Providers/BlogServiceProvider.php`** and update it as follows:
+- Now, we need to register our views in the service provider's `boot` method. Open the file **`packages/Webkul/Category/src/Providers/CategoryServiceProvider.php`** and update it as follows:
 
   ```php
   <?php
 
-  namespace Webkul\Blog\Providers;
+  namespace Webkul\Category\Providers;
 
   use Illuminate\Support\ServiceProvider;
 
   /**
-  * BlogServiceProvider
+  * CategoryServiceProvider
   *
   * @copyright 2024 Webkul Software PVT. LTD. (http://www.webkul.com)
   */
-  class BlogServiceProvider extends ServiceProvider
+  class CategoryServiceProvider extends ServiceProvider
   {
      /**
       * Bootstrap services.
@@ -65,15 +94,15 @@ To learn in detail about Views, you can visit the Laravel documentation [here](h
       {
           //... 
 
-          $this->loadViewsFrom(__DIR__ . '/../Resources/views', 'blog');
+          $this->loadViewsFrom(__DIR__ . '/../Resources/views', 'category');
       }
   }
   ```
 
 - Now, check the routes in your browser.
 
-  ::: details Admin Output
+  ::: details category Output
 
-  ![Admin Browser Output](../../assets/images/package-development/blog-admin-output.png)
+  ![Admin Browser Output](../../assets/images/package-development/category-package-output.png)
 
   :::

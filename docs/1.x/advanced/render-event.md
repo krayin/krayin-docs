@@ -42,12 +42,12 @@ To render content before or after a specific section of a template, follow these
    ```php
     <?php
 
-    namespace Webkul\Blog\Providers;
+    namespace Webkul\Category\Providers;
 
     use Illuminate\Support\ServiceProvider;
     use Illuminate\Support\Facades\Event;
 
-    class BlogServiceProvider extends ServiceProvider
+    class CategoryServiceProvider extends ServiceProvider
     {
         /**
          * Bootstrap any application services.

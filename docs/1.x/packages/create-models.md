@@ -8,16 +8,16 @@ We are using the [konekt/concord](https://packagist.org/packages/konekt/concord)
 
 ## Using Krayin Package Generator
 
-- This command creates a new **`Post`** Model inside your package.
+- This command creates a new **`Category`** Model inside your package.
 
   ```sh
-  php artisan package:make-model Post Webkul/Blog
+  php artisan package:make-model Category Webkul/Category
   ```
 
 - This command creates the following files:
-  - New model **`Post.php`** in the **`packages/Webkul/Blog/src/Models`** directory.
-  - New model proxy **`PostProxy.php`** in the **`packages/Webkul/Blog/src/Models`** directory.
-  - New model contract **`Post.php*`** in the **`packages/Webkul/Blog/src/Contracts`** directory.
+  - New model **`Category.php`** in the **`packages/Webkul/Category/src/Models`** directory.
+  - New model proxy **`CategoryProxy.php`** in the **`packages/Webkul/Category/src/Models`** directory.
+  - New model contract **`Category.php*`** in the **`packages/Webkul/Category/src/Contracts`** directory.
 
 ## Using Laravel Artisan Command
 
@@ -31,26 +31,26 @@ Each contract has a corresponding implementation provided by the framework. For 
 
 All Laravel contracts are stored in their own GitHub repository. This provides a quick reference for all available contracts and a single, decoupled package that can be used by package developers.
 
-- Now, create a folder named **`Contracts`** inside **`Webkul/Blog/src/`** and create an interface file named **`Post.php`**.
+- Now, create a folder named **`Contracts`** inside **`Webkul/Category/src/`** and create an interface file named **`Category.php`**.
 
   ```
   packages
   └── Webkul
-      └── Blog
+      └── Category
           └── src
               ├── ...
               └── Contracts
-                  └── Post.php
+                  └── Category.php
   ```
 
-- Copy the following code into the **`Post.php`** file.
+- Copy the following code into the **`Category.php`** file.
 
   ```php
   <?php
 
-  namespace Webkul\Blog\Contracts;
+  namespace Webkul\Category\Contracts;
 
-  interface Post
+  interface Category
   {
   }
   ```
@@ -59,30 +59,30 @@ All Laravel contracts are stored in their own GitHub repository. This provides a
 
 Proxies, as their name suggests, lead you to the actual model class. The concept of model proxies has been introduced to override the functionality of the existing Model. It is a type of model inheritance without creating a new table in the database.
 
-- Now, create a **`Models`** folder inside **`packages/Webkul/Blog/src/`**. Inside the **`Models`** folder, create a model proxy file named **`PostProxy.php`**. This Proxy class will extend **`Konekt\Concord\Proxies\ModelProxy`**.
+- Now, create a **`Models`** folder inside **`packages/Webkul/Category/src/`**. Inside the **`Models`** folder, create a model proxy file named **`CategoryProxy.php`**. This Proxy class will extend **`Konekt\Concord\Proxies\ModelProxy`**.
 
   ```
   └── packages
       └── Webkul
-          └── Blog
+          └── Category
               └── src
                   ├── ...
                   ├── Contracts
-                  │   └── Post.php
+                  │   └── Category.php
                   └── Models
-                      └── PostProxy.php
+                      └── CategoryProxy.php
   ```
 
-- Copy the following code into the **`PostProxy.php`** file.
+- Copy the following code into the **`CategoryProxy.php`** file.
 
   ```php
   <?php
 
-  namespace Webkul\Blog\Models;
+  namespace Webkul\Category\Models;
 
   use Konekt\Concord\Proxies\ModelProxy;
 
-  class PostProxy extends ModelProxy
+  class CategoryProxy extends ModelProxy
   {
   }
   ```
@@ -92,72 +92,65 @@ Proxies, as their name suggests, lead you to the actual model class. The concept
 - The simple way to create a model is to execute the `make:model` artisan command:
 
   ```sh
-  php artisan make:model Post
+  php artisan make:model Category
   ```
 
-- Now, move your **`Post`** model from the project root directory (i.e., **`App/Models`**) to the **`packages/Webkul/Blog/src/Models`** folder.
+- Now, move your **`Category`** model from the project root directory (i.e., **`App/Models`**) to the **`packages/Webkul/Category/src/Models`** folder.
 
   ```
   └── packages
       └── Webkul
-          └── Blog
+          └── Category
               └── src
                   ├── ...
                   ├── Contracts
-                  │   └── Post.php
+                  │   └── Category.php
                   └── Models
-                      ├── Post.php
-                      └── PostProxy.php
+                      ├── Category.php
+                      └── CategoryProxy.php
   ```
 
-- Copy the following code into the **`Post.php`** file.
+- Copy the following code into the **`Category.php`** file.
 
   ```php
   <?php
 
-  namespace Webkul\Blog\Models;
+  namespace Webkul\Category\Models;
 
   use Illuminate\Database\Eloquent\Model;
-  use Illuminate\Database\Eloquent\Relations\BelongsTo;
-  use Webkul\User\Models\Admin;
-  use Webkul\Blog\Contracts\Post as PostContract;
+  use Webkul\Attribute\Traits\CustomAttribute;
+  use Webkul\Category\Contracts\Category as CategoryContract;
 
-  class Post extends Model implements PostContract
+  class Category extends Model implements CategoryContract
   {
-     /**
+      use CustomAttribute;
+
+      /**
       * The attributes that are mass assignable.
       *
-      * @var $fillable
+      * @var array
       */
       protected $fillable = [
-          'title',
+          'name',
+          'slug',
           'description',
-          'user_id',
-          'status'
       ];
-
-     /**
-      * Get the user that owns the post.
-      */
-      public function author(): BelongsTo
-      {
-          return $this->belongsTo(Admin::class, 'user_id');
-      }
   }
+
   ```
 
 ### Module Service Provider
 
-- Now, we need to create a provider named **`ModuleServiceProvider.php`** inside **`Webkul/Blog/src/Providers`**.
+- Now, we need to create a provider named **`ModuleServiceProvider.php`** inside **`Webkul/Category/src/Providers`**.
 
   ```
   └── packages
     └── Webkul
-        └── Blog
+        └── Category
             └── src
                 ├── ...
                 └── Providers
-                    ├── BlogServiceProvider.php
+                    ├── CategoryServiceProvider.php
                     └── ModuleServiceProvider.php
   ```
 
@@ -166,14 +159,14 @@ Proxies, as their name suggests, lead you to the actual model class. The concept
   ```php
   <?php
 
-  namespace Webkul\Blog\Providers;
+  namespace Webkul\Category\Providers;
 
   use Konekt\Concord\BaseModuleServiceProvider;
 
   class ModuleServiceProvider extends BaseModuleServiceProvider
   {
       protected $models = [
-          \Webkul\Blog\Models\Post::class,
+          \Webkul\Category\Models\Category::class,
       ];
   }
   ```
@@ -186,7 +179,7 @@ Proxies, as their name suggests, lead you to the actual model class. The concept
   return [
       'modules' => [
           // Other service providers
-          \Webkul\Blog\Providers\ModuleServiceProvider::class,
+          \Webkul\Category\Providers\ModuleServiceProvider::class,
       ]
   ];
   ```

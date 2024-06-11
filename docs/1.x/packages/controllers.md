@@ -6,21 +6,21 @@ To learn in detail about Controllers, you can visit the Laravel documentation [h
 
 ## Directory Structure
 
-- Create an **`Http`** folder in the **`packages/Webkul/Blog/src`** path. Inside the **`Http`** folder, create another folder named **`Controllers`**. Inside the **`Controllers`** folder, we need to create one file named **`Controller.php`** and two folders, namely **`Admin`**.
+- Create an **`Http`** folder in the **`packages/Webkul/Category/src`** path. Inside the **`Http`** folder, create another folder named **`Controllers`**. Inside the **`Controllers`** folder, we need to create one file named **`Controller.php`** and two folders, namely **`Category`**.
 
-- Inside both the **`Admin`** folders, create a **`PostController.php`** file. The updated directory structure will look like this:
+- Inside both the **`Category`** folders, create a **`CategoryController.php`** file. The updated directory structure will look like this:
 
   ```
   └── packages
       └── Webkul
-          └── Blog
+          └── Category
               └── src
                   ├── ...
                   └── Http
                       └── Controllers
                           ├── Controller.php
-                          └── Admin
-                              └── PostController.php
+                          └── Category
+                              └── CategoryController.php
   ```
 
 ## Base Controller
@@ -30,7 +30,7 @@ To learn in detail about Controllers, you can visit the Laravel documentation [h
   ```php
   <?php
 
-  namespace Webkul\Blog\Http\Controllers;
+  namespace Webkul\Category\Http\Controllers;
 
   use Illuminate\Foundation\Bus\DispatchesJobs;
   use Illuminate\Routing\Controller as BaseController;
@@ -45,57 +45,121 @@ To learn in detail about Controllers, you can visit the Laravel documentation [h
 
 ## Controllers
 
-- **`Admin/PostController.php`**: This file is for admin usage. Add the following code to this file:
+- **`Category/CategoryController.php`**: This file is for category usage. Add the following code to this file:
 
   ```php
-  <?php
+    <?php
 
-  namespace Webkul\Blog\Http\Controllers\Admin;
+    namespace Webkul\Category\Http\Controllers\Category;
 
-  use Illuminate\Http\Request;
-  use Webkul\Blog\Http\Controllers\Controller;
-  use Webkul\Blog\Repository\PostRepository;
+    use Webkul\Admin\Http\Controllers\Controller;
+    use Webkul\Category\DataGrids\Category\CategoryDataGrid;
+    use Webkul\Category\Repositories\CategoryRepository;
 
-  class PostController extends Controller
-  {
-      /**
-       * Create a controller instance.
-       * 
-       * @param  \Webkul\Blog\Repository\PostRepository  $postRepository
-       * @return void
-       */
-      public function __construct(protected PostRepository $postRepository)
-      {
-      }
+    class CategoryController extends Controller
+    {
+        /**
+        * Create a new controller instance.
 
-      /**
-       * Index.
-       * 
-       * @return \Illuminate\View\View
-       */
-      public function index() {
-          $blogs = $this->postRepository->all();
+        * @return void
+        */
+        public function __construct(protected CategoryRepository $categoryRepository)
+        {
+            request()->request->add(['entity_type' => 'category']);
+        }
 
-          return view('blog::admin.index', ['blogs' => $blogs]);
-      }
+        /**
+        * Display a listing of the resource.
+        *
+        * @return \Illuminate\View\View
+        */
+        public function index()
+        {
+            if (request()->ajax()) {
+                return app(CategoryDataGrid::class)->toJson();
+            }
+        
+            return view('category::category.index');
+        }
 
-      /**
-       * Create.
-       * 
-       * @return \Illuminate\View\View
-       */
-      public function create() {
-          //
-      }
+        /**
+        * Create a new category.
+        *
+        * @return \Illuminate\View\View
+        */
+        public function create()
+        {
+            return view('category::category.create');
+        }
 
-      /**
-       * Store.
-       * 
-       * @param  \Illuminate\Http\Request  $request
-       * @return \Illuminate\View\View
-       */
-      public function store(Request $request) {
-          //
-      }
-  }
+        /**
+        * Store a newly created category in storage.
+        *
+        * @return \Illuminate\Http\RedirectResponse
+        */
+        public function store()
+        {
+            $this->validate(request(), [
+                'name' => 'required',
+                'slug' => 'required|unique:categories,slug',
+            ]);
+
+            $this->categoryRepository->create(request()->all());
+
+            session()->flash('success', 'Category created successfully.');
+
+            return redirect()->route('admin.categories.index');
+        }
+
+        /**
+        * Show the form for editing the specified category.
+        *
+        * @param int $id
+        * @return \Illuminate\View\View
+        */
+        public function edit($id)
+        {
+            $category = $this->categoryRepository->findOrFail($id);
+
+            return view('category::category.edit', compact('category'));
+        }
+
+        /**
+        * Update the specified category in storage.
+        *
+        * @param int $id
+        * @return \Illuminate\Http\RedirectResponse
+        */
+        public function update($id)
+        {
+            $this->validate(request(), [
+                'name' => 'required',
+                'slug' => 'required|unique:categories,slug,' . $id,
+            ]);
+
+            $this->categoryRepository->update(request()->all(), $id);
+
+            session()->flash('success', 'Category updated successfully.');
+
+            return redirect()->route('admin.categories.index');
+        }
+
+        /**
+        * Remove the specified category from storage.
+        *
+        * @param int $id
+        * @return \Illuminate\Http\RedirectResponse
+        */
+        public function destroy($id)
+        {
+            $category = $this->categoryRepository->findOrFail($id);
+
+            $category->delete($id);
+
+            session()->flash('success', 'Category deleted successfully.');
+
+            return redirect()->route('admin.categories.index');
+        }
+    }
+
   ```

@@ -34,9 +34,15 @@ In **`Webkul\Ui\DataGrid\DataGrid.php`** abstract class, two abstract methods ar
     ```php
     public function prepareQueryBuilder()
     {
-        $queryBuilder = DB::table('posts')
-            ->select('id', 'title', 'status', 'created_at', 'updated_at')
-            ->where('user_id', '=', auth()->guard('admin')->user()->id);
+        $queryBuilder = DB::table('categories')
+            ->addSelect(
+                'categories.id',
+                'categories.slug',
+                'categories.name',
+                'categories.description',
+            );
+
+        $this->addFilter('id', 'categories.id');
 
         $this->setQueryBuilder($queryBuilder);
     }
@@ -59,7 +65,7 @@ In **`Webkul\Ui\DataGrid\DataGrid.php`** abstract class, two abstract methods ar
     {
         $this->addColumn([
             'index' => 'id',
-            'label' => trans('blog::app.admin.datagrid.id'),
+            'label' => trans('category::app.admin.datagrid.id'),
             'type' => 'number',
             'searchable' => false,
             'sortable' => true,
@@ -83,9 +89,9 @@ In **`Webkul\Ui\DataGrid\DataGrid.php`** abstract class, two abstract methods ar
     public function prepareActions()
     {
         $this->addAction([
-            'title' => trans('blog::app.admin.datagrid.edit'),
+            'title' => trans('category::app.admin.datagrid.edit'),
             'method' => 'GET',
-            'route' => 'admin.blog.edit',
+            'route' => 'admin.category.edit',
             'icon' => 'icon pencil-lg-icon'
         ]);
     }
@@ -97,26 +103,26 @@ When working with multiple DataGrids, the default DataGrid implementation can ha
 
 Follow the steps below to implement multiple DataGrids:
 
-1. Create a folder called **`DataGrids`** inside the **`src`** folder of your package. Within the **`DataGrids`** folder, create a file called **`PostDataGrid.php`** that extends the **`DataGrid`** class from the **`Webkul\Ui`** package. The directory structure will be as follows:
+1. Create a folder called **`DataGrids`** inside the **`src`** folder of your package. Within the **`DataGrids`** folder, create a file called **`CategoryDataGrid.php`** that extends the **`DataGrid`** class from the **`Webkul\Ui`** package. The directory structure will be as follows:
 
     ```
     └── packages
         └── Webkul
-            └── Blog
+            └── Category
                 └── src
                     ├── ...
                     └── DataGrids
-                        └── PostDataGrid.php
+                        └── CategoryDataGrid.php
     ```
 
-2. Add the following code to your DataGrid file, i.e., **`PostDataGrid.php`**:
+2. Add the following code to your DataGrid file, i.e., **`CategoryDataGrid.php`**:
 
     ```php
-    namespace Webkul\Blog\DataGrids;
+    namespace Webkul\Category\DataGrids;
 
     use Webkul\Ui\DataGrid\DataGrid;
 
-    class PostDataGrid extends DataGrid
+    class CategoryDataGrid extends DataGrid
     {
         // ...
     }
@@ -124,14 +130,14 @@ Follow the steps below to implement multiple DataGrids:
 
 ### DataGrid to JSON
 
-3. Import the **`ProvideDataGridPlus`** trait into the **`PostDataGrid`** class:
+3. Import the **`ProvideDataGridPlus`** trait into the **`CategoryDataGrid`** class:
 
     ```php
-    namespace Webkul\Blog\DataGrids;
+    namespace Webkul\Category\DataGrids;
 
     use Webkul\Admin\Traits\ProvideDropdownOptions;
 
-    class PostDataGrid extends DataGrid
+    class CategoryDataGrid extends DataGrid
     {
         use ProvideDropdownOptions;
 
@@ -141,12 +147,12 @@ Follow the steps below to implement multiple DataGrids:
 
 4. After that, the **`toJson()`** method will be available in the DataGrid instance, which provides data to the component.
 
-5. Now, go to **`Admin/PostController.php`** and locate the **`index`** method. Use the **`toJson()`** method as follows:
+5. Now, go to **`Admin/CategoryController.php`** and locate the **`index`** method. Use the **`toJson()`** method as follows:
 
     ```php
-    use Webkul\Blog\DataGrids\PostDataGrid;
+    use Webkul\Category\DataGrids\CategoryDataGrid;
 
-    class PostController extends Controller
+    class CategoryController extends Controller
     {
         /**
          * Display a listing of the resource.
@@ -156,10 +162,10 @@ Follow the steps below to implement multiple DataGrids:
         public function index()
         {
             if (request()->ajax()) {
-                return app(PostDataGrid::class)->toJson();
+                return app(CategoryDataGrid::class)->toJson();
             }
 
-            return view('blog::admin.index');
+            return view('category::admin.index');
         }
 
         // ...
@@ -168,22 +174,37 @@ Follow the steps below to implement multiple DataGrids:
 
 ### Render DataGrid
 
-6. In the view file **`views/admin/index.blade.php`**, use the **`datagrid-plus`** component and specify the URL from which it will load the JSON data:
+6. In the view file **`views/admin/index.blade.php`**, use the **`table-component`** component and specify the URL from which it will load the JSON data:
 
     ```php
-    <div class="page-content">
-        ...
+    @section('content-wrapper')
+        <div class="content full-page">
+            <table-component data-src="{{ route('admin.categories.index') }}">
+                <template v-slot:table-header>
+                    <h1>
+                        {!! view_render_event('admin.products.index.header.before') !!}
 
-        <datagrid-plus src="{{ route('admin.blog.index') }}"></datagrid-plus>
+                        {{ Breadcrumbs::render('categories') }}
 
-        ...
-    </div>
+                        {{ __('Category') }}
+
+                        {!! view_render_event('admin.products.index.header.after') !!}
+                    </h1>
+
+                </template>
+
+                <template v-slot:table-action>
+                    <a href="{{ route('admin.categories.create') }}" class="btn btn-md btn-primary">{{ __('Create Category') }}</a>
+                </template>
+            <table-component>
+        </div>
+    @stop
     ```
 
     With these steps, your DataGrid is now ready to be used.
 
 ::: warning
-Make sure to copy the sample code provided below to your own **`PostDataGrid.php`** file, as we have already included all the necessary methods and functions there. This code can be used later as an example for your implementation.
+Make sure to copy the sample code provided below to your own **`CategoryDataGrid.php`** file, as we have already included all the necessary methods and functions there. This code can be used later as an example for your implementation.
 :::
 
 ## Sample DataGrid
@@ -193,144 +214,82 @@ Here's an improved version of the provided DataGrid sample:
 ```php
 <?php
 
-namespace Webkul\Blog\DataGrids;
+namespace Webkul\Category\DataGrids\Category;
 
+use Webkul\UI\DataGrid\DataGrid;
 use Illuminate\Support\Facades\DB;
-use Webkul\Ui\DataGrid\DataGrid;
-use Webkul\Admin\Traits\ProvideDropdownOptions;
 
-class PostDataGrid extends DataGrid
+class CategoryDataGrid extends DataGrid
 {
-    use ProvideDropdownOptions;
-
     /**
-     * The column that needs to be treated as an index column.
-     */
-    protected $index = 'id';
-
-    /**
-     * The sorting order. Can be 'asc' or 'desc'.
-     */
-    protected $sortOrder = 'desc';
-
-    /**
-     * Prepare the query builder.
+     * Prepare query builder.
+     *
+     * @return void
      */
     public function prepareQueryBuilder()
     {
-        $queryBuilder = DB::table('posts')
-            ->select('id', 'title', 'status', 'created_at', 'updated_at')
-            ->where('user_id', '=', auth()->guard('admin')->user()->id);
+        $queryBuilder = DB::table('categories')
+            ->addSelect(
+                'categories.id',
+                'categories.slug',
+                'categories.name',
+                'categories.description',
+            );
+
+        $this->addFilter('id', 'categories.id');
 
         $this->setQueryBuilder($queryBuilder);
     }
 
     /**
      * Add columns.
+     *
+     * @return void
      */
     public function addColumns()
     {
         $this->addColumn([
-            'index' => 'id',
-            'label' => trans('blog::app.admin.datagrid.id'),
-            'type' => 'number',
-            'searchable' => false,
+            'index'    => 'slug',
+        'label'    => trans('Slug'),
+            'type'     => 'string',
             'sortable' => true,
-            'filterable' => true,
         ]);
 
         $this->addColumn([
-            'index' => 'title',
-            'label' => trans('blog::app.admin.datagrid.title'),
-            'type' => 'string',
-            'searchable' => true,
+            'index'    => 'name',
+            'label'    => trans('Name'),
+            'type'     => 'string',
             'sortable' => true,
-            'filterable' => false,
-            'wrapper' => function ($value) {
-                return substr($value->title, 0, 30);
-            },
         ]);
 
         $this->addColumn([
-            'index' => 'status',
-            'label' => trans('blog::app.admin.datagrid.status'),
-            'type' => 'boolean',
+            'index'    => 'description',
+            'label'    => trans('Description'),
+            'type'     => 'string',
             'sortable' => true,
-            'searchable' => false,
-            'filterable' => true,
-            'closure' => function ($value) {
-                $html = '';
-
-                if ($value->status) {
-                    $html .= '<span class="badge badge-md badge-success">' . trans('blog::app.admin.datagrid.active') . '</span>';
-                } else {
-                    $html .= '<span class="badge badge-md badge-danger">' . trans('blog::app.admin.datagrid.inactive') . '</span>';
-                }
-
-                return $html;
-            },
-        ]);
-
-        $this->addColumn([
-            'index' => 'created_at',
-            'label' => trans('blog::app.admin.datagrid.created_at'),
-            'type' => 'datetime',
-            'searchable' => true,
-            'sortable' => true,
-            'filterable' => true,
-        ]);
-
-        $this->addColumn([
-            'index' => 'updated_at',
-            'label' => trans('blog::app.admin.datagrid.updated_at'),
-            'type' => 'datetime',
-            'searchable' => true,
-            'sortable' => true,
-            'filterable' => true,
         ]);
     }
 
     /**
      * Prepare actions.
+     *
+     * @return void
      */
     public function prepareActions()
     {
         $this->addAction([
-            'title' => trans('blog::app.admin.datagrid.edit'),
+            'title'  => trans('ui::app.datagrid.edit'),
             'method' => 'GET',
-            'route' => 'admin.blog.edit',
-            'icon' => 'icon pencil-lg-icon',
+            'route'  => 'admin.categories.edit',
+            'icon'   => 'pencil-icon',
         ]);
 
         $this->addAction([
-            'title' => trans('blog::app.admin.datagrid.delete'),
-            'method' => 'POST',
-            'route' => 'admin.blog.delete',
-            'icon' => 'icon trash-icon',
-        ]);
-    }
-
-    /**
-     * Prepare mass actions.
-     */
-    public function prepareMassActions()
-    {
-        $this->addMassAction([
-            'type' => 'update',
-            'action' => route('admin.blog.massupdate'),
-            'label' => trans('blog::app.admin.datagrid.massupdate'),
-            'method' => 'POST',
-            'options' => [
-                trans('blog::app.admin.datagrid.active') => 1,
-                trans('blog::app.admin.datagrid.inactive') => 0,
-            ],
-        ]);
-
-        $this->addMassAction([
-            'type' => 'delete',
-            'action' => route('admin.blog.massdelete'),
-            'label' => trans('blog::app.admin.datagrid.massdelete'),
-            'method' => 'POST',
+            'title'        => trans('ui::app.datagrid.delete'),
+            'method'       => 'DELETE',
+            'route'        => 'admin.categories.delete',
+            'confirm_text' => trans('ui::app.datagrid.massaction.delete', ['resource' => 'user']),
+            'icon'         => 'trash-icon',
         ]);
     }
 }

@@ -6,20 +6,20 @@ To understand Migrations in detail, you can visit the Laravel documentation [her
 
 ## Using Krayin Package Generator
 
-This command creates a new migration class in the **`packages/Webkul/Blog/src/Database/Migrations`** directory.
+This command creates a new migration class in the **`packages/Webkul/Category/src/Database/Migrations`** directory.
 
 ```sh
-php artisan package:make-migration CreatePostsTable Webkul/Blog
+php artisan package:make-migration CreateCategoryTable Webkul/Category
 ```
 
 ## Using Laravel Artisan Command
 
-- Create a **`Database`** folder in the **`packages/Webkul/Blog/src`** path. Inside the **`Database`** folder, create **`Migrations`** and **`Seeders`** folders.
+- Create a **`Database`** folder in the **`packages/Webkul/Category/src`** path. Inside the **`Database`** folder, create **`Migrations`** and **`Seeders`** folders.
 
     ```
     └── packages
         └── Webkul
-            └── Blog
+            └── Category
                 └── src
                     ├── ...
                     └── Database
@@ -30,7 +30,7 @@ php artisan package:make-migration CreatePostsTable Webkul/Blog
 - Run the following command with the **`--path`** option to specify where your migration file will be placed.
 
   ```sh
-  php artisan make:migration create_posts_table --path=packages/Webkul/Blog/src/Database/Migrations
+  php artisan make:migration create_categories_table --path=packages/Webkul/Category/src/Database/Migrations
   ```
 
 - Copy the code provided here and paste it into your migration file.
@@ -51,12 +51,11 @@ php artisan package:make-migration CreatePostsTable Webkul/Blog
       */
       public function up()
       {
-          Schema::create('posts', function (Blueprint $table) {
+          Schema::create('categories', function (Blueprint $table) {
               $table->id();
-              $table->string('title')->nullable();
+              $table->string('slug')->unique();
+              $table->string('name');
               $table->longText('description')->nullable();
-              $table->integer('user_id');
-              $table->tinyInteger('status')->default(1);
               $table->timestamps();
           });
       }
@@ -68,7 +67,7 @@ php artisan package:make-migration CreatePostsTable Webkul/Blog
       */
       public function down()
       {
-          Schema::dropIfExists('posts');
+          Schema::dropIfExists('categories');
       }
   };
   ```
@@ -80,16 +79,16 @@ php artisan package:make-migration CreatePostsTable Webkul/Blog
   ```php
   <?php
 
-  namespace Webkul\Blog\Providers;
+  namespace Webkul\Category\Providers;
 
   use Illuminate\Support\ServiceProvider;
 
   /**
-  * BlogServiceProvider
+  * CategoryServiceProvider
   *
   * @copyright 2024 Webkul Software PVT. LTD. (http://www.webkul.com)
   */
-  class BlogServiceProvider extends ServiceProvider
+  class CategoryServiceProvider extends ServiceProvider
   {
      /**
       * Bootstrap services.
@@ -105,7 +104,7 @@ php artisan package:make-migration CreatePostsTable Webkul/Blog
 
 ### Creating Tables from Migrations
 
-- Run the following command to create the **`posts`** table in your database.
+- Run the following command to create the **`categories`** table in your database.
 
   ```sh
   php artisan migrate

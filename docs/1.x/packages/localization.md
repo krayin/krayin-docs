@@ -6,14 +6,14 @@ To learn in detail about Localization, you can visit the Laravel documentation [
 
 ## Directory Structure
 
-- Now, let's create a language file for our package. Create a **`lang`** folder in the **`packages/Webkul/Blog/src/Resources`** path.
+- Now, let's create a language file for our package. Create a **`lang`** folder in the **`packages/Webkul/Category/src/Resources`** path.
 
 - Inside the **`lang`** folder, you can create different folders for language translations. For example, you can create folders for English ('en'), Hindi ('hi'), etc. For now, let's create a folder named **`en`** (representing the language code). Inside the **`en`** folder, create a file named **`app.php`** for language translation.
 
   ```
   └── packages
       └── Webkul
-          └── Blog
+          └── Category
               └── src
                   ├── ...
                   └── Resources
@@ -42,16 +42,16 @@ To learn in detail about Localization, you can visit the Laravel documentation [
   ```php
   <?php
 
-  namespace Webkul\Blog\Providers;
+  namespace Webkul\Category\Providers;
 
   use Illuminate\Support\ServiceProvider;
 
   /**
-  * BlogServiceProvider
+  * CategoryServiceProvider
   *
   * @copyright 2024 Webkul Software PVT. LTD. (http://www.webkul.com)
   */
-  class BlogServiceProvider extends ServiceProvider
+  class CategoryServiceProvider extends ServiceProvider
   {
      /**
       * Bootstrap services.
@@ -62,7 +62,7 @@ To learn in detail about Localization, you can visit the Laravel documentation [
       {
           //... 
 
-          $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'blog');
+          $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'category');
       }
   }
   ```
@@ -70,11 +70,11 @@ To learn in detail about Localization, you can visit the Laravel documentation [
 - Add the following code to your Blade file:
 
   ```html
-  {{ __('blog::app.admin.name') }}
+  {{ __('category::app.admin.name') }}
   ```
 
   ::: details Admin Output
 
-  ![Translation Output](../../assets/images/package-development/blog-admin-lang-output.png)
+  ![Translation Output](../../assets/images/package-development/category-admin-lang-output.png)
 
   :::

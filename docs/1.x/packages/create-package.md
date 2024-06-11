@@ -17,13 +17,13 @@ To facilitate package development, you can use the [Krayin Package Generator](ht
    - If the package directory does not exist:
 
      ```shell
-     php artisan package:make Webkul/Blog
+     php artisan package:make Webkul/Category
      ```
 
    - If the package directory already exists, you can use the **`--force`** option to overwrite it:
 
      ```shell
-     php artisan package:make Webkul/Blog --force
+     php artisan package:make Webkul/Category --force
      ```
 
    This command will set up the necessary files and directories in the **`packages`** directory.
@@ -39,7 +39,7 @@ To register your package, follow these steps:
        ...
        "psr-4": {
            // Other PSR-4 namespaces
-           "Webkul\\Blog\\": "packages/Webkul/Blog/src"
+           "Webkul\\Category\\": "packages/Webkul/Category/src"
        }
    }
    ```
@@ -49,17 +49,12 @@ To register your package, follow these steps:
     ```php
     <?php
 
-    return [
-        
-        // Other configuration options
-
-        'providers' => ServiceProvider::defaultProviders()->merge([
-            // Other service providers
-            Webkul\Blog\Providers\BlogServiceProvider::class,
-        ])->toArray(),
-        
-        // Other configuration options
-    ];
+        return [
+            'providers' => [
+                //
+                Webkul\Category\Providers\CategoryServiceProvider::class,
+            ],
+        ];
     ```
 
 3. Run the following commands to autoload your package and publish its assets and configurations:
@@ -70,11 +65,11 @@ To register your package, follow these steps:
    php artisan vendor:publish --force
    ```
 
-   When prompted to select which items to publish, choose the number corresponding to **`"Webkul\Blog\Providers\BlogServiceProvider"`** and press enter to publish all assets and configurations.
+   When prompted to select which items to publish, choose the number corresponding to **`"Webkul\Category\Providers\CategoryServiceProvider"`** and press enter to publish all assets and configurations.
 
 ::: details Example Output in the Browser
 
-![helloworld-admin-browser-output](../../assets/images/package-development/blog-package-output.png)
+![helloworld-admin-browser-output](../../assets/images/package-development/category-package-output.png)
 
 :::
 
@@ -91,7 +86,7 @@ If you prefer to set up your package manually, follow these steps assuming you a
    ```
    └── packages
        └── Webkul
-           └── Blog
+           └── Category
    ```
 
 2. In your package folder, create a folder named as **`src`**. This is where you'll put all your package-related files. Your updated structure will look like this:
@@ -99,38 +94,38 @@ If you prefer to set up your package manually, follow these steps assuming you a
    ```
    └── packages
        └── Webkul
-           └── Blog
+           └── Category
                └── src
    ```
 
 ### Create Service Provider
 
-1. In the **`src`** folder, create a folder named as **`Providers`**. Inside that folder, create a file named as **`BlogServiceProvider.php`**. Your structure should look like this:
+1. In the **`src`** folder, create a folder named as **`Providers`**. Inside that folder, create a file named as **`CategoryServiceProvider.php`**. Your structure should look like this:
 
    ```
    └── packages
        └── Webkul
-           └── Blog
+           └── Category
                └── src
                    └── Providers
-                       └── BlogServiceProvider.php
+                       └── CategoryServiceProvider.php
    ```
 
-2. Copy the following code and paste it into **`BlogServiceProvider.php`**:
+2. Copy the following code and paste it into **`CategoryServiceProvider.php`**:
 
    ```php
    <?php
 
-   namespace Webkul\Blog\Providers;
+   namespace Webkul\Category\Providers;
 
    use Illuminate\Support\ServiceProvider;
 
    /**
-    * BlogServiceProvider
+    * CategoryServiceProvider
     *
     * @copyright 2024 Webkul Software PVT. LTD.
     */
-   class BlogServiceProvider extends ServiceProvider
+   class CategoryServiceProvider extends ServiceProvider
    {
        /**
         * Bootstrap services.
@@ -163,7 +158,7 @@ If you prefer to set up your package manually, follow these steps assuming you a
        ...
        "psr-4": {
            // Other PSR-4 namespaces
-           "Webkul\\Blog\\": "packages/Webkul/Blog/src"
+           "Webkul\\Category\\": "packages/Webkul/Category/src"
        }
    }
    ```
@@ -173,17 +168,12 @@ If you prefer to set up your package manually, follow these steps assuming you a
     ```php
     <?php
 
-    return [
-        
-        // Other configuration options
-
-        'providers' => ServiceProvider::defaultProviders()->merge([
-            // Other service providers
-            Webkul\Blog\Providers\BlogServiceProvider::class,
-        ])->toArray(),
-        
-        // Other configuration options
-    ];
+        return [
+            'providers' => [
+                //
+                Webkul\Category\Providers\CategoryServiceProvider::class,
+            ],
+        ];
     ```
 
 3. Run the following command to autoload your package:

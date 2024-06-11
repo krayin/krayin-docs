@@ -6,9 +6,9 @@
 
 Krayin utilizes Concord, a Laravel extension, for building modules on top of Laravel's built-in service providers. Concord introduces the concept of model proxies, which allow you to override and extend core models in a modular way.
 
-Concord requires the existence of an interface, such as **Product**, which serves as a contract that can be bound to a concrete class using Concord's **registerModel()** method.
+Concord requires the existence of an interface, such as **Category**, which serves as a contract that can be bound to a concrete class using Concord's **registerModel()** method.
 
-By default, the **`Models\Product`** class is bound to the **`Contracts\Product`** interface within the module. If you want to extend or override this class, you can use Concord's **registerModel()** method.
+By default, the **`Models\Category`** class is bound to the **`Contracts\Category`** interface within the module. If you want to extend or override this class, you can use Concord's **registerModel()** method.
 
 The **registerModel()** method handles the binding of the interface and implementation in Laravel's service container, enabling you to easily type-hint the interface for automatic injection.
 
@@ -21,11 +21,11 @@ For more details, you can visit the [Concord GitHub repository](https://github.c
   ```php
   <?php
 
-  namespace Webkul\Blog\Providers;
+  namespace Webkul\Category\Providers;
 
   use Illuminate\Support\ServiceProvider;
 
-  class BlogServiceProvider extends ServiceProvider
+  class CategoryServiceProvider extends ServiceProvider
   {
       /**
        * Bootstrap any application services.
@@ -37,7 +37,7 @@ For more details, you can visit the [Concord GitHub repository](https://github.c
           //...
           
           $this->app->concord->registerModel(
-              \Webkul\Product\Contracts\Product::class, \App\Http\Product::class
+              \Webkul\Category\Contracts\Category::class, \App\Http\Category::class
           );
       }
   }
@@ -55,9 +55,9 @@ For more details, you can visit the [Concord GitHub repository](https://github.c
 
   namespace App\Http;
 
-  use Webkul\Product\Models\Product as ProductBaseModel;
+  use Webkul\Category\Models\Category as CategoryBaseModel;
 
-  class Product extends ProductBaseModel
+  class Category extends CategoryBaseModel
   {
       //
   }

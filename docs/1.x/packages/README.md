@@ -8,7 +8,7 @@ In Krayin, we have created numerous packages located at **`packages/Webkul/`**. 
 
 ~~~directory-structure
 └── Webkul
-    └── Blog
+    └── Category
         ├── publishable
         │   └── assets
         │       ├── css
@@ -16,7 +16,7 @@ In Krayin, we have created numerous packages located at **`packages/Webkul/`**. 
         │       │   ├── default.css
         │       │   └── velocity.css
         │       ├── images
-        │       │   └── blog-icon.png
+        │       │   └── category-icon.png
         │       └── js
         │           └── app.js
         └── src
@@ -27,7 +27,7 @@ In Krayin, we have created numerous packages located at **`packages/Webkul/`**. 
             ├── Console
             │   └── Commands
             ├── Contracts
-            │   └── Post.php
+            │   └── Category.php
             ├── Database
             │   ├── Migrations
             │   │   └── 2023_04_21_173057_create_posts_table
@@ -36,25 +36,25 @@ In Krayin, we have created numerous packages located at **`packages/Webkul/`**. 
             ├── Http
             │   ├── Controllers
             │   │   └── Admin
-            │   │       └── PostController.php
+            │   │       └── CategoryController.php
             │   ├── Middleware
             │   └── Requests
             ├── Listeners
             ├── Mail
             ├── Models
-            │   ├── Post.php
-            │   └── PostProxy.php
+            │   ├── Category.php
+            │   └── CategoryProxy.php
             ├── Providers
-            │   ├── BlogServiceProvider.php
+            │   ├── CategoryServiceProvider.php
             │   └── ModuleServiceProvider.php
             ├── Routes
             │   └── admin-routes.php
             ├── Repositories
-            │   └── PostRepository.php
+            │   └── CategoryRepository.php
             └── Resources
                 ├── assets
                 │   ├── images
-                │   │   └── blog-icon.png
+                │   │   └── category-icon.png
                 │   ├── js
                 │   │   └── app.js
                 │   └── sass

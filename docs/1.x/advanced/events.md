@@ -8,16 +8,16 @@ Event Listeners in Krayin are a way to implement the observer pattern, where lis
 
 ## Creating an Event Class
 
-If you have the Krayin Package Generator installed, you can use the following command to create a new event class in the **`packages/Webkul/Blog/src/Events`** directory:
+If you have the Krayin Package Generator installed, you can use the following command to create a new event class in the **`packages/Webkul/Category/src/Events`** directory:
 
 ```sh
-php artisan package:make-event BlogEvent Webkul/Blog
+php artisan package:make-event CategoryEvent Webkul/Category
 ```
 
 If the event class already exists, you can use the **`--force`** option to overwrite it:
 
 ```sh
-php artisan package:make-event BlogEvent Webkul/Blog --force
+php artisan package:make-event CategoryEvent Webkul/Category --force
 ```
 
 Alternatively, if you don't have the package generator, you can create the file manually.

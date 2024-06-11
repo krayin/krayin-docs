@@ -22,34 +22,34 @@ Examples:
 
 ```php
 // Bound in constructor
-public function __construct(protected PostRepository $postRepository) {}
+public function __construct(protected CategoryRepository $categoryRepository) {}
 ```
 
 ```php
 // Find all results in the Repository
-$posts = $this->postRepository->all();
+$categories = $this->categoryRepository->all();
 ```
 
 ## Using Krayin Package Generator
 
-- This command creates a new Repository class in the **`packages/Webkul/Blog/src/Repository`** directory.
+- This command creates a new Repository class in the **`packages/Webkul/Category/src/Repository`** directory.
 
   ```sh
-  php artisan package:make-repository PostRepository Webkul/Blog
+  php artisan package:make-repository CategoryRepository Webkul/Category
   ```
 
 ## Manual Setup of Files
 
-- Create a **`Repository`** folder inside **`Webkul/Blog/src/`** and create a file named **`PostRepository.php`**. In the repository class, create the **`model()`** method that returns the path of your contract class.
+- Create a **`Repository`** folder inside **`Webkul/Category/src/`** and create a file named **`CategoryRepository.php`**. In the repository class, create the **`model()`** method that returns the path of your contract class.
 
   ```
   └── packages
       └── Webkul
-          └── Blog
+          └── Category
               └── src
                   ├── ...
                   └── Repository
-                      └── PostRepository.php
+                      └── CategoryRepository.php
   ```
 
 - Copy the following code into your newly created repository file.
@@ -57,22 +57,65 @@ $posts = $this->postRepository->all();
   ```php
   <?php
 
-  namespace Webkul\Blog\Repository;
+  namespace Webkul\Category\Repositories;
 
+  use Illuminate\Container\Container;
   use Webkul\Core\Eloquent\Repository;
+  use Webkul\Attribute\Repositories\AttributeValueRepository;
 
-  class PostRepository extends Repository
+  class CategoryRepository extends Repository
   {
       /**
-      * Specify the Model class name
+      * Create a new repository instance.
       *
-      * @return string
+      * @return void
       */
-      function model(): string
+      public function __construct(
+          protected AttributeValueRepository $attributeValueRepository,
+          Container $container
+      )
       {
-          return 'Webkul\Blog\Contracts\Post';
+          parent::__construct($container);
+      }
+
+      /**
+      * Specify Model class name
+      *
+      * @return mixed
+      */
+      function model()
+      {
+          return 'Webkul\Category\Contracts\Category';
+      }
+
+      /**
+      * @param array $data
+      * @return \Webkul\Product\Contracts\Product
+      */
+      public function create(array $data)
+      {
+          $product = parent::create($data);
+
+          $this->attributeValueRepository->save($data, $product->id);
+
+          return $product;
+      }
+
+      /**
+      * @param array  $data
+      * @param int    $id
+      * @param string $attribute
+      * @return \Webkul\Product\Contracts\Product
+      */
+      public function update(array $data, $id, $attribute = "id")
+      {
+          $product = parent::update($data, $id);
+
+          $this->attributeValueRepository->save($data, $id);
+
+          return $product;
       }
   }
   ```
 
-- Now, your **`PostRepository`** is ready to use.
+- Now, your **`CategoryRepository`** is ready to use.

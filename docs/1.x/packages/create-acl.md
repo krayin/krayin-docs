@@ -10,12 +10,12 @@ In addition to providing authentication services out of the box, Krayin also off
 
 To configure the ACL, follow these steps:
 
-1. Create a new file named **`acl.php`** in the **`packages/Webkul/Blog/src/Config`** folder of your package. 
+1. Create a new file named **`acl.php`** in the **`packages/Webkul/Category/src/Config`** folder of your package. 
 
    ```
    └── packages
        └── Webkul
-           └── Blog
+           └── Category
                └── src
                    ├── ...
                    └── Config
@@ -30,9 +30,9 @@ To configure the ACL, follow these steps:
 
    return [
        [
-           'key' => 'blog',
-           'name' => 'blog',
-           'route' => 'blog.admin.index',
+           'key' => 'category',
+           'name' => 'category',
+           'route' => 'category.admin.index',
            'sort' => 2
        ]
    ];
@@ -44,18 +44,18 @@ To configure the ACL, follow these steps:
 
 To merge the ACL configuration, follow these steps:
 
-1. Open the **`BlogServiceProvider`** class in the **`Webkul\Blog\Providers`** namespace.
+1. Open the **`CategoryServiceProvider`** class in the **`Webkul\Category\Providers`** namespace.
 
 2. In the **`register`** method, add the following code to merge the ACL configuration:
 
    ```php
     <?php
 
-    namespace Webkul\Blog\Providers;
+    namespace Webkul\Category\Providers;
 
     use Illuminate\Support\ServiceProvider;
 
-    class BlogServiceProvider extends ServiceProvider
+    class CategoryServiceProvider extends ServiceProvider
     {
         /**
          * Register services.
