@@ -1,12 +1,25 @@
 # Create and using a new attribute
 
-![attribute-list](../../assets/images/custom-attributes/add-attribute.png)
+Here is the list of all attributes
 
-Let's have an example of Product's attributes
-1. Name
-2. SKU
-3. Quantity
+![attribute-list](../../assets/images/custom-attributes/attribute-list.png)
 
-These are few product's attributes which have been created by system while CRM installation.
+- Step-1:
+Navigate to `Settings` menu and search about `Attributes` click on it.
 
-![product-attributes](../../assets/images/custom-attributes/product-attributes.png)
+![attribute-list](../../assets/images/custom-attributes/attribute-step-1.png)
+
+- Step-2:
+Now click on `Create Attribute` button.
+
+![attribute-list](../../assets/images/custom-attributes/attribute-step-2.png)
+
+- Step-3:
+Fill all the inputs field as your requirement the hit the `Save as Attribute` button.
+
+![attribute-list](../../assets/images/custom-attributes/attribute-step-3.png)
+
+- Step-4:
+Your custom attribute is created now and visible into `Leads` create page when you create `Leads`.
+
+![attribute-list](../../assets/images/custom-attributes/attribute-step-4.png)

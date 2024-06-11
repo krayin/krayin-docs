@@ -73,7 +73,6 @@ module.exports = [
         collapsable: true,
         children: setVersionPrefix([
             ['custom-attributes/uses', 'How to use custom attribute'],
-            ['custom-attributes/add-lookup', 'Add Lookup'],
         ]),
     },
     {
