@@ -72,6 +72,7 @@ module.exports = [
         path: setVersionPrefix('custom-attributes'),
         collapsable: true,
         children: setVersionPrefix([
+            ['custom-attributes/custom-attribute', 'Make Model With Custom Attribute'],
             ['custom-attributes/uses', 'How to use custom attribute'],
         ]),
     },
