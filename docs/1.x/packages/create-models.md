@@ -118,13 +118,10 @@ Proxies, as their name suggests, lead you to the actual model class. The concept
   namespace Webkul\Category\Models;
 
   use Illuminate\Database\Eloquent\Model;
-  use Webkul\Attribute\Traits\CustomAttribute;
   use Webkul\Category\Contracts\Category as CategoryContract;
 
   class Category extends Model implements CategoryContract
   {
-      use CustomAttribute;
-
       /**
       * The attributes that are mass assignable.
       *

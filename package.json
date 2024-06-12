@@ -4,9 +4,9 @@
   "description": "Krayin Developer Documentation",
   "main": "index.js",
   "scripts": {
-    "dev": "vuepress dev docs",
-    "build": "vuepress build docs",
-    "eject": "vuepress eject docs"
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
+    "docs:eject": "vuepress eject docs"
   },
   "keywords": [
     "krayin",

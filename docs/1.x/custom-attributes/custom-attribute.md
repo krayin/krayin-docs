@@ -29,7 +29,7 @@ In the CategoryServiceProvider, register the configuration file inside the regis
  */
 public function register()
 {
-    $this->mergeConfigFrom(dirname(__DIR__) . '/Config/menu.php', 'menu.admin');
+    $this->mergeConfigFrom(dirname(__DIR__) . '/Config/attribute_entity_types.php', 'attribute_entity_types');
 }
 ```
 
