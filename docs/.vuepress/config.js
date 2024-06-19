@@ -2,7 +2,7 @@ module.exports = {
     base: '/',
     port: '8080',
     cache: false,
-    title: 'Krayin CRM Documentation',
+    title: 'Documentation',
     description: 'Krayin CRM Developer Portal',
     head: [
         ['link', { rel: "icon", type: "image/png", href: "/favicon.ico"}],
@@ -21,13 +21,17 @@ module.exports = {
         logo: '/logo.svg',
         nav: [
             { text: 'Home', link: '/' },
+            { text: 'Community Forum', link: 'https://forums.krayincrm.com/' },
         ],
+
+        contactUs: { text: 'Contact Us', link: 'https://krayincrm.com/contacts/' },
+        
         sidebar: {
-            '/1.x/': require('./version-configs/1.x')
-        }
+            '/1.x/': require('./version-configs/1.x'),
+        },
     },
     markdown: {
-        lineNumbers: false
+        lineNumbers: false,
     },
-    plugins: ['@vuepress/pwa', 'copy-code', '@vuepress/back-to-top']
+    plugins: ['@vuepress/pwa', 'copy-code', '@vuepress/back-to-top'],
 };

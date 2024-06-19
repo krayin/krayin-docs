@@ -1,21 +1,7 @@
-# Bagisto Web APIs
+# Krayin APIs
 
-Bagisto Web API is a medium to use the features of the core Bagisto System. By using Bagisto Web API, you can integrate your application to serve the default content of Bagisto.
+[[toc]]
 
-## Key Features
+## REST API
 
-- Bagisto APIs supports REST (Representational State Transfer).
-- Authentication: Customer Authentication with Login Details.
-- Provide access to performed CRUD operations.
-- Also Provide the option to filter the responses based on attribute fields.
-- The Framework supports the pagination which helps to increase the performance of application.
-
-## Where can I use Bagisto Web APIs?
-
-We can use the Bagisto APIs in different areas. Some of them are:
-
-- To build a PWA (Progressive Web Application) application, which uses modern web capabilities to deliver an application like experience to the users and provide more user friendly experience than a web application.
-
-- Use to integrate an Online-Shopping Mobile Application with the Bagisto Store to help the customers make purchase.
-
-- Use to integrate with CRM (Customer Relationship Management) systems Like: HubSpot, Salesforce etc. which allows you to manage the business relationships with your customers to help you grow your business.
+The Krayin REST API supports REST (Representational State Transfer) and provides access to CRUD (Create, Read, Update, Delete) operations. It also supports pagination to increase the performance of the application. The Krayin REST API can be used to build a PWA (Progressive Web Application) application, integrate an online shopping mobile application with the Krayin store.

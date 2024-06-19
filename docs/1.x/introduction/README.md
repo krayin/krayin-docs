@@ -6,5 +6,5 @@ Free & Opensource Laravel CRM solution for SMEs and Enterprises for complete cus
 
 To learn more about **Krayin's** features and try a demo, check out our website [https://devdocs.krayincrm.com/](https://devdocs.krayincrm.com).
 
-<!-- Get quickly updated on the current version and recently released features, see [Bagisto roadmap](https://bagisto.com/roadmap/).
-You can get started with the source code by checking out the repo on GitHub at [bagisto/bagisto](https://github.com/bagisto/bagisto). -->
+<!-- Get quickly updated on the current version and recently released features, see [Krayin roadmap](https://Krayin.com/roadmap/).
+You can get started with the source code by checking out the repo on GitHub at [Krayin/Krayin](https://github.com/krayin/Krayin). -->
