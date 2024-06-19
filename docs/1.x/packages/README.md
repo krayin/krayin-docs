@@ -58,9 +58,7 @@ In Krayin, we have created numerous packages located at **`packages/Webkul/`**. 
                 │   ├── js
                 │   │   └── app.js
                 │   └── sass
-                │       ├── admin.scss
-                │       ├── default.scss
-                │       └── velocity.scss
+                │       └── admin.scss
                 ├── lang
                 │   └── app.php
                 └── views
