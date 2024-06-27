@@ -1,65 +1,88 @@
 # Installation
 
-## Install Krayin using composer:
+[[TOC]]
+
+## Install Using Composer
+
+To install Krayin using Composer, use the following steps:
+
+- Choose the directory where you want to install Krayin. Open your terminal and navigate to this directory.
+
+- Once you are in the desired directory, run the following command in your terminal to install Krayin:
+
+- Run the following command:
+
+    ```sh
+    composer create-project krayin/laravel-crm
+    ```
+
+- Run the following command:
+
+    ```sh
+    php artisan krayin-crm:install
+    ```
+
+    ::: warning
+    During the installation process, if the **`.env`** file doesn't exist, the installer will prompt you to provide the necessary information.
+    :::
+
+- Follow the prompts during the installation process to provide the following details:
+
+    ```sh
+    - Please enter the application name : 
+    - Please enter the application URL : 
+    - Please select the default application locale : 
+    - Please select the default currency : 
+    - Please select the database connection : 
+    - Please select the database host : 
+    - Please select the database name : 
+    - Please enter your database username : 
+    - Please enter your database password : 
+    ```
+
+- For Create your admin credentials
+    ```sh
+    - Enter the name of the admin user :
+    - Enter the email address of the admin user :
+    - Configure the password for the admin user :
+    ```
+
+## Start Using Krayin
+
+### On a Production Server
+
+To access Krayin on a production server, open your domain in a web browser. For example:
 
 ```
-composer create-project krayin/laravel-crm
+https://example.com/
 ```
 
-- Start the installation script
+### On Your Local Server
 
-```sh
-php artisan krayin-crm:install
+To access Krayin on your local server, follow these steps:
+
+1. Configure your HTTP server to point to the **`public/`** directory of the project.
+2. Run the following command:
+
+    ```sh
+    php artisan serve
+    ```
+
+3. Open your browser and access the provided local server URL.
+
+### Login as an Admin
+
+To log in as an admin, visit **`https://example.com/admin/`**. If you used the **`php artisan krayin-crm:install`** command, use the following credentials:
+
+```text
+Email: admin@example.com
+Password: admin123
 ```
 
-### Features of this command
+### Contributing
 
-::: warning
-It will check if the .env file is already created or not.
-**Only if the .env file already exists then please provide the following details**
-:::
+Contributions are welcome! Follow the contribution guidelines to get started.
 
-```
--   APP_TIMEZONE
--   APP_LOCALE
--   LOG_CHANNEL
--   APP_CURRENCY
--   DB_DATABASE
--   DB_USERNAME
--   DB_PASSWORD
-```
+### License
 
-- After asking the following options it will start the installation
-
-```sh
--  Please select the default locale or press enter to continue [en]:
--  Please enter the default timezone [Asia/Kolkata]:
--  Please enter the default currency [USD]:
--  What is the database name to be used by Krayin?:
--  What is your database username?:
--  What is your database password?:
-```
-
-# Start using Krayin
-
-### On a production server
-
-- Go to your domain for example:
-  - `https://example.com/`
-  - `https://localhost/laravel-crm/public`
-  - `https://example.com/public`
-
-### On your local device
-
-```sh
-php artisan serve
-```
-
-### How to login as admin:
-
-Go to `https://example.com/admin/login`, use the following credentials
-
-```
-email: admin@example.com
-password: admin123
-```
+Krayin is open-sourced software licensed under the MIT license.sir mujhe 
