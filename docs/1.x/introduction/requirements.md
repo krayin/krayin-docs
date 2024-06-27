@@ -1,6 +1,6 @@
 # Requirements
 
-[[toc]]
+[[TOC]]
 
 Before installing Krayin please make sure your server meets the following requirements,
 
