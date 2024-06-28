@@ -4,7 +4,7 @@
 
 [Laravel](https://laravel.com) packages are the primary way of adding functionality so the following features are distributed into packages to enhance the application and allow developers to follow the standard way of developing custom functionality.
 
-Bagisto comes with a set of powerful default packages that provide essential functionalities out of the box. Below is a list of these default packages along with a brief description of each:
+Krayin comes with a set of powerful default packages that provide essential functionalities out of the box. Below is a list of these default packages along with a brief description of each:
 
 ### Admin
 
@@ -260,4 +260,4 @@ Performance Monitoring: Detailed analytics and reporting tools track workflow pe
 
 Integration and Extensibility: Workflows integrate with other CRM modules and external systems, extending automation capabilities across the organization’s ecosystem.
 
-Service provider enables features such as loading [routes](/2.x/packages/routes.html), [migrations](/2.x/packages/create-migrations.html), [languages](/2.x/packages/localization.html) or publishing [views](/2.x/packages/views.html), etc so **Bagisto** is developed considering these aspects.
+Service provider enables features such as loading [routes](/1.x/packages/routes.html), [migrations](/1.x/packages/create-migrations.html), [languages](/1.x/packages/localization.html) or publishing [views](/1.x/packages/views.html), etc so **Krayin** is developed considering these aspects.

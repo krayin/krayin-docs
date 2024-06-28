@@ -16,12 +16,12 @@ Before installing Krayin please make sure your server meets the following requir
 
 Ensure the following extensions are installed and enabled. You can check using the **`phpinfo()`** page or the **`php -m`** command.
 
-- **php-intl extension**: This extension is required for internationalization support in Bagisto.
+- **php-intl extension**: This extension is required for internationalization support in Krayin.
 
 - **php-gd extension**: The **`php-gd`** extension must be properly installed to ensure correct image functionality in the project. If not installed correctly, image-related features may not work as expected.
 
   ::: tip Note
-  It is important to ensure proper installation of the **`php-gd`** extension to avoid any issues with image manipulation in Bagisto.
+  It is important to ensure proper installation of the **`php-gd`** extension to avoid any issues with image manipulation in Krayin.
   :::
 
 ## PHP Configuration
@@ -46,7 +46,7 @@ Whenever you make changes to the PHP configuration file, be sure to restart Apac
 
 ## Supported Database Servers
 
-Bagisto supports the following database servers:
+Krayin supports the following database servers:
 
 - **MySQL**: Version 8.0.32 or higher is recommended for optimal performance and compatibility.
 
