@@ -28,7 +28,7 @@ The **docker-compose.yml** configuration file requires following inputs from the
 #### Webserver configuration
 In the `web_server` service block, assign your system working user uid to the `USER_UID` enviroment variable.  
 Run the following command `id -u` on linux or Macos to get your user id
-```shell
+```bash
 id -u
 ```
 
@@ -38,7 +38,7 @@ In the `database_server` service block, assign mysql database name, mysql databa
 
 #### Clone configuration from Github
 You can make use of our repository from Github by cloning this in your new directory
-```shell
+```bash
 git clone https://github.com/krayin/Krayin-docker.git .
 ```
 #### Configure manually
@@ -98,7 +98,7 @@ networks:
 
 #### Download the docker image
 The following command will download the docker images for apache-php version 7.3 and mysql version 5.7.
-```shell
+```bash
 docker-compose pull
 ```
 
@@ -115,7 +115,7 @@ docker-compose up -d
 Check your running docker containers with the following commands
 
 `docker ps` OR `docker-compose ps`
-```shell
+```bash
 CONTAINER ID   IMAGE                      COMMAND                  CREATED             STATUS             PORTS                               NAMES
 62a10346b84a   webkul/apache-php:latest   "/usr/bin/supervisord"   About an hour ago   Up About an hour   0.0.0.0:80->80/tcp                  apache2
 90a0a2e0e46b   mysql:5.7                  "docker-entrypoint.s…"   About an hour ago   Up About an hour   0.0.0.0:3306->3306/tcp, 33060/tcp   mysql
@@ -139,7 +139,7 @@ DB_PASSWORD=
 ```
 
 Run the following commands to install Krayin.
-```shell
+```bash
 docker exec -i apache2 bash -c "su - www-data -s /bin/bash -c 'php Krayin/artisan migrate'" 
 docker exec -i apache2 bash -c "su - www-data -s /bin/bash -c 'php Krayin/artisan db:seed'"
 docker exec -i apache2 bash -c "su - www-data -s /bin/bash -c 'php Krayin/artisan vendor:publish'"
@@ -152,7 +152,7 @@ Mention the database details same as docker-compose.yml and admin details.
 
 ### Install with composer
 The following commands will be exexcuted within the docker container
-```shell
+```bash
 docker exec -i apache2 bash -c "su - www-data -s /bin/bash -c 'composer create-project Krayin/Krayin'"
 ```
 
@@ -169,7 +169,7 @@ DB_PASSWORD=
 ```
 
 Run the following commands to install Krayin.
-```shell
+```bash
 docker exec -i apache2 bash -c "su - www-data -s /bin/bash -c 'php Krayin/artisan migrate'" 
 docker exec -i apache2 bash -c "su - www-data -s /bin/bash -c 'php Krayin/artisan db:seed'"
 docker exec -i apache2 bash -c "su - www-data -s /bin/bash -c 'php Krayin/artisan vendor:publish'"

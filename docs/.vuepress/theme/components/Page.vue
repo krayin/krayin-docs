@@ -28,4 +28,12 @@ export default {
   padding-bottom 2rem
   display block
 
+.table-of-contents ul
+    list-style-type none
+    color #0041FF
+
+.table-of-contents ul li:before
+  content '\0023'
+  position absolute
+  margin-left -16px
 </style>

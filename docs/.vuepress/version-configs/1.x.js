@@ -29,7 +29,6 @@ module.exports = [
         collapsable: true,
         children: setVersionPrefix([
             ['architecture/packages', 'Packages'],
-            ['architecture/frontend', 'Frontend'],
             ['architecture/repository-pattern', 'Repository Pattern'],
             ['architecture/modular-design', 'Modular Design']
         ]),
