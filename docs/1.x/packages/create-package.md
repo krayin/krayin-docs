@@ -19,7 +19,7 @@ This guide will take you through the process of creating a package for Krayin, f
 
 To facilitate package development, you can use the [Krayin Package Generator](https://github.com/krayin/krayin-package-generator). Follow the steps below to install it:
 
-- Install the Krayin Package Generator by running the following command in the root folder of your Krayin application:
+- Install the Krayin Package Generator by running the following command in the root directory of your Krayin application:
 
    ```bash
    composer require krayin/krayin-package-generator
@@ -93,11 +93,11 @@ Congratulations! Your package is now registered and ready to use. Start creating
 
 ## Manual Setup of Files
 
-If you prefer to set up your package manually, follow these steps assuming you are familiar with package directory structures and workflows. We'll use the default **`package`** folder in Krayin as an example.
+If you prefer to set up your package manually, follow these steps assuming you are familiar with package directory structures and workflows. We'll use the default **`package`** directory in Krayin as an example.
 
 ### Create Package Directory
 
-Inside the **`packages/Webkul`** folder, create a folder with your package name. Your structure should look like this:
+Inside the **`packages/Webkul`** directory, create a directory with your package name. Your structure should look like this:
 
 ```
 └── packages
@@ -105,7 +105,7 @@ Inside the **`packages/Webkul`** folder, create a folder with your package name.
         └── Category
 ```
 
-In your package folder, create a folder named as **`src`**. This is where you'll put all your package-related files. Your updated structure will look like this:
+In your package directory, create a directory named as **`src`**. This is where you'll put all your package-related files. Your updated structure will look like this:
 
 ```
    └── packages
@@ -116,7 +116,7 @@ In your package folder, create a folder named as **`src`**. This is where you'll
 
 ### Create Service Provider
 
-In the **`src`** folder, create a folder named as **`Providers`**. Inside that folder, create a file named as **`CategoryServiceProvider.php`**. Your structure should look like this:
+In the **`src`** directory, create a directory named as **`Providers`**. Inside that directory, create a file named as **`CategoryServiceProvider.php`**. Your structure should look like this:
 
 ```
    └── packages

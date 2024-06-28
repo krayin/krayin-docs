@@ -39,7 +39,7 @@ Each contract has a corresponding implementation provided by the framework. For 
 
 All Laravel contracts are stored in their own GitHub repository. This provides a quick reference for all available contracts and a single, decoupled package that can be used by package developers.
 
-Now, create a folder named **`Contracts`** inside **`Webkul/Category/src/`** and create an interface file named **`Category.php`**.
+Now, create a directory named **`Contracts`** inside **`Webkul/Category/src/`** and create an interface file named **`Category.php`**.
 
 ```structure
 packages
@@ -66,7 +66,7 @@ Copy the following code into the **`Category.php`** file.
 
 Proxies, as their name suggests, act as intermediaries to the actual model class. Model proxies are used to override the functionality of existing models without creating a new database table.
 
-Navigate to the directory `packages/Webkul/Category/src/` and create a new folder named `Models`.
+Navigate to the directory `packages/Webkul/Category/src/` and create a new directory named `Models`.
 
 ```
 └── packages
@@ -77,7 +77,7 @@ Navigate to the directory `packages/Webkul/Category/src/` and create a new folde
       └── Models
 ```
 
-Inside the `Models` folder, create a new PHP file named `CategoryProxy.php`.
+Inside the `Models` directory, create a new PHP file named `CategoryProxy.php`.
 
   ```
   └── packages
@@ -113,7 +113,7 @@ The simple way to create a model is to execute the `make:model` artisan command
   php artisan make:model Category
   ```
 
-Now, move your **`Category`** model from the project root directory (i.e., **`App/Models`**) to the **`packages/Webkul/Category/src/Models`** folder.
+Now, move your **`Category`** model from the project root directory (i.e., **`App/Models`**) to the **`packages/Webkul/Category/src/Models`** directory.
 
   ```
   └── packages

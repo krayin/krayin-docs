@@ -45,7 +45,7 @@ Manually setting up repository files involves creating and organizing repository
 
 ### Setting Up CategoryRepository in Webkul/Category Package
 
-Start by creating a `Repository` folder within the `Webkul/Category/src/` directory. This folder will house the repository class responsible for handling category-related database operations.Create a file named `CategoryRepository.php`. 
+Start by creating a `Repository` directory within the `Webkul/Category/src/` directory. This directory will house the repository class responsible for handling category-related database operations.Create a file named `CategoryRepository.php`. 
 
 ```
   └── packages

@@ -42,7 +42,7 @@ You can make use of our repository from Github by cloning this in your new direc
 git clone https://github.com/krayin/Krayin-docker.git .
 ```
 #### Configure manually
-- Create a new folder for example **Krayin-docker** and create **docker-compose.yml** manually inside it.
+- Create a new directory for example **Krayin-docker** and create **docker-compose.yml** manually inside it.
 - Add the following content to **docker-compose.yml**
 ```yml
 version: '3'

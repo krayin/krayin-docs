@@ -4,11 +4,11 @@
 
 ## Directory Structure
 
-- To organize our assets, we need to create the following folder structure in the **`Resources`** folder:
-  - Create a folder named **`assets`**.
-  - Inside the **`assets`** folder, create the following folders: **`sass`**, **`js`**, and **`images`**.
-  - In the **sass** folder, add the files **_admin.scss_**.
-  - In the **js** folder, add the file **app.js**.
+- To organize our assets, we need to create the following directory structure in the **`Resources`** directory:
+  - Create a directory named **`assets`**.
+  - Inside the **`assets`** directory, create the following folders: **`sass`**, **`js`**, and **`images`**.
+  - In the **sass** directory, add the files **_admin.scss_**.
+  - In the **js** directory, add the file **app.js**.
 
 Here's the updated directory structure:
 
@@ -103,10 +103,10 @@ To compile the assets, perform the following steps:
 
 Now, your **`scss`** and **`js`** files are ready to use. You can write all your CSS and JS code here.
 
-To compile the assets, run **`npm run prod`**. This will compile all your CSS, JS, and images into the publishable folder. Finally, make sure to register your publishable in the **`CategoryServiceProvider`**.
+To compile the assets, run **`npm run prod`**. This will compile all your CSS, JS, and images into the publishable directory. Finally, make sure to register your publishable in the **`CategoryServiceProvider`**.
 
 ::: tip
-You can also use **`npm run watch`**, which watches for changes in your assets and automatically updates the public path. When you're done making changes, run **`npm run prod`** to compile all your changes and move them to the publishable folder.
+You can also use **`npm run watch`**, which watches for changes in your assets and automatically updates the public path. When you're done making changes, run **`npm run prod`** to compile all your changes and move them to the publishable directory.
 :::
 
 ## Load Assets From Package
@@ -147,7 +147,7 @@ You can also use **`npm run watch`**, which watches for changes in your assets a
 
 To link the stylesheets to the layouts, follow these steps:
 
-1. Inside each **layouts** folder, create a file called **`style.blade.php`**.
+1. Inside each **layouts** directory, create a file called **`style.blade.php`**.
 
 2. Copy the following code into the **`admin/layouts/style.blade.php`** file:
 

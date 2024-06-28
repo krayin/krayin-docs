@@ -90,7 +90,7 @@ Email Composition and Management
 
 - Sent Mail: Access a log of all sent emails. This helps users keep track of their communications and refer back to previously sent messages when needed.
 
-- Trash: Manage deleted emails in the trash folder. Users can recover emails from the trash if they were deleted by mistake or permanently delete emails to free up space
+- Trash: Manage deleted emails in the trash directory. Users can recover emails from the trash if they were deleted by mistake or permanently delete emails to free up space
 
 ### EmailTemplate
 

@@ -6,7 +6,7 @@
 
 To ensure that the admin menu includes the necessary configuration, follow these steps:
 
-1. In your package's source directory, which is typically located at **`packages/Webkul/Category/src`**, create a new folder named **`Config`** if it doesn't already exist.
+1. In your package's source directory, which is typically located at **`packages/Webkul/Category/src`**, create a new directory named **`Config`** if it doesn't already exist.
    ```
     └── packages
         └── Webkul
@@ -17,7 +17,7 @@ To ensure that the admin menu includes the necessary configuration, follow these
                         └── admin-menu.php
    ```
 
-2. Inside the newly created **`Config`** folder, create a file named **`admin-menu.php`**.
+2. Inside the newly created **`Config`** directory, create a file named **`admin-menu.php`**.
 
 3. Copy and paste the following code into the **`admin-menu.php`** file:
 
@@ -64,7 +64,7 @@ To ensure that the admin menu includes the necessary configuration, follow these
     }
     ```
 
-    Ensure that you have the necessary **`.png`** image files (**`category.png`** and **`category-active.png`**) and manually place them inside the **`assets/images`** folder of your package.
+    Ensure that you have the necessary **`.png`** image files (**`category.png`** and **`category-active.png`**) and manually place them inside the **`assets/images`** directory of your package.
 
 6. To merge the **`admin-menu.php`** configuration with the core menu file, use the **`mergeConfigFrom()`** method in the **`register()`** method of your package's service provider. Here's an example:
 

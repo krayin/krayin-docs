@@ -10,7 +10,7 @@ In addition to providing authentication services out of the box, Krayin also off
 
 To configure the ACL, follow these steps:
 
-1. Create a new file named **`acl.php`** in the **`packages/Webkul/Category/src/Config`** folder of your package. 
+1. Create a new file named **`acl.php`** in the **`packages/Webkul/Category/src/Config`** directory of your package. 
 
    ```
    └── packages

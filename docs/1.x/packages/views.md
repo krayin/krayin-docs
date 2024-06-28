@@ -6,7 +6,7 @@ To learn in detail about Views, you can visit the Laravel documentation [here](h
 
 ## Directory Structure
 
-- Create a **`Resources`** folder in the **`packages/Webkul/Category/src`** path. Inside the **`Resources`** folder, create another folder named **`views`**. Now, inside the **`views`** folder, we need to create folders, named **`category`**. The updated directory structure will look like this:
+- Create a **`Resources`** directory in the **`packages/Webkul/Category/src`** path. Inside the **`Resources`** directory, create another directory named **`views`**. Now, inside the **`views`** directory, we need to create folders, named **`category`**. The updated directory structure will look like this:
 
   ```
   └── packages
@@ -19,7 +19,7 @@ To learn in detail about Views, you can visit the Laravel documentation [here](h
                           └── category
   ```
 
-- Inside this folder, **`category`**, create a file named **`index.blade.php`** and add some HTML to it.
+- Inside this directory, **`category`**, create a file named **`index.blade.php`** and add some HTML to it.
 
   ```
   └── packages

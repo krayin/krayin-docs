@@ -6,11 +6,11 @@ To learn in detail about Localization, you can visit the Laravel documentation [
 
 ## Directory Structure
 
-- Now, let's create a language file for our package. Create a **`lang`** folder in the **`packages/Webkul/Category/src/Resources`** path.
+- Now, let's create a language file for our package. Create a **`lang`** directory in the **`packages/Webkul/Category/src/Resources`** path.
 
-- Inside the **`lang`** folder, you can create different folders for language translations. For example, you can create folders for English ('en'), Hindi ('hi'), etc. For now, let's create a folder named **`en`** (representing the language code). Inside the **`en`** folder, create a file named **`app.php`** for language translation.
+- Inside the **`lang`** directory, you can create different folders for language translations. For example, you can create folders for English ('en'), Hindi ('hi'), etc. For now, let's create a directory named **`en`** (representing the language code). Inside the **`en`** directory, create a file named **`app.php`** for language translation.
 
-  ```
+```php
   └── packages
       └── Webkul
           └── Category
@@ -21,19 +21,19 @@ To learn in detail about Localization, you can visit the Laravel documentation [
                       └── lang
                           └── en
                               └── app.php
-  ```
+```
 
 - Now, let's write a translation in **`app.php`** as follows:
 
-  ```php
+```php
   <?php
 
   return [
-      'admin' => [
-          'name' => 'John Doe'
-      ]
+    'admin' => [
+        'name' => 'John Doe'
+    ]
   ];
-  ```
+```
 
 ## Load Translation from Package
 

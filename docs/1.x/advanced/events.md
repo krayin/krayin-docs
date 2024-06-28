@@ -4,7 +4,7 @@
 
 ## Introduction
 
-Event Listeners in Krayin are a way to implement the observer pattern, where listeners respond to events that occur in the application. Events can be thought of as announcements made by the application, and listeners are the actions taken in response to those announcements. All event classes in Krayin are stored in the **Providers** folder, and the listeners are stored in the **Listeners** folder.
+Event Listeners in Krayin are a way to implement the observer pattern, where listeners respond to events that occur in the application. Events can be thought of as announcements made by the application, and listeners are the actions taken in response to those announcements. All event classes in Krayin are stored in the **Providers** directory, and the listeners are stored in the **Listeners** directory.
 
 ## Creating an Event Class
 
@@ -203,7 +203,7 @@ In most CRUD operations, events are fired before and after the execution of a fu
 
 To listen to an existing event in Krayin, you can follow these steps:
 
-1. Open the **`EventServiceProvider.php`** file located in the **`Providers`** folder.
+1. Open the **`EventServiceProvider.php`** file located in the **`Providers`** directory.
 
 2. Inside the **`boot`** method, you can register your listener by calling the **`Event::listen`** method and providing the event name and the listener function.
 

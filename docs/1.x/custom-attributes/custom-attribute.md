@@ -2,7 +2,7 @@
 
 Before using the CustomAttribute trait, you need to set it up.
 
-1. Create a configuration file inside the Category package's Config folder named attribute_entity_types.php.
+1. Create a configuration file inside the Category package's Config directory named attribute_entity_types.php.
 2. Add the following code snippet to the configuration file:
 
 ```php
