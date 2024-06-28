@@ -77,7 +77,7 @@ To merge the ACL configuration, follow these steps:
 
 3. After making the changes, run the following command to cache the latest changes:
 
-   ```sh
+   ```bash
    php artisan optimize
    ```
 

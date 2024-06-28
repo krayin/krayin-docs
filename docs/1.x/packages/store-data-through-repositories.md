@@ -34,7 +34,7 @@ $categories = $this->categoryRepository->all();
 
 - This command creates a new Repository class in the **`packages/Webkul/Category/src/Repository`** directory.
 
-  ```sh
+  ```bash
   php artisan package:make-repository CategoryRepository Webkul/Category
   ```
 

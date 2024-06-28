@@ -10,7 +10,7 @@ We are using the [konekt/concord](https://packagist.org/packages/konekt/concord)
 
 - This command creates a new **`Category`** Model inside your package.
 
-  ```sh
+  ```bash
   php artisan package:make-model Category Webkul/Category
   ```
 
@@ -91,7 +91,7 @@ Proxies, as their name suggests, lead you to the actual model class. The concept
 
 - The simple way to create a model is to execute the `make:model` artisan command:
 
-  ```sh
+  ```bash
   php artisan make:model Category
   ```
 

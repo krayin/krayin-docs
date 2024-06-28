@@ -16,7 +16,7 @@ Let's create a new migration file for your application. We will assume that the 
 
 This command creates a new migration class in the **`packages/Webkul/Category/src/Database/Migrations`** directory.
 
-```sh
+```bash
 php artisan package:make-migration CreateCategoryTable Webkul/Category
 ```
 
@@ -40,7 +40,7 @@ Create a `Database` folder in the `packages/Webkul/Category/src` path. Inside th
 
 Run the following command with the `--path` option to specify where your migration file will be placed.
 
-  ```sh
+  ```bash
   php artisan make:migration create_categories_table --path=packages/Webkul/Category/src/Database/Migrations
   ```
 

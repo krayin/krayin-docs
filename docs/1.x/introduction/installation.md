@@ -12,13 +12,13 @@ To install Krayin using Composer, use the following steps:
 
 - Run the following command:
 
-    ```sh
+    ```bash
     composer create-project krayin/laravel-crm
     ```
 
 - Run the following command:
 
-    ```sh
+    ```bash
     php artisan krayin-crm:install
     ```
 
@@ -28,7 +28,7 @@ To install Krayin using Composer, use the following steps:
 
 - Follow the prompts during the installation process to provide the following details:
 
-    ```sh
+    ```bash
     - Please enter the application name : 
     - Please enter the application URL : 
     - Please select the default application locale : 
@@ -41,7 +41,7 @@ To install Krayin using Composer, use the following steps:
     ```
 
 - For Create your admin credentials
-    ```sh
+    ```bash
     - Enter the name of the admin user :
     - Enter the email address of the admin user :
     - Configure the password for the admin user :
@@ -64,7 +64,7 @@ To access Krayin on your local server, follow these steps:
 1. Configure your HTTP server to point to the **`public/`** directory of the project.
 2. Run the following command:
 
-    ```sh
+    ```bash
     php artisan serve
     ```
 
