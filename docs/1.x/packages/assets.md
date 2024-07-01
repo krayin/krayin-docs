@@ -257,15 +257,15 @@ mix.js(__dirname + "/src/Resources/assets/js/app.js", "js/admin.js")
 
 ```
 
-  - mix.js(): Compiles the JavaScript file from the specified source to the specified destination.
+- mix.js(): Compiles the JavaScript file from the specified source to the specified destination.
 
-  - mix.copy(): Copies image files from the source directory to the public path.
+- mix.copy(): Copies image files from the source directory to the public path.
 
-  - mix.sass(): Compiles the SASS file to CSS.
+- mix.sass(): Compiles the SASS file to CSS.
 
-  - options({ processCssUrls: false }): Disables the processing of URLs found in CSS files.
+- options({ processCssUrls: false }): Disables the processing of URLs found in CSS files.
 
-  - vue(): Configures Laravel Mix to handle Vue.js single-file components.
+- vue(): Configures Laravel Mix to handle Vue.js single-file components.
 
 ### Webpack Configuration
 
@@ -298,11 +298,10 @@ if (mix.inProduction()) {
     mix.version();
 }
 ```
+
 This enables versioning in production, appending a unique hash to filenames to help with cache busting.
 
 Overall, this configuration sets up Laravel Mix to handle JavaScript, images, SASS, and Vue.js components, with different behaviors for development and production environments.
-
-
 
 ## Load Assets in Blade File
 

@@ -54,7 +54,7 @@ return [
 
 ### Define Routes
 
-In your package's `routes.php` file, define the named route used in` menu.php` as follows.
+In your package's `routes.php` file, define the named route used in `menu.php` as follows.
 
 ```php
 Route::get('/category', [CategoryController::class, 'index'])->name('category.admin.index');
@@ -92,7 +92,6 @@ Here the example how you can add menu icon.
     background-image: url("../images/sprite-main.svg");
 }
 ```
-
 
 ### Merge Configuration
 
