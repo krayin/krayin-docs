@@ -103,7 +103,7 @@ When working with multiple DataGrids, the default DataGrid implementation can ha
 
 Follow the steps below to implement multiple DataGrids:
 
-1. Create a folder called **`DataGrids`** inside the **`src`** folder of your package. Within the **`DataGrids`** folder, create a file called **`CategoryDataGrid.php`** that extends the **`DataGrid`** class from the **`Webkul\Ui`** package. The directory structure will be as follows:
+1. Create a directory called **`DataGrids`** inside the **`src`** directory of your package. Within the **`DataGrids`** directory, create a file called **`CategoryDataGrid.php`** that extends the **`DataGrid`** class from the **`Webkul\Ui`** package. The directory structure will be as follows:
 
     ```
     └── packages
@@ -124,7 +124,7 @@ Follow the steps below to implement multiple DataGrids:
 
     class CategoryDataGrid extends DataGrid
     {
-        // ...
+        ...
     }
     ```
 
@@ -141,7 +141,7 @@ Follow the steps below to implement multiple DataGrids:
     {
         use ProvideDropdownOptions;
 
-        // ...
+        ...
     }
     ```
 
@@ -168,7 +168,7 @@ Follow the steps below to implement multiple DataGrids:
             return view('category::admin.index');
         }
 
-        // ...
+        ...
     }
     ```
 

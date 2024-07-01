@@ -1,106 +1,143 @@
-# Admin Menu
+# Menu
 
 [[TOC]]
 
-## Directory Structure
+## Introduction
 
-To ensure that the admin menu includes the necessary configuration, follow these steps:
+The menu in Krayin allows developers to customize and extend the default menu items within the admin panel. By adding custom menu items, you can provide easy access to various sections and features specific to your package. This guide will walk you through the process of configuring the menu for your custom package.
 
-1. In your package's source directory, which is typically located at **`packages/Webkul/Category/src`**, create a new folder named **`Config`** if it doesn't already exist.
-   ```
-    └── packages
-        └── Webkul
-            └── Category
-                └── src
+## Configure the menu
+
+To ensure that the menu includes the necessary configuration, follow these steps:
+
+### Create Configuration File
+
+- Navigate to your package's source directory, typically located at `packages/Webkul/Category/src`.
+
+- Create a new directory named `Config` if it doesn't already exist.
+
+- Inside the `Config` directory, create a file `named menu.php`.
+
+```php
+└── packages
+    └── Webkul
+        └── Category
+            └── src
+                ├── ...
+                └── Config
+                    └── menu.php
+```
+
+### Define Menu Items
+
+Open `menu.php` and define your menu items using an array structure. Each item should include:
+
+- `key` Unique identifier for the menu item.
+- `name` Display name of the menu item.
+- `route` Laravel route name corresponding to the menu item.
+- `sort` Optional. Sort order for menu items.
+- `icon` Optional. CSS class for an icon associated with the menu item.
+
+```php
+<?php
+
+return [
+    [
+        'key'   => 'categories',
+        'name'  => 'categories',
+        'route' => 'category.admin.index',
+        'sort'  => 2,
+        'icon'  => 'icon-category',
+    ],
+];
+```
+
+### Define Routes
+
+In your package's `routes.php` file, define the named route used in `menu.php` as follows.
+
+```php
+Route::get('/category', [CategoryController::class, 'index'])->name('category.admin.index');
+```
+
+In this step, we define the route that corresponds to the menu item added in the previous step.
+
+### Add Menu Icon
+
+You can add menu icon by creating the file icons.scss, follow the below provided directory structure.
+
+```php
+└── packages
+    └── Webkul
+        └── Category
+            └── src
+                ├── ...
+                └── Resources
                     ├── ...
-                    └── Config
-                        └── admin-menu.php
-   ```
+                    └── assets
+                        ├── sass
+                        │   ├── icon.scss
+                        │   └── app.sass
+                        ├── js
+                        │   └── app.js
+                        └── images
+                    
+```
 
-2. Inside the newly created **`Config`** folder, create a file named **`admin-menu.php`**.
+Here the example how you can add menu icon.
 
-3. Copy and paste the following code into the **`admin-menu.php`** file:
+```scss
+.icon-category {
+    background-position: -371px -2px;
+    background-image: url("../images/sprite-main.svg");
+}
+```
 
-    ```php
-    <?php
+### Merge Configuration
 
-    return [
-        [
-            'key'        => 'categories',
-            'name'       => 'Categorys',
-            'route'      => 'category.admin.index',
-            'sort'       => 2,
-            'icon-class' => 'category-icon',
-        ],
-    ];
-    ```
+In your package's service provider (`CategoryServiceProvider`), use `mergeConfigFrom()` to integrate your `menu.php` configuration with the core menu.
 
-4. In your **`admin-routes.php`** file (located in the same package's source directory), add the named route **`category.admin.index`** as follows:
+```php
+<?php
 
-    ```php
-    Route::get('/categories', [CategoryController::class, 'index'])->name('category.admin.index');
-    ```
+namespace Webkul\Category\Providers;
 
-    In this step, we define the route that corresponds to the menu item added in the previous step.
+use Illuminate\Support\ServiceProvider;
 
-## Add Menu Icon
-
-5. To add the menu icon styling, open the **`assets/scss/admin.scss`** file within your package and add the following code:
-
-    ```css
-    .category-icon {
-        background-image: url("../images/category.png");
-        width: 45px;
-        height: 45px;
-        opacity: 0.6;
-        margin-left: 4px !important;
-    }
-
-    .active {
-        .category-icon {
-            opacity: 1;
-            background-image: url("../images/category-active.png");
-        }
-    }
-    ```
-
-    Ensure that you have the necessary **`.png`** image files (**`category.png`** and **`category-active.png`**) and manually place them inside the **`assets/images`** folder of your package.
-
-6. To merge the **`admin-menu.php`** configuration with the core menu file, use the **`mergeConfigFrom()`** method in the **`register()`** method of your package's service provider. Here's an example:
-
-    ```php
-    <?php
-
-    namespace Webkul\Category\Providers;
-
-    use Illuminate\Support\ServiceProvider;
-
-    class CategoryServiceProvider extends ServiceProvider
+class CategoryServiceProvider extends ServiceProvider
+{
+    /**
+     * Register services.
+     *
+     * @return void
+     */
+    public function register()
     {
-        /**
-         * Register services.
-         *
-         * @return void
-         */
-        public function register()
-        {
-            $this->mergeConfigFrom(
-                dirname(__DIR__) . '/Config/admin-menu.php', 'menu.admin'
-            );
-        }
+        $this->mergeConfigFrom(
+            dirname(__DIR__) . '/Config/menu.php', 'menu.admin'
+        );
     }
-    ```
+}
+```
 
-7. Finally, run the following command to optimize your application:
+### Optimize Application
 
-    ```
-    php artisan optimize
-    ```
+Finally, run the following command to optimize your application:
 
-    After completing these steps, the menu item should appear in the admin panel.
+```bash
+php artisan optimize:clear
+```
 
-    ::: details Admin Menu Output
+After completing these steps, your custom menu item (categories) with its associated route and icon should appear within the admin panel of Krayin.
 
-    ![Admin Menu Output](../../assets/images/package-development/category-package-output.png)
+## Level of Menu
 
-    :::
+In Krayin, the menu offers two levels of navigation to organize and access different sections and features efficiently:
+
+### First Level (Sidebar)
+
+This level appears in the sidebar and contains the primary menu items. These are the main sections of the admin panel, such as Dashboard, Catalog, and Sales.
+
+### Second Level (Hover Menu)
+
+When you hover over an item in the first-level sidebar menu, the second level appears. This level contains sub-items related to the main section, providing more specific options. For example, hovering over "Catalog" might show options like Products, Categories, and Attributes.

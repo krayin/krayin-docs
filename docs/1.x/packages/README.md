@@ -12,9 +12,7 @@ In Krayin, we have created numerous packages located at **`packages/Webkul/`**. 
         ├── publishable
         │   └── assets
         │       ├── css
-        │       │   ├── admin.css
-        │       │   ├── default.css
-        │       │   └── velocity.css
+        │       │   └── admin.css
         │       ├── images
         │       │   └── category-icon.png
         │       └── js
@@ -30,7 +28,7 @@ In Krayin, we have created numerous packages located at **`packages/Webkul/`**. 
             │   └── Category.php
             ├── Database
             │   ├── Migrations
-            │   │   └── 2023_04_21_173057_create_posts_table
+            │   │   └── 2023_04_21_173057_create_categories_table.php
             │   └── Seeders
             ├── Events
             ├── Http
@@ -39,6 +37,7 @@ In Krayin, we have created numerous packages located at **`packages/Webkul/`**. 
             │   │       └── CategoryController.php
             │   ├── Middleware
             │   └── Requests
+            │       └── CategoryRequest.php
             ├── Listeners
             ├── Mail
             ├── Models

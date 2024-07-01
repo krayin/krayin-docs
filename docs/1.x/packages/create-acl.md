@@ -4,107 +4,120 @@
 
 ## Introduction
 
-In addition to providing authentication services out of the box, Krayin also offers an Access Control List (ACL) functionality. This feature allows administrators to control user access to different parts of Krayin.
+Krayin's Access Control List (ACL) feature enhances security by allowing administrators to finely manage user access across different application sections. It enables precise control over permissions, ensuring users only access authorized resources and actions. By defining roles and assigning privileges based on organizational structures or responsibilities, Krayin's ACL strengthens governance, safeguards sensitive data, and ensures compliance with policies. This capability supports a secure and customizable user experience, adapting permissions dynamically to meet evolving organizational needs, thereby enhancing operational efficiency.
 
 ## Directory Structure
 
-To configure the ACL, follow these steps:
+To configure Access Control List (ACL) settings in Krayin, follow these structured steps:
 
-1. Create a new file named **`acl.php`** in the **`packages/Webkul/Category/src/Config`** folder of your package. 
+### Create Configuration File
 
-   ```
-   └── packages
-       └── Webkul
-           └── Category
-               └── src
-                   ├── ...
-                   └── Config
-                       ├── acl.php
-                       └── ...
-   ```
+ Begin by creating a new file named `acl.php` within the `Config` directory of your package located at `packages/Webkul/Category/src/Config`:
 
-2. Add the following code to **`acl.php`**:
+```
+└── packages
+      └── Webkul
+         └── Category
+            └── src
+                  ├── ...
+                  └── Config
+                     ├── acl.php
+                     └── ...
+```
 
-   ```php
-   <?php
+### Define ACL Configuration
 
-   return [
-       [
-           'key' => 'category',
-           'name' => 'category',
-           'route' => 'category.admin.index',
-           'sort' => 2
-       ]
-   ];
-   ```
+Inside `acl.php`, define ACL settings using an array format. Each array element represents a menu item or resource with parameters such as key, `name`, `route`, and `sort`. Here’s an example:
+ 
+Add the following code to `acl.php`:
 
-   In the above code, we have defined an array for each menu item with the parameters (key, name, route, and sort). You need to define the menus you want to include in the ACL here.
+```php
+<?php
 
-## Merge Configuration
+return [
+      [
+         'key'   => 'category',
+         'name'  => 'category',
+         'route' => 'category.admin.index',
+         'sort'  => 2
+      ]
+];
+```
+
+In the above code, we have defined an array for each menu item with the parameters (key, name, route, and sort). You need to define the menus you want to include in the ACL here.
+
+## Merge ACL Configuration
 
 To merge the ACL configuration, follow these steps:
 
-1. Open the **`CategoryServiceProvider`** class in the **`Webkul\Category\Providers`** namespace.
+### Modify Service Provider
 
-2. In the **`register`** method, add the following code to merge the ACL configuration:
+Navigate to the `CategoryServiceProvider` class within the `Webkul\Category\Providers` namespace.
 
-   ```php
-    <?php
+### Register Method
 
-    namespace Webkul\Category\Providers;
+Inside the `register` method of your service provider, use the mergeConfigFrom method to merge your ACL configuration file:
 
-    use Illuminate\Support\ServiceProvider;
+```php
+   <?php
 
-    class CategoryServiceProvider extends ServiceProvider
-    {
-        /**
-         * Register services.
-         *
-         * @return void
-         */
-        public function register()
-        {
-            //...
-            
-            $this->mergeConfigFrom(
-               dirname(__DIR__) . '/Config/acl.php', 'acl'
-            );
-        }
-    }
-    ```
+   namespace Webkul\Category\Providers;
 
-   This will merge the ACL configuration with the existing configuration.
+   use Illuminate\Support\ServiceProvider;
 
-3. After making the changes, run the following command to cache the latest changes:
-
-   ```sh
-   php artisan optimize
+   class CategoryServiceProvider extends ServiceProvider
+   {
+      /**
+      * Register services.
+      *
+      * @return void
+      */
+      public function register()
+      {
+         //  ...
+         
+         $this->mergeConfigFrom(
+            dirname(__DIR__) . '/Config/acl.php', 'acl'
+         );
+      }
+   }
    ```
 
-   This will ensure that the latest ACL configuration is used.
+Ensure that the path specified in mergeConfigFrom matches the location of your acl.php file.
 
-4. You can now check the updated ACL configuration in the admin panel:
+This will merge the ACL configuration with the existing configuration.
 
-   :::details Admin ACL Output
+### Clear Configuration Cache
 
-   ![Admin ACL Output](../../assets/images/package-development/admin-acl.png)
+After making changes, clear the configuration cache to apply the latest ACL configuration:
 
-   :::
+```sh
+php artisan optimize
+```
+
+### Verify in Admin Panel
+
+Check the updated ACL configuration within the admin panel to confirm that menu items are correctly displayed and sorted according to your configuration.
+
+This will ensure that the latest ACL configuration is used.
 
 ## Checking Roles and Permissions
 
-To check roles and permissions, follow these steps:
+To manage roles and permissions effectively:
 
-1. Open the **`Admin`** model in the **`Webkul\User\Models`** namespace.
+### Access Roles
 
-2. In this model, you will find a relationship binding with the **`Role`** model in the same namespace. You can use this relationship to access all the permissions of the current user.
+In the Admin model located in `Webkul\User\Models`, utilize the relationship with the Role model to manage `roles` associated with users.
 
-3. We have provided the **`bouncer()`** helper function, which allows you to check permissions. Use the following code to check if the current user has a specific permission:
+### Permission Checks
 
-   ```php
-   bouncer()->hasPermission($permission)
-   ```
+Use the `bouncer()` helper function to verify if a user has specific permissions. Example usage:
 
-   Replace `$permission` with the actual permission you want to check.
+```php
+bouncer()->hasPermission($permission)
+```
 
-By following these steps, you can configure and manage the Access Control List (ACL) in Krayin.
+Replace `$permission` with the actual permission you want to check.
+
+By following these steps, you can seamlessly configure and manage Access Control List (ACL) settings in Krayin, ensuring secure and controlled access to administrative functionalities.
+

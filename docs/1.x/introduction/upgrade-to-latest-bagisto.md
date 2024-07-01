@@ -41,7 +41,7 @@ To upgrade your current version to the latest version of Krayin, you need to fol
   php artisan storage:link
   ~~~
 
-- Copy all the content of the previous version's folder (e.g. `old-project/storage/app/public`) to the latest version's folder (e.g. `new-project/storage/app/public`).
+- Copy all the content of the previous version's directory (e.g. `old-project/storage/app/public`) to the latest version's directory (e.g. `new-project/storage/app/public`).
 
   ::: tip
     If your existing project also depends on some local storage, or you have changed some paths, or you want previous logs also then make sure you add all those also.
