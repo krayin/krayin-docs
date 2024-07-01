@@ -96,7 +96,7 @@ Here the example how you can add menu icon.
 
 ### Merge Configuration
 
-In your package's service provider (`categorieserviceProvider`), use `mergeConfigFrom()` to integrate your `menu.php` configuration with the core menu.
+In your package's service provider (`CategoryServiceProvider`), use `mergeConfigFrom()` to integrate your `menu.php` configuration with the core menu.
 
 ```php
 <?php
@@ -105,7 +105,7 @@ namespace Webkul\Category\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class categorieserviceProvider extends ServiceProvider
+class CategoryServiceProvider extends ServiceProvider
 {
     /**
      * Register services.

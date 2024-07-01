@@ -239,11 +239,11 @@ mix.setPublicPath(publicPath).mergeManifest();
 mix.disableNotifications();
 ```
 
-  - mix.setPublicPath(publicPath): Sets the public directory where the compiled assets will be stored.
+- mix.setPublicPath(publicPath): Sets the public directory where the compiled assets will be stored.
 
-  - mix.mergeManifest(): Merges the Mix manifests.
+- mix.mergeManifest(): Merges the Mix manifests.
 
-  - mix.disableNotifications(): Disables system notifications for the build process.
+- mix.disableNotifications(): Disables system notifications for the build process.
 
 ### Asset Compilation
 
