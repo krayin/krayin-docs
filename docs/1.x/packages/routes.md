@@ -12,11 +12,11 @@ For detailed information on Laravel routes, including how to define routes, use 
 
 ## Create a new Route
 
-Let's start by creating a route to display the categories. We will assume that the package name is "Category". 
+Let's start by creating a route to display the categories. We will assume that the package name is "Category".
 
 Start by creating a `Routes` directory inside `packages/Webkul/Category/src`.
 
-Inside the `Routes` directory, create two files named `admin-routes.php` and `shop-routes.php`. 
+Inside the `Routes` directory, create file named `routes.php`.
 
 The updated directory structure will look like this:
 
@@ -27,12 +27,12 @@ packages
         └── src
             ├── ...
             └── Routes
-                └── admin-routes.php
+                └── routes.php
 ```
 
-### Admin Routes
+### Routes
 
-`admin-routes.php` This file is for admin routes. Add the following code to this file:
+`routes.php` This file is for Routes. Add the following code to this file:
 
 ```php
 <?php
@@ -40,33 +40,17 @@ packages
 use Illuminate\Support\Facades\Route;
 use Webkul\Category\Http\Controllers\Admin\CategoryController;
 
-Route::group(['middleware' => ['web', 'admin'], 'prefix' => config('app.admin_url')], function () {
+Route::group([
+    'middleware' => ['web', 'admin_locale'],
+    'prefix'     => config('app.admin_path')
+], function () {
     Route::get('/categories', [CategoryController::class, 'index']);
 });
 ```
 
 #### Explanation
 
-Routes inside `admin-routes.php` are prefixed with the admin URL (`config('app.admin_url')`) and apply the `web` and `admin` middleware groups. Adjust the middleware and URL prefix according to your application's configuration.
-
-### Shop Routes
-
-`shop-routes.php` Define routes for the shop section in this file.
-
-```php
-<?php
-
-use Illuminate\Support\Facades\Route;
-use Webkul\Category\Http\Controllers\Shop\CategoryController;
-
-Route::group(['middleware' => ['web', 'theme', 'locale', 'currency']], function () {
-    Route::get('/categories', [CategoryController::class, 'index']);
-});
-```
-
-#### Explanation
-
-Routes inside `shop-routes.php` apply middleware groups (`web`, `theme`, `locale`, `currency`) commonly used for shop-related routes. Adjust middleware as per your application's requirements.
+Routes inside `routes.php` are prefixed with the admin URL (`config('app.admin_path')`) and apply the `web` and `admin_locale` middleware groups. Adjust the middleware and URL prefix according to your application's configuration.
 
 ## Loading Routes
 
@@ -90,22 +74,30 @@ CategoryServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //... 
+       // ...
         
-        $this->loadRoutesFrom(__DIR__ . '/../Routes/admin-routes.php');
+        $this->loadRoutesFrom(__DIR__ . '/../Routes/routes.php');
+    }
 
-        $this->loadRoutesFrom(__DIR__ . '/../Routes/shop-routes.php');
+    /**
+     * Register services.
+     * 
+     * @return void
+     */
+    public function register()
+    {
+        // ...
     }
 }
 ```
 
 #### Explanation
 
-The `loadRoutesFrom` method registers routes defined in `admin-routes.php` and `shop-routes.php` within the Laravel application, integrating them into the routing system.
+The `loadRoutesFrom` method registers the routes defined in `routes.php`, within the Laravel application, integrating them into the routing system.
 
 ## Available HTTP methods
 
-Basic routes are the most common type of routes in Laravel. They respond to HTTP requests like `GET`, `Category`, `PUT`, `DELETE`, etc., and map the URL to a specific controller method or closure function. For example:
+Basic routes are the most common type of routes in Laravel. They respond to HTTP requests like `GET`, `POST`, `PUT`, `DELETE`, etc., and map the URL to a specific controller method or closure function. For example:
 
 ### GET
 

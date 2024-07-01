@@ -92,7 +92,7 @@ To learn in detail about Views, you can visit the Laravel documentation [here](h
       */
       public function boot()
       {
-          //... 
+         // ...
 
           $this->loadViewsFrom(__DIR__ . '/../Resources/views', 'category');
       }

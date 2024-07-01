@@ -124,7 +124,7 @@ Follow the steps below to implement multiple DataGrids:
 
     class CategoryDataGrid extends DataGrid
     {
-        // ...
+        ...
     }
     ```
 
@@ -141,7 +141,7 @@ Follow the steps below to implement multiple DataGrids:
     {
         use ProvideDropdownOptions;
 
-        // ...
+        ...
     }
     ```
 
@@ -168,7 +168,7 @@ Follow the steps below to implement multiple DataGrids:
             return view('category::admin.index');
         }
 
-        // ...
+        ...
     }
     ```
 

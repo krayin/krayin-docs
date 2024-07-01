@@ -60,7 +60,7 @@ To learn in detail about Localization, you can visit the Laravel documentation [
       */
       public function boot()
       {
-          //... 
+         // ...
 
           $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'category');
       }

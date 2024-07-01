@@ -134,7 +134,7 @@ You can also use **`npm run watch`**, which watches for changes in your assets a
          */
         public function boot()
         {
-            //... 
+           // ...
 
             $this->publishes([
                 __DIR__ . '/../../publishable/assets' => public_path('vendor/webkul/category/assets'),
@@ -181,7 +181,7 @@ To link the stylesheets to the layouts, follow these steps:
          */
         public function boot()
         {
-            //... 
+           // ...
 
             $this->publishes([
                 __DIR__ . '/../../publishable/assets' => public_path('vendor/webkul/category/assets'),
@@ -199,6 +199,7 @@ To link the stylesheets to the layouts, follow these steps:
          */
         public function register()
         {
+          // ...
         }
     }
     ```

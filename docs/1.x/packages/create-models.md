@@ -142,6 +142,8 @@ use Webkul\Category\Contracts\Category as CategoryContract;
 
 class Category extends Model implements CategoryContract
 {
+  // ...
+
   /**
    * The attributes that are mass assignable.
    *
