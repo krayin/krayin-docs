@@ -53,11 +53,11 @@ Below is an example of basic HTML content that you can add to each `index.blade.
 
 @section('page_title')
     {{ __('category::app.categories.index.title') }}
-@endSection
+@endsection
 
 @section('content-wrapper')
 
-@endSection
+@endsection
 ```
 
 ## Load Views from Package
