@@ -56,7 +56,7 @@ To render content before or after a specific section of a template, follow these
          */
         public function boot()
         {
-            //...
+            //  ...
                 
             Event::listen('admin.products.create.header.before', function($viewRenderEventManager) {
                 $viewRenderEventManager->addTemplate('template file path to be injected');

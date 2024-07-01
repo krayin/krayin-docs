@@ -74,7 +74,7 @@ Inside the `register` method of your service provider, use the mergeConfigFrom m
       */
       public function register()
       {
-         //...
+         //  ...
          
          $this->mergeConfigFrom(
             dirname(__DIR__) . '/Config/acl.php', 'acl'

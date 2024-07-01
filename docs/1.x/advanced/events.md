@@ -45,7 +45,7 @@ In Krayin, you register events manually in the `boot` method of your `EventServi
  */
 public function boot()
 {
-    //...
+    //  ...
 
     Event::listen('event.name', 'path-upto-listener@function');
 }
@@ -67,7 +67,7 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //...
+        //  ...
 
         Event::listen('lead.create.after', 'Webkul\Admin\Listeners\Leads@linkToEmail');
     }

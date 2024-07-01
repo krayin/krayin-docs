@@ -6,61 +6,72 @@
 
 Krayin utilizes Concord, a Laravel extension, for building modules on top of Laravel's built-in service providers. Concord introduces the concept of model proxies, which allow you to override and extend core models in a modular way.
 
-Concord requires the existence of an interface, such as **Category**, which serves as a contract that can be bound to a concrete class using Concord's **registerModel()** method.
+Concord requires the existence of an interface, such as `Product`, which serves as a contract that can be bound to a concrete class using Concord's `registerModel()` method.
 
-By default, the **`Models\Category`** class is bound to the **`Contracts\Category`** interface within the module. If you want to extend or override this class, you can use Concord's **registerModel()** method.
+By default, the `Models\Product` class is bound to the `Contracts\Product` interface within the module. If you want to extend or override this class, you can use Concord's `registerModel()` method.
 
-The **registerModel()** method handles the binding of the interface and implementation in Laravel's service container, enabling you to easily type-hint the interface for automatic injection.
+The `registerModel()` method handles the binding of the interface and implementation in Laravel's service container, enabling you to easily type-hint the interface for automatic injection.
 
 For more details, you can visit the [Concord GitHub repository](https://github.com/artkonekt/concord) or refer to the [Concord documentation](https://artkonekt.github.io/concord/#/).
 
 ## Overriding a Model Class
 
-- In Concord modules, an interface is typically defined for each Eloquent model. If you wish to override a model, you can instruct Concord to use another class for that interface. Here's an example:
+To override a core model in Krayin using Concord, follow these steps:
 
-  ```php
-  <?php
+### Define an Interface (Contract)
 
-  namespace Webkul\Category\Providers;
+In Krayin's modular structure, each Eloquent model typically corresponds to an interface. This interface acts as a contract that specifies the methods the model must implement.
 
-  use Illuminate\Support\ServiceProvider;
+### Register the Model Override
 
-  class CategoryServiceProvider extends ServiceProvider
-  {
-      /**
-       * Bootstrap any application services.
-       *
-       * @return void
-       */
-      public function boot()
-      {
-          //...
-          
-          $this->app->concord->registerModel(
-              \Webkul\Category\Contracts\Category::class, \App\Http\Category::class
-          );
-      }
-  }
-  ```
+Use Concord's registerModel() method in your module's service provider (ServiceProvider) to bind your custom model implementation to the interface. Here’s how you can do it:
 
-- In the code above, the **registerModel()** method accepts two parameters:
+```php
+<?php
 
-  - The first parameter specifies the path to the interface (contract) you want to override.
-  - The second parameter specifies the path to the model class that will override the default implementation.
+namespace Webkul\Category\Providers;
 
-- The model class you're overriding must extend your specified model path, as shown in the example below:
+use Illuminate\Support\ServiceProvider;
 
-  ```php
-  <?php
+class CategoryServiceProvider extends ServiceProvider
+{
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        //  ...
+        
+        $this->app->concord->registerModel(
+            \Webkul\Product\Contracts\Product::class, \App\Http\Product::class
+        );
+    }
+}
+```
 
-  namespace App\Http;
+- Replace `\Webkul\Product\Contracts\Product::class` with the interface you wish to override.
+- Replace `\App\Http\Product::class` with the path to your custom model class that extends the core model you are overriding.
 
-  use Webkul\Category\Models\Category as CategoryBaseModel;
+### Implement the Custom Model Class
 
-  class Category extends CategoryBaseModel
-  {
-      //
-  }
-  ```
+Your custom model class (Product in this example) should extend the base core model (`ProductBaseModel`), ensuring it adheres to the contract specified by the interface. Here’s an example:
 
-By following this approach, you can override core models in Krayin using Concord's module system.
+```php
+<?php
+
+namespace App\Http;
+
+use Webkul\Product\Models\Product as ProductBaseModel;
+
+class Product extends ProductBaseModel
+{
+    //
+}
+```
+
+Once registered, you can use dependency injection or other Laravel mechanisms to reference the interface(`\Webkul\Product\Contracts\Product::class`) throughout your application. Laravel's service container will automatically resolve your custom model implementation (`\App\Http\Product::class`) where the interface is referenced.
+
+By following this approach, you can effectively extend and override core models within Krayin using Concord, maintaining modularity and flexibility in your application's architecture.
+

@@ -137,7 +137,7 @@ class CategoryServiceProvider extends ServiceProvider
    */
   public function boot()
   {
-    //... 
+    //  ... 
 
     $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'category');
   }
