@@ -19,7 +19,6 @@ To maintain organization and manage these assets effectively, developers typical
 - `/Resources/assets/images`: Stores image files used throughout the application.
 - `/Resources/assets/js`: Holds JavaScript files such as `app.js` for client-side scripting.
 - `/Resources/assets/sass`: Contains CSS files like `app.css` for styling the application.
-- `/Resources/assets/fonts`: Stores fonts used throughout the application.
 
 Here's the updated directory structure:
 
@@ -33,11 +32,10 @@ Here's the updated directory structure:
                     ├── ...
                     └── assets
                         ├── sass
-                        │   └── app.sass
+                        │   └── app.scss
                         ├── js
                         │   └── app.js
                         └── images
-                        └── fonts
                     
 ```
 
