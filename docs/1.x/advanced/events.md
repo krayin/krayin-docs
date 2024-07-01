@@ -4,12 +4,12 @@
 
 ## Introduction
 
-Event Listeners in Krayin are a way to implement the observer pattern, where listeners respond to events that occur in the application. Events can be thought of as announcements made by the application, and listeners are the actions taken in response to those announcements. All event classes in Krayin are stored in the `Providers` folder, and the listeners are stored in the `Listeners` folder.
+Event Listeners in Krayin are a way to implement the observer pattern, where listeners respond to events that occur in the application. Events can be thought of as announcements made by the application, and listeners are the actions taken in response to those announcements. All event classes in Krayin are stored in the `Providers` directory, and the listeners are stored in the `Listeners` directory.
 
 In Krayin, events and listeners are organized in a clear and structured manner:
 
-- Events are typically stored in the Events folder.
-- Listeners are stored in the Listeners folder.
+- Events are typically stored in the Events directory.
+- Listeners are stored in the Listeners directory.
 
 This organization makes it easy to manage and locate the event-driven components of your application.
 

@@ -59,16 +59,16 @@ To support localization in your package, you need to create language files. Foll
 #### Create the `lang` Folder
 
 - Navigate to the `packages/Webkul/Category/src/Resources` directory.
-- Create a folder named `lang`.
+- Create a directory named `lang`.
 
 #### Create Language Code Folders
 
-- Inside the `lang` folder, create different folders for each language you want to support. For example, you can create folders for English (`en`), Hindi (`hi`), etc.
-- For now, let's create a folder named `en` to represent English.
+- Inside the `lang` directory, create different folders for each language you want to support. For example, you can create folders for English (`en`), Hindi (`hi`), etc.
+- For now, let's create a directory named `en` to represent English.
 
 #### Create the `app.php` File
 
-- Inside the `en` folder, create a file named `app.php` for language translations.
+- Inside the `en` directory, create a file named `app.php` for language translations.
 
 ### Directory Structure
 
@@ -89,7 +89,7 @@ The updated directory structure will look like this:
 
 ### Writing a Translation in `app.php`
 
-To add translations for your package, you can edit the `app.php` file located in the language folder (`en` in this case). Below is an example of how you can define translations:
+To add translations for your package, you can edit the `app.php` file located in the language directory (`en` in this case). Below is an example of how you can define translations:
 
 #### Open the `app.php` File
 
