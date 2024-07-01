@@ -6,9 +6,9 @@
 
 [Laravel](https://laravel.com) packages are the primary way of adding functionality so the following features are distributed into packages to enhance the application and allow developers to follow the standard way of developing custom functionality.
 
-Bagisto comes with a set of powerful default packages that provide essential functionalities out of the box. Below is a list of these default packages along with a brief description of each:
+Krayin comes with a set of powerful default packages that provide essential functionalities out of the box. Below is a list of these default packages along with a brief description of each:
 
-## Available Packages In Bagisto
+## Available Packages In Krayin
 
 
 [Laravel](https://laravel.com) packages are the primary way of adding functionality so the following features are distributed into packages to enhance the application and allow developers to follow the standard way of developing custom functionality.

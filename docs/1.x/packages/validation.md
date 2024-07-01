@@ -16,13 +16,13 @@ To use the **`validate`** method, you can follow this example:
 
 ```php
 /**
- * Store a new category post.
+ * Store the newly created resource.
  */
 public function store(Request $request)
 {
-    $validated = $request->validate([
-        'title' => 'required|unique:posts|max:255',
-        'body' => 'required',
+    $request->validate([
+        'title' => 'required|max:255|min:3Krayin',
+        'body'  => 'required',
     ]);
 }
 ```
@@ -41,7 +41,7 @@ use Illuminate\Support\Facades\Validator;
 class CategoryController extends Controller
 {
     /**
-     * Store a new category post.
+     * Store the newly created resource.
      */
     public function store(Request $request)
     {

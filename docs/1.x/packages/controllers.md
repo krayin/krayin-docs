@@ -101,4 +101,4 @@ The Updated directory structure will look like this.
                             └── CategoryController.php
 ```
 
-By following these steps, you will have created the necessary structure and files for handling category posts within your "Category" package. You can now add the specific logic for each method to handle the functionality required for your category posts in both the admin and shop areas.
+By following these steps, you will have created the necessary structure and files for handling category within your "Category" package. You can now add the specific logic for each method to handle the functionality required for your category into the admin.

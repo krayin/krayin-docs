@@ -155,7 +155,7 @@ class CategoryController extends Controller
 
 ## Blade File Naming Convention
 
-Bagisto utilizes Blade templates to handle `listing`, `creation`, and `updating` operations for resources like products, posts, and categories. This section provides a detailed guide on how to implement these operations using Blade templates within your Bagisto package.
+Krayin utilizes Blade templates to handle `listing`, `creation`, and `updating` operations for resources like products, leads, persons, organizations, and categories. This section provides a detailed guide on how to implement these operations using Blade templates within your Krayin package.
 
 ### Listing (Index Blade):
 
@@ -173,6 +173,6 @@ Bagisto utilizes Blade templates to handle `listing`, `creation`, and `updating`
 
 - The `edit.blade.php` template contains a form for editing existing records.
 
-- The controller's `edit` method fetches the specific post and passes it to the view.
+- The controller's `edit` method fetches the specific categories and passes it to the view.
 
-By following these steps, you can effectively utilize Blade templates in Bagisto for listing, creating, and updating resources, ensuring a structured and maintainable approach to managing CRUD operations within your application.
+By following these steps, you can effectively utilize Blade templates in Krayin for listing, creating, and updating resources, ensuring a structured and maintainable approach to managing CRUD operations within your application.

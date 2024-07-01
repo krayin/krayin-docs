@@ -4,7 +4,7 @@
 
 ## Introduction
 
-Bagisto provides a range of helper methods in its packages to streamline and simplify the development process. These helpers are designed to offer utility functions that facilitate common tasks, reducing the amount of boilerplate code developers need to write and enhancing overall productivity.
+Krayin provides a range of helper methods in its packages to streamline and simplify the development process. These helpers are designed to offer utility functions that facilitate common tasks, reducing the amount of boilerplate code developers need to write and enhancing overall productivity.
 
 ## Core Helpers
 
