@@ -2,10 +2,11 @@ module.exports = {
     base: '/',
     port: '8080',
     cache: false,
-    title: 'Documentation',
+    title: 'Krayin CRM Developer Portal', // Set the default title for all pages
     description: 'Krayin CRM Developer Portal',
     head: [
-        ['link', { rel: "icon", type: "image/png", href: "/favicon.ico"}],
+        ['link', { rel: "icon", type: "image/png", href: "/favicon.ico" }],
+        ['meta', { name: 'title', content: 'Krayin CRM Developer Portal' }], // Meta title for SEO
     ],
     themeConfig: {
         smoothScroll: true,
