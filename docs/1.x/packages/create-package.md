@@ -2,29 +2,44 @@
 
 [[TOC]]
 
+## Introduction
+
+A package is a self-contained module that encapsulates specific features or functionality, allowing developers to add custom features without altering the core codebase. This approach not only preserves the integrity of the core system but also ensures that updates and maintenance can be carried out smoothly.
+
+By developing packages, you can introduce new functionalities, integrate third-party services, or customize existing features to better meet your business requirements. Each package is isolated, promoting clean code practices and enabling easier debugging and testing.
+
+This guide will take you through the process of creating a package for Krayin, from setting up the directory structure to defining configurations, routes, controllers, models, and views. By the end of this guide, you will have a solid understanding of how to develop and integrate packages into the Krayin platform, enhancing its capabilities while maintaining a robust and maintainable codebase.
+
+## Prerequisites
+
+- A working Krayin application
+- Composer installed
+
 ## Using Krayin Package Generator
 
 To facilitate package development, you can use the [Krayin Package Generator](https://github.com/krayin/krayin-package-generator). Follow the steps below to install it:
 
-1. Install the Krayin Package Generator by running the following command in the root folder of your Krayin application:
+- Install the Krayin Package Generator by running the following command in the root directory of your Krayin application:
 
-   ```shell
+   ```bash
    composer require krayin/krayin-package-generator
    ```
 
-2. Once installed, you can generate your package using the following command:
+- Once installed, you can generate your package using the following command:
+
+    We will assume that the package name is "**Category**".
 
    - If the package directory does not exist:
 
-     ```shell
-     php artisan package:make Webkul/Category
-     ```
+    ```bash
+    php artisan package:make Webkul/Category
+    ```
 
    - If the package directory already exists, you can use the **`--force`** option to overwrite it:
 
-     ```shell
-     php artisan package:make Webkul/Category --force
-     ```
+    ```bash
+    php artisan package:make Webkul/Category --force
+    ```
 
    This command will set up the necessary files and directories in the **`packages`** directory.
 
@@ -32,99 +47,95 @@ To facilitate package development, you can use the [Krayin Package Generator](ht
 
 To register your package, follow these steps:
 
-1. Add your package's namespace to the **`psr-4`** section in the **`composer.json`** file located in the root directory of your Krayin application. Update it as follows:
+Add your package's namespace to the **`psr-4`** section in the **`composer.json`** file located in the root directory of your Krayin application. Update it as follows:
 
    ```json
-   "autoload": {
+    "autoload": {
        ...
        "psr-4": {
-           // Other PSR-4 namespaces
            "Webkul\\Category\\": "packages/Webkul/Category/src"
-       }
-   }
+        }
+       ...
+    }
    ```
 
-2. Register your package's service provider in the **`config/app.php`** file located in the root directory of your Krayin application. Add the following line to the **`providers`** array:
+Register your package's service provider in the **`config/app.php`** file located in the root directory of your Krayin application. Add the following line to the **`providers`** array:
 
-    ```php
-    <?php
+```php
+<?php
 
-        return [
-            'providers' => [
-                //
-                Webkul\Category\Providers\CategoryServiceProvider::class,
-            ],
-        ];
-    ```
+return [
+    
+    // Other configuration options
 
-3. Run the following commands to autoload your package and publish its assets and configurations:
+    'providers' => ServiceProvider::defaultProviders()->merge([
+        // Other service providers
+        Webkul\Category\Providers\CategoryServiceProvider::class,
+    ])->toArray(),
+    
+    // Other configuration options
+];
+```
 
-   ```shell
-   composer dump-autoload
-   php artisan optimize
-   php artisan vendor:publish --force
-   ```
+### Run the Commands
 
-   When prompted to select which items to publish, choose the number corresponding to **`"Webkul\Category\Providers\CategoryServiceProvider"`** and press enter to publish all assets and configurations.
+Run the following commands to autoload your package and publish its assets and configurations:
 
-::: details Example Output in the Browser
+```bash
+composer dump-autoload
+php artisan optimize
+php artisan vendor:publish --provider=Webkul\Category\Providers\CategoryServiceProvider
+```
 
-![helloworld-admin-browser-output](../../assets/images/package-development/category-package-output.png)
-
-:::
+When prompted to select which items to publish, choose the number corresponding to **`"Webkul\Category\Providers\CategoryServiceProvider"`** and press enter to publish all assets and configurations.
 
 Congratulations! Your package is now registered and ready to use. Start creating something cool!
 
 ## Manual Setup of Files
 
-If you prefer to set up your package manually, follow these steps assuming you are familiar with package directory structures and workflows. We'll use the default **`package`** folder in Krayin as an example.
+If you prefer to set up your package manually, follow these steps assuming you are familiar with package directory structures and workflows. We'll use the default **`package`** directory in Krayin as an example.
 
 ### Create Package Directory
 
-1. Inside the **`packages/Webkul`** folder, create a folder with your package name. Your structure should look like this:
+Inside the **`packages/Webkul`** directory, create a directory with your package name. Your structure should look like this:
 
-   ```
-   └── packages
-       └── Webkul
-           └── Category
-   ```
+```
+└── packages
+    └── Webkul
+        └── Category
+```
 
-2. In your package folder, create a folder named as **`src`**. This is where you'll put all your package-related files. Your updated structure will look like this:
+In your package directory, create a directory named as **`src`**. This is where you'll put all your package-related files. Your updated structure will look like this:
 
-   ```
+```
    └── packages
        └── Webkul
            └── Category
                └── src
-   ```
+```
 
 ### Create Service Provider
 
-1. In the **`src`** folder, create a folder named as **`Providers`**. Inside that folder, create a file named as **`CategoryServiceProvider.php`**. Your structure should look like this:
+In the **`src`** directory, create a directory named as **`Providers`**. Inside that directory, create a file named as **`CategoryServiceProvider.php`**. Your structure should look like this:
 
-   ```
+```
    └── packages
        └── Webkul
            └── Category
                └── src
                    └── Providers
                        └── CategoryServiceProvider.php
-   ```
+```
 
-2. Copy the following code and paste it into **`CategoryServiceProvider.php`**:
+Copy the following code and paste it into **`CategoryServiceProvider.php`**:
 
-   ```php
+```php
    <?php
 
    namespace Webkul\Category\Providers;
 
    use Illuminate\Support\ServiceProvider;
 
-   /**
-    * CategoryServiceProvider
-    *
-    * @copyright 2024 Webkul Software PVT. LTD.
-    */
    class CategoryServiceProvider extends ServiceProvider
    {
        /**
@@ -147,39 +158,48 @@ If you prefer to set up your package manually, follow these steps assuming you a
            //
        }
    }
-   ```
+```
 
 ### Register Your Package
 
-1. Add your package's namespace to the **`psr-4`** section in the **`composer.json`** file located in the root directory of your Krayin application. Update it as follows:
+Add your package's namespace to the **`psr-4`** section in the **`composer.json`** file located in the root directory of your Krayin application. Update it as follows:
 
-   ```json
-   "autoload": {
+```json
+    "autoload": {
        ...
-       "psr-4": {
-           // Other PSR-4 namespaces
+        "psr-4": {
+           // ...
            "Webkul\\Category\\": "packages/Webkul/Category/src"
-       }
-   }
-   ```
+        }
+    }
+```
 
-2. Register your package's service provider in the **`config/app.php`** file located in the root directory of your Krayin application. Add the following line to the **`providers`** array:
+Register your package's service provider in the **`config/app.php`** file located in the root directory of your Krayin application. Add the following line to the **`providers`** array:
 
-    ```php
-    <?php
+```php
+<?php
 
-        return [
-            'providers' => [
-                //
-                Webkul\Category\Providers\CategoryServiceProvider::class,
-            ],
-        ];
-    ```
+return [
+    // ...
 
-3. Run the following command to autoload your package:
+    'providers' => ServiceProvider::defaultProviders()->merge([
+        // ...
 
-   ```shell
+        Webkul\Category\Providers\CategoryServiceProvider::class,
+
+        // ...
+    ])->toArray(),
+    
+    // ...
+];
+```
+
+### Run the Commands
+
+Run the following command to autoload your package:
+
+```bash
    composer dump-autoload
-   ```
+```
 
-   Your package is now ready to use!
+Your package is now ready to use !

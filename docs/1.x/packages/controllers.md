@@ -2,164 +2,103 @@
 
 [[TOC]]
 
-To learn in detail about Controllers, you can visit the Laravel documentation [here](https://laravel.com/docs/10.x/controllers).
+## Introduction
 
-## Directory Structure
+In Laravel, controllers are responsible for handling the request logic of an application. They act as intermediaries between the models and views, processing user input, interacting with the data layer, and returning the appropriate responses. By organizing related request handling logic into separate classes, controllers make it easier to manage and maintain the application's codebase.
 
-- Create an **`Http`** folder in the **`packages/Webkul/Category/src`** path. Inside the **`Http`** folder, create another folder named **`Controllers`**. Inside the **`Controllers`** folder, we need to create one file named **`Controller.php`** and two folders, namely **`Category`**.
+To learn in detail about Controllers, you can visit the Laravel documentation [here](https://laravel.com/docs/11.x/controllers).
 
-- Inside both the **`Category`** folders, create a **`CategoryController.php`** file. The updated directory structure will look like this:
+## How to create Controllers
 
-  ```
-  └── packages
-      └── Webkul
-          └── Category
-              └── src
-                  ├── ...
-                  └── Http
-                      └── Controllers
-                          ├── Controller.php
-                          └── Category
-                              └── CategoryController.php
-  ```
+To start building a controller for our category within the Laravel package named "Category," follow the steps below:
 
-## Base Controller
+### Directory Structure
 
-- **`Controller.php`**: This is the base controller. Add the following code to this file:
+Create the necessary directory structure within the `packages/Webkul/Category/src` path. To create the directory structure follow the following steps:
 
-  ```php
-  <?php
+1. Navigate to the `packages/Webkul/Category/src` directory.
+2. Create an `Http` directory inside `src`.
+3. Inside the `Http` directory, create another directory named `Controllers`.
+4. Inside the `Controllers` directory, create base controller named `Controller.php` which is extends the `Laravel` core controller:
 
-  namespace Webkul\Category\Http\Controllers;
+```php
+<?php
 
-  use Illuminate\Foundation\Bus\DispatchesJobs;
-  use Illuminate\Routing\Controller as BaseController;
-  use Illuminate\Foundation\Validation\ValidatesRequests;
-  use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+namespace Webkul\Admin\Http\Controllers;
 
-  class Controller extends BaseController
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
+class Controller extends BaseController
+{
+  use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+}
+```
+
+5. Now create a new directory named Category inside this directory, create a new file named `CategoryController.php` file.
+
+In `packages/Webkul/Category/src/Http/Controllers/Category/CategoryController.php`, define the CategoryController:
+
+```php
+<?php
+
+namespace Webkul\Category\Http\Controllers\Shop;
+
+use Webkul\Category\Http\Controllers\Controller;
+use Webkul\Category\Repository\CategoryRepository;
+
+class CategoryController extends Controller
+{
+  /**
+   * Create a controller instance.
+   * 
+   * @return void
+   */
+  public function __construct(protected CategoryRepository $categoryRepository)
   {
-      use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
   }
-  ```
 
-## Controllers
+  /**
+   * Display the listing of the resource.
+   * 
+   * @return \Illuminate\View\View
+   */
+  public function index()
+  {
+    $categories = $this->categoryRepository->all();
 
-- **`Category/CategoryController.php`**: This file is for category usage. Add the following code to this file:
+    return view('category::admin.index', compact('categories'));
+  }
 
-  ```php
-    <?php
+  /**
+   * Category details.
+   * 
+   * @return \Illuminate\View\View
+   */
+  public function show(int $id) 
+  {
+    // ...
+  }
 
-    namespace Webkul\Category\Http\Controllers\Category;
+  // ...
+}
+```
 
-    use Webkul\Admin\Http\Controllers\Controller;
-    use Webkul\Category\DataGrids\Category\CategoryDataGrid;
-    use Webkul\Category\Repositories\CategoryRepository;
+The Updated directory structure will look like this.
 
-    class CategoryController extends Controller
-    {
-        /**
-        * Create a new controller instance.
+```php
+└── packages
+    └── Webkul
+        └── Category
+            └── src
+                ├── ...
+                └── Http
+                    └── Controllers
+                        ├── Controller.php
+                        └── Category
+                            └── CategoryController.php
+```
 
-        * @return void
-        */
-        public function __construct(protected CategoryRepository $categoryRepository)
-        {
-            request()->request->add(['entity_type' => 'category']);
-        }
-
-        /**
-        * Display a listing of the resource.
-        *
-        * @return \Illuminate\View\View
-        */
-        public function index()
-        {
-            if (request()->ajax()) {
-                return app(CategoryDataGrid::class)->toJson();
-            }
-        
-            return view('category::category.index');
-        }
-
-        /**
-        * Create a new category.
-        *
-        * @return \Illuminate\View\View
-        */
-        public function create()
-        {
-            return view('category::category.create');
-        }
-
-        /**
-        * Store a newly created category in storage.
-        *
-        * @return \Illuminate\Http\RedirectResponse
-        */
-        public function store()
-        {
-            $this->validate(request(), [
-                'name' => 'required',
-                'slug' => 'required|unique:categories,slug',
-            ]);
-
-            $this->categoryRepository->create(request()->all());
-
-            session()->flash('success', 'Category created successfully.');
-
-            return redirect()->route('admin.categories.index');
-        }
-
-        /**
-        * Show the form for editing the specified category.
-        *
-        * @param int $id
-        * @return \Illuminate\View\View
-        */
-        public function edit($id)
-        {
-            $category = $this->categoryRepository->findOrFail($id);
-
-            return view('category::category.edit', compact('category'));
-        }
-
-        /**
-        * Update the specified category in storage.
-        *
-        * @param int $id
-        * @return \Illuminate\Http\RedirectResponse
-        */
-        public function update($id)
-        {
-            $this->validate(request(), [
-                'name' => 'required',
-                'slug' => 'required|unique:categories,slug,' . $id,
-            ]);
-
-            $this->categoryRepository->update(request()->all(), $id);
-
-            session()->flash('success', 'Category updated successfully.');
-
-            return redirect()->route('admin.categories.index');
-        }
-
-        /**
-        * Remove the specified category from storage.
-        *
-        * @param int $id
-        * @return \Illuminate\Http\RedirectResponse
-        */
-        public function destroy($id)
-        {
-            $category = $this->categoryRepository->findOrFail($id);
-
-            $category->delete($id);
-
-            session()->flash('success', 'Category deleted successfully.');
-
-            return redirect()->route('admin.categories.index');
-        }
-    }
-
-  ```
+By following these steps, you will have created the necessary structure and files for handling category within your "Category" package. You can now add the specific logic for each method to handle the functionality required for your category into the admin.

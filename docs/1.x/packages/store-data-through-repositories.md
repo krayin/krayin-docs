@@ -1,48 +1,53 @@
-# Repository
+# Repositories
 
 [[TOC]]
 
 ## Introduction
 
-In traditional development, application logic is often written directly in the controller. However, there is an alternative approach that abstracts some of these calls into PHP classes called Repositories. The purpose of repositories is to decouple models from controllers and provide readable names for complex queries.
+In traditional development, application logic is often embedded in controllers. An alternative approach uses Repositories to abstract database operations and queries, promoting cleaner, more maintainable code.
 
-This file defines our Repository class. Instances of this class have a model property that is bound to an Eloquent model. With this binding in the constructor, we can call Eloquent methods such as findOrFail, update, or all from the class methods.
+Repositories decouple models from controllers and provide readable names for complex queries. Each Repository class binds to an Eloquent model in its constructor, enabling the use of methods like `findOrFail`, `update`, and `all`. This separation enhances code readability, reusability, and adherence to the separation of concerns principle, making the application easier to manage and scale.
 
-We are using the Prettus Repository package. You can find all available methods in the Prettus repository [here](https://github.com/andersao/l5-repository). Here are some examples:
+## Dependency Injection
 
-Examples:
-
-| Sl. no. | Method              | Description                               |
-| ------- | ------              | -----------                               |
-| 1       | all                 | Find all results in the Repository         |
-| 2       | paginate            | Find all results in the Repository with pagination  |
-| 3       | find                | Find a result by ID                        |
-| 4       | with(['table_name'])| Load the model relationships               |
-| 5       | findWhereIn         | Find results by multiple values in one field|
+Dependency Injection (DI) is a design pattern widely used in Laravel for managing class dependencies. It allows classes to receive their dependencies from an external source rather than creating them internally. This promotes loose coupling between classes, enhances reusability, and simplifies unit testing.
 
 ```php
-// Bound in constructor
 public function __construct(protected CategoryRepository $categoryRepository) {}
 ```
 
-```php
-// Find all results in the Repository
-$categories = $this->categoryRepository->all();
-```
+The `__construct()` method is defined with a parameter `$categoryRepository` typed as `CategoryRepository`.
+Laravel's service container automatically resolves and injects an instance of `CategoryRepository` when an instance of the class containing this constructor is instantiated.
+
+This is a form of dependency injection where the `CategoryRepository` dependency is injected into the class through its constructor.
 
 ## Using Krayin Package Generator
 
-- This command creates a new Repository class in the **`packages/Webkul/Category/src/Repository`** directory.
+The Krayin package generator provides a convenient way to create new components for your Krayin application. One of these components is the Repository class, which is essential for abstracting database interactions and promoting clean code architecture.
 
-  ```sh
-  php artisan package:make-repository CategoryRepository Webkul/Category
-  ```
+### Create a New Repository Class
 
-## Manual Setup of Files
+To create a new Repository class, use the following command. This command creates a new Repository class in the `packages/Webkul/Category/src/Repository` directory.
 
-- Create a **`Repository`** folder inside **`Webkul/Category/src/`** and create a file named **`CategoryRepository.php`**. In the repository class, create the **`model()`** method that returns the path of your contract class.
+```bash
+php artisan package:make-repository CategoryRepository Webkul/Category
+```
 
-  ```
+### Explanation
+
+- **Command:** The command `php artisan package:make-repository` is used to generate a new Repository class.
+- **Repository Name:** `CategoryRepository` is the name of the new Repository class that will be created.
+- **Package Path:** `Webkul/Category` specifies the package within the packages directory where the new Repository class will be created.
+
+## Manually Setting Up Repository Files
+
+Manually setting up repository files involves creating and organizing repository classes in your application without relying on automated generators. This approach allows for custom structuring and naming conventions tailored to your project's needs. By manually managing repository files, developers can ensure precise control over code organization and maintain consistency across the application architecture.
+
+### Setting Up CategoryRepository in Webkul/Category Package
+
+Start by creating a `Repository` directory within the `Webkul/Category/src/` directory. This directory will house the repository class responsible for handling category-related database operations.Create a file named `CategoryRepository.php`. 
+
+```
   └── packages
       └── Webkul
           └── Category
@@ -50,72 +55,125 @@ $categories = $this->categoryRepository->all();
                   ├── ...
                   └── Repository
                       └── CategoryRepository.php
-  ```
+```
 
-- Copy the following code into your newly created repository file.
+This file will contain the `CategoryRepository` class, which will encapsulate methods for interacting with category data.
+Copy the following code into your newly created repository file.
 
-  ```php
-  <?php
+```php
+<?php
 
-  namespace Webkul\Category\Repositories;
+namespace Webkul\Category\Repository;
 
-  use Illuminate\Container\Container;
-  use Webkul\Core\Eloquent\Repository;
-  use Webkul\Attribute\Repositories\AttributeValueRepository;
+use Webkul\Core\Eloquent\Repository;
 
-  class CategoryRepository extends Repository
-  {
-      /**
-      * Create a new repository instance.
-      *
-      * @return void
-      */
-      public function __construct(
-          protected AttributeValueRepository $attributeValueRepository,
-          Container $container
-      )
-      {
-          parent::__construct($container);
-      }
+class CategoryRepository extends Repository
+{
+    /**
+     * Specify the Model class name
+     *
+     * @return string
+     */
+    function model(): string
+    {
+        return 'Webkul\Category\Contracts\Category';
+    }
+}
+```
 
-      /**
-      * Specify Model class name
-      *
-      * @return mixed
-      */
-      function model()
-      {
-          return 'Webkul\Category\Contracts\Category';
-      }
+## Available Methods
 
-      /**
-      * @param array $data
-      * @return \Webkul\Product\Contracts\Product
-      */
-      public function create(array $data)
-      {
-          $product = parent::create($data);
+We are using the Prettus Repository package. You can find all available methods in the Prettus repository [here](https://github.com/andersao/l5-repository?tab=readme-ov-file#methods). Here are some examples:
 
-          $this->attributeValueRepository->save($data, $product->id);
+Examples:
 
-          return $product;
-      }
+| SN. | Method              | Description                               |
+| ------- | ------              | -----------                               |
+| 1       | all                 | Find all results in the Repository        |
+| 2       | find                | Find a result by ID                       |
+| 3       | findOrFail          | Retrieve a single resource by its ID or throw an exception if not found.|
+| 4       | create              | Create a new resource.                       |
+| 5       | update              | Update an existing resource by its ID.       |
+| 6       | delete              | Delete a resource by its ID.                 |
+| 7       | paginate            | Find all results in the Repository with pagination  |
+| 8       | where               | Retrieve resource matching specific conditions.  |
+| 9       | first               | Retrieve the first resource matching specific conditions. |
+| 10      | firstOrFail         | Retrieve the first resource matching specific conditions or throw an exception if not found. |
+| 11      | With(['table_name'])| Load the model relationships Eager load relationships |
+| 12      | findWhereIn         | Find results by multiple values in one field|
 
-      /**
-      * @param array  $data
-      * @param int    $id
-      * @param string $attribute
-      * @return \Webkul\Product\Contracts\Product
-      */
-      public function update(array $data, $id, $attribute = "id")
-      {
-          $product = parent::update($data, $id);
+### all
 
-          $this->attributeValueRepository->save($data, $id);
+The all method is called on the categoryRepository instance. This method retrieves all records of the Category model from the database.
 
-          return $product;
-      }
-  }
-  ```
+```php
+$categories = $this->categoryRepository->all();
+```
 
-- Now, your **`CategoryRepository`** is ready to use.
+### Find
+
+The find method is called on the categoryRepository instance. This method attempts to retrieve a Category model by its primary key.
+
+```php
+$category = $this->categoryRepository->find($id);
+```
+
+### FindOrFail
+
+The findOrFail method is called on the categoryRepository instance. This method attempts to retrieve a Category model by its primary key and throws ModelNotFound Exception.
+
+```php
+$category = $this->categoryRepository->findOrFail($id);
+```
+
+### Create
+
+The `create` method is called on the `categoryRepository` instance. This method is responsible for creating and saving a new instance of the `Category` model to the database.
+
+```php
+$category = $this->categoryRepository->create($data);
+```
+
+### Update
+
+The `update` method is called on the `categoryRepository` instance. This method is responsible for updating a existing instance of the `Category` model to the database.
+
+```php
+$category = $this->categoryRepository->update($data, $id);
+```
+
+### Delete
+
+The `delete` method is called on the `categoryRepository` instance. This method is responsible for delete a existing instance of the `category` model to the database.
+
+```php
+$category = $this->categoryRepository->delete($id);
+```
+
+### Paginate
+
+The `paginate` method is called on the `categoryRepository` instance. This method is responsible for retrieving a paginated set of records for the `Category` model from the database.
+
+```php
+// Number of categories to be displayed per page.
+$perPage = 15;
+
+// Paginate the categories.
+$categories = $this->categoryRepository->paginate($perPage);
+```
+
+### FindWhere
+
+The `findWhere` method is called on the categoryRepository instance. This method adds a query constraint to filter the results based on a specified condition.
+
+```php
+$categories = $this->categoryRepository->findWhere([
+    'status' => 'active',
+]);
+```
+
+The `model()` method within CategoryRepository.php returns the path of your contract class (`CategoryContract` in this example). This method initializes the model instance used throughout the repository for database interactions.
+
+Your `CategoryRepository` is now set up and ready for use within your application. It encapsulates the logic for interacting with category data, following best practices for separation of concerns and promoting clean architecture.
+
+By utilizing the `CategoryRepository`, you can efficiently perform database operations related to categorys while maintaining a structured and maintainable codebase.
