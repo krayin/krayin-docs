@@ -85,4 +85,4 @@ Contributions are welcome! Follow the contribution guidelines to get started.
 
 ### License
 
-Krayin is open-sourced software licensed under the MIT license.sir mujhe 
+Krayin is open-sourced software licensed under the MIT license.
