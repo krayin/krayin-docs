@@ -6,7 +6,7 @@
 
 Free & Opensource Laravel CRM solution for SMEs and Enterprises for complete customer lifecycle management.
 
-We also have a forum for any type of concerns, feature requests, or discussions. Please visit: [Krayin CRM Forums](https://forums.krayincrm.com/)
+We also have a forum for any type of concerns, feature requests, or discussions. Try our [demo](https://demo.krayincrm.com/) or you can visit: [Krayin](https://krayincrm.com/)
 
 ## Key Features of Krayin
 
