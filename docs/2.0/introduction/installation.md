@@ -2,6 +2,60 @@
 
 [[TOC]]
 
+## Install Using GUI Installer
+
+To install Krayin using our GUI installer, you can follow any of the following methods:
+
+#### Method 1:
+
+- Choose the directory where you want to install Krayin. Open your terminal and navigate to this directory. 
+
+- Once you are in the desired directory, run the following command in your terminal to install Krayin:
+
+    ```sh
+    composer create-project Krayin/Krayin
+    ```
+
+- Configure your HTTP server to point to the **`public/`** directory of the project.
+
+- Open your browser and access the following URL:
+
+    ```
+    http://localhost/krayin/public/
+    ```
+
+  This will launch the Krayin installer.
+
+#### Method 2:
+
+Otherwise you can download the zip file and install it using the following steps:
+
+- [Download Krayin](https://krayincrm.com/download/) from our website.
+
+- Extract the contents of the downloaded
+
+- Navigate to the project root directory.
+
+- Run the following command:
+
+    ```sh
+    composer create project
+    ```
+
+- Configure your HTTP server to point to the **`public/`** directory of the project.
+
+- Open your browser and access the following URL:
+
+    ```
+    http://localhost/krayin/public/
+    ```
+
+   This will launch the Krayin installer.
+
+::: warning
+Ensure that Composer is installed on your system
+:::
+
 ## Install Using Composer
 
 To install Krayin using Composer, use the following steps:

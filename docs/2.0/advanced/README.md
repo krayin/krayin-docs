@@ -1,6 +1,6 @@
 # Digging Deeper
 
-Welcome to the "Digging Deeper" section of the Krayin documentation. Here, we will explore various advanced topics related to Krayin, which will enable you to customize and extend your e-commerce platform to suit your specific needs.
+Welcome to the "Digging Deeper" section of the Krayin documentation. Here, we will explore various advanced topics related to Krayin, which will enable you to customize and extend your CRM platform to suit your specific needs.
 
 We expect you to have knowledge of creating packages in Laravel. If you are new to package development, we recommend referring to the [Package Development](../packages/create-package.html) section for a primer on creating and managing packages in Laravel.
 

@@ -1,6 +1,6 @@
 ## Package Development
 
-If you are looking to extend the functionalities of Krayin eCommerce platform, creating a package is the way to go. A package is a self-contained module that adds specific features to the platform. It allows developers to add custom functionality to the platform without modifying the core codebase.
+If you are looking to extend the functionalities of Krayin CRM platform, creating a package is the way to go. A package is a self-contained module that adds specific features to the platform. It allows developers to add custom functionality to the platform without modifying the core codebase.
 
 This guide will walk you through the process of developing a package for Krayin.
 
@@ -9,14 +9,6 @@ In Krayin, we have created numerous packages located at **`packages/Webkul/`**. 
 ~~~directory-structure
 └── Webkul
     └── Category
-        ├── publishable
-        │   └── assets
-        │       ├── css
-        │       │   └── admin.css
-        │       ├── images
-        │       │   └── category-icon.png
-        │       └── js
-        │           └── app.js
         └── src
             ├── Config
             │   ├── acl.php
@@ -56,10 +48,11 @@ In Krayin, we have created numerous packages located at **`packages/Webkul/`**. 
                 │   │   └── category-icon.png
                 │   ├── js
                 │   │   └── app.js
-                │   └── sass
-                │       └── admin.scss
+                │   └── css
+                │       └── app.css
                 ├── lang
-                │   └── app.php
+                │   ├── ar.php
+                │   └── en.php
                 └── views
                     ├── admin
                     │   └── layouts

@@ -115,7 +115,7 @@ Template Management
 
 ### Installer
 
-The Installer Package in Krayin CRM streamlines the setup and installation process, allowing users to quickly and efficiently get the CRM up and running. The package now includes command-line interface (CLI) support, enhancing ease of use and automation capabilities. Here’s a detailed description of its functionalities:
+The Installer Package in Krayin CRM streamlines the setup and installation process, allowing users to quickly and efficiently get the CRM up and running. The package now includes Command Line Interface (CLI) and Graphical User Interface (GUI) support, enhancing ease of use and automation capabilities. Here’s a detailed description of its functionalities:
 
 Key Features
 
@@ -132,6 +132,21 @@ Command-Line Interface (CLI) Support: The Installer Package provides a robust CL
 - Dependency Installation: Automatically install necessary dependencies and packages. This includes installing composer dependencies and running other required setup scripts to ensure that all components are in place.
 
 Post-Installation Configuration: After the initial setup, the installer can also handle additional configurations such as setting up email services, configuring caching, and other optional settings to optimize the CRM’s performance and capabilities.
+
+In addition to the Command-Line Interface (CLI), the Installer Package in Krayin CRM also offers a Graphical User Interface (GUI) for users who prefer a more visual and guided setup process. The GUI Installer is designed to make the installation process user-friendly, even for those who may not be familiar with command-line operations.
+
+Accessing the GUI Installer
+
+Navigate to the Installer:
+Open your web browser and navigate to the installation URL of your Krayin CRM instance. Typically, this would be:
+arduino
+
+```path
+http://yourdomain.com/install
+```
+
+This will take you to the GUI Installer interface, where you can begin the setup process.
+
 
 ### Lead
 
@@ -211,28 +226,6 @@ Key Components Managed
 
 - User ID: Associates tags with specific users or owners within the CRM, facilitating personalized organization and access control.
 
-### UI
-
-The UI Package in Krayin CRM encompasses the entire user interface-related components and functionalities, managing Single File Components (SFCs) in Vue.js, as well as associated CSS and JavaScript resources. Here’s an overview of its comprehensive role in the CRM:
-
-Key Responsibilities
-
-SFC Vue Components:
-
-- Definition: Manages the Vue.js Single File Components (SFCs) responsible for various UI elements and features within the CRM.
-
-- Functionality: Includes components for dashboards, forms, lists, modals, notifications, and other interactive elements crucial for user interaction and data presentation.
-CSS Styling:
-
-- Definition: Handles cascading style sheets (CSS) to define the visual appearance and layout of UI components and pages.
-
-- Functionality: Ensures consistent branding, responsive design, and user interface aesthetics across different devices and screen sizes.
-JavaScript Enhancements:
-
-- Definition: Implements JavaScript enhancements and interactions to enrich user experience and functionality.
-
-- Functionality: Enables dynamic content updates, client-side validations, interactive UI behaviors, and seamless integration with backend services.
-
 ### User
 
 The User Package in Krayin CRM is instrumental for managing groups, roles, and user accounts within the system. Here’s an overview of its functionalities:
@@ -255,18 +248,51 @@ Automation and Notifications: Submission of WebForms can trigger automated actio
 
 Accessibility and Embedding: Forms can be embedded on websites or shared via links, providing accessibility to external users and ensuring data collection efficiency.
 
-### Workflow
+### Automation
 
-Workflows in Krayin CRM automate business processes and streamline operations by defining a series of actions based on predefined triggers and conditions. Here’s how workflows enhance CRM functionality:
+Automation in Krayin CRM is designed to enhance your business processes by streamlining operations through a series of automated actions that are triggered based on predefined conditions. This powerful feature is a combination of workflows and webhooks, enabling users to create complex, automated sequences that help reduce manual tasks, improve efficiency, and ensure consistency across various operations. Here’s how Automation enhances the CRM functionality:
 
-Automated Task Execution: Workflows automate routine tasks such as sending follow-up emails, assigning tasks to team members, or updating CRM records based on specified criteria.
+1. Workflows
 
-Visual Workflow Builder: Users can visually design workflows using a drag-and-drop interface, making it easy to create complex automation scenarios without coding.
+Task Automation: Trigger any custom actions when specific conditions are met. For example, when a lead is moved to a certain stage, a follow-up task can be automatically assigned to a salesperson.
+Conditional Logic: Define conditional statements that guide the automation process. Workflows can branch into different actions based on whether certain conditions are true or false. This allows for highly customized automation that fits specific business requirements.
+Scheduled Actions: Set up actions to occur at a later date, such as sending a reminder email after a lead has been idle for a specific number of days. This keeps your team proactive and ensures no lead falls through the cracks.
 
-Conditional Logic: Workflows support conditional logic to route processes dynamically, ensuring actions are triggered based on specific data conditions or user interactions.
+2. Webhooks
 
-Performance Monitoring: Detailed analytics and reporting tools track workflow performance, providing insights into efficiency, bottlenecks, and process improvements.
+Integration with External Systems: Webhooks allow Krayin CRM to communicate with other systems and applications in real-time. When a trigger event occurs, a webhook sends data to an external URL, enabling seamless integration with other tools like marketing platforms, analytics systems, or custom applications.
+Real-Time Updates: Automate the process of sending real-time updates to external systems when certain events happen within the CRM. For example, when a new contact is added or a deal is closed, the relevant data can be instantly pushed to other systems to keep all your tools in sync.
+Custom Actions: Utilize webhooks to define custom actions that go beyond the built-in capabilities of Krayin CRM. This flexibility allows you to tailor the CRM to fit the unique needs of your business.
 
-Integration and Extensibility: Workflows integrate with other CRM modules and external systems, extending automation capabilities across the organization’s ecosystem.
+Service provider enables features such as loading [routes](/2.0/packages/routes.html), [migrations](/2.0/packages/create-migrations.html), [languages](/2.0/packages/localization.html) or publishing [views](/2.0/packages/views.html), etc so **Krayin** is developed considering these aspects.
 
-Service provider enables features such as loading [routes](/1.x/packages/routes.html), [migrations](/1.x/packages/create-migrations.html), [languages](/1.x/packages/localization.html) or publishing [views](/1.x/packages/views.html), etc so **Krayin** is developed considering these aspects.
+### Datagrid
+
+The DataGrid package in Krayin empowers administrators with a versatile solution for displaying and managing tabular data within the admin panel. It incorporates crucial components like models, repositories, and database interactions to streamline data handling and enhance user experience.
+
+#### Dynamic Data Presentation:
+
+- Dynamic Data Presentation
+    - Allows administrators to configure columns, filters, sorting options, and pagination settings for displaying data tables.
+
+- Advanced Filtering and Sorting
+    - Enables administrators to apply filters based on various criteria to refine data views.
+
+    - Supports sorting functionalities to organize data based on specified attributes.
+
+### Warehouse
+
+The Warehouse Package in Krayin CRM is designed to manage warehouse information efficiently. It allows users to store and organize key details about each warehouse, including contact information, descriptions, and addresses. This package provides the necessary tools to handle warehouse-related data, which is crucial for managing inventory and logistics operations within the CRM.
+
+Key Features
+
+- Warehouse Management:
+
+The package provides functionalities to create, update, and manage warehouses within the CRM. Each warehouse can be uniquely identified by its name and associated with specific contact information, such as email addresses, phone numbers, and physical addresses.
+Contact Information Handling:
+
+The package supports storing multiple contact details for each warehouse, including names, emails, and phone numbers. This feature ensures that all relevant contact information is easily accessible for communication and coordination.
+
+- Address Management:
+
+The package allows you to store and manage the full address details of each warehouse, including street, city, state, and postal code. This is useful for ensuring that all logistical operations are correctly aligned with the physical locations of the warehouses.

@@ -118,7 +118,7 @@ In Laravel applications, views are typically rendered from controller methods us
 ```php
 <?php
 
-namespace Webkul\Category\Http\Controllers\Shop;
+namespace Webkul\Category\Http\Controllers;
 
 use Illuminate\View\View;
 use Webkul\Category\Http\Controllers\Controller;

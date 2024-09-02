@@ -44,7 +44,7 @@ In `packages/Webkul/Category/src/Http/Controllers/Category/CategoryController.ph
 ```php
 <?php
 
-namespace Webkul\Category\Http\Controllers\Shop;
+namespace Webkul\Category\Http\Controllers;
 
 use Webkul\Category\Http\Controllers\Controller;
 use Webkul\Category\Repository\CategoryRepository;
