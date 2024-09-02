@@ -7,7 +7,7 @@ To upgrade your current version to the latest version of Krayin, you need to fol
 - You can download Krayin from the following links,
 
   - [Download From Official Krayin Site](https://Krayin.com/en/download/)
-  - [Download From Github](https://github.com/krayin/Krayin)
+  - [Download From Github](https://github.com/krayin/laravel-crm)
 
 - After downloading the latest version, run the specified commands in the terminal,
 

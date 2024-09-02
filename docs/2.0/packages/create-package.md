@@ -17,7 +17,7 @@ This guide will take you through the process of creating a package for Krayin, f
 
 ## Using Krayin Package Generator
 
-To facilitate package development, you can use the [Krayin Package Generator](https://github.com/krayin/krayin-package-generator). Follow the steps below to install it:
+To facilitate package development, you can use the [Krayin Package Generator](https://github.com/krayin/laravel-crm-package-generator). Follow the steps below to install it:
 
 - Install the Krayin Package Generator by running the following command in the root directory of your Krayin application:
 
