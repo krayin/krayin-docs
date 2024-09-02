@@ -75,9 +75,8 @@ You can add menu icon by creating the file icons.scss, follow the below provided
                 └── Resources
                     ├── ...
                     └── assets
-                        ├── sass
-                        │   ├── icon.scss
-                        │   └── app.sass
+                        ├── css
+                        │   └── app.css
                         ├── js
                         │   └── app.js
                         └── images
