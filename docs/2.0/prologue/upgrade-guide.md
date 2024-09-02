@@ -12,7 +12,7 @@ To upgrade your current version to the latest version of Krayin, follow these st
 
 2. Extract the downloaded Krayin zip file to the desired deployment location.
 
-3. Open the terminal and navigate to the root folder of the extracted Krayin folder.
+3. Open the terminal and navigate to the root dictory of the extracted Krayin dictory.
 
 4. Run the following command in the terminal:
 
@@ -22,7 +22,7 @@ To upgrade your current version to the latest version of Krayin, follow these st
 
    This command will install the necessary dependencies for the latest version of Krayin.
 
-5. Open the **`.env`** file in your project's root folder. Provide the database credentials of your old project, which you want to upgrade using Krayin.
+5. Open the **`.env`** file in your project's root dictory. Provide the database credentials of your old project, which you want to upgrade using Krayin.
 
 6. Run one of the following commands to cache the new changes:
 
@@ -46,13 +46,13 @@ To upgrade your current version to the latest version of Krayin, follow these st
    Be cautious when using the seeder command as it may reset settings and categories. Add default settings manually if necessary.
    :::
 
-8. Create a symbolic link to link public assets to the storage folder by running the following command:
+8. Create a symbolic link to link public assets to the storage dictory by running the following command:
 
    ```sh
    php artisan storage:link
    ```
 
-9. Copy the contents of the previous version's folder (e.g., **`old-project/storage/app/public`**) to the corresponding folder in the latest version (e.g., **`new-project/storage/app/public`**).
+9. Copy the contents of the previous version's dictory (e.g., **`old-project/storage/app/public`**) to the corresponding dictory in the latest version (e.g., **`new-project/storage/app/public`**).
 
    ::: tip
    If your existing project depends on local storage, has changed paths, or requires previous logs, ensure to include those as well.

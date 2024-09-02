@@ -25,7 +25,7 @@ php artisan package:make-migration CreateCategoryTable Webkul/Category
 
 ## Using Laravel Artisan Command
 
-Create a `Database` directory in the `packages/Webkul/Category/src` path. Inside the `Database` directory, create `Migrations` and `Seeders` folders.
+Create a `Database` directory in the `packages/Webkul/Category/src` path. Inside the `Database` directory, create `Migrations` and `Seeders` directories.
 
 ```
 └── packages

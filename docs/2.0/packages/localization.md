@@ -45,7 +45,7 @@ You may also configure a `"fallback language"`, which will be used when the defa
   |
   | The fallback locale determines the locale to use when the current one
   | is not available. You may change the value to correspond to any of
-  | the language folders that are provided through your application.
+  | the language directories that are provided through your application.
   |
   */
 
@@ -63,7 +63,7 @@ To support localization in your package, you need to create language files. Foll
 
 #### Create Language Code Folders
 
-- Inside the `lang` directory, create different folders for each language you want to support. For example, you can create folders for English (`en`), Hindi (`hi`), etc.
+- Inside the `lang` directory, create different directories for each language you want to support. For example, you can create directories for English (`en`), Hindi (`hi`), etc.
 - For now, let's create a directory named `en` to represent English.
 
 #### Create the `app.php` File

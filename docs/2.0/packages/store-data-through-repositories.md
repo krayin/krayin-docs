@@ -30,12 +30,12 @@ The Krayin package generator provides a convenient way to create new components 
 To create a new Repository class, use the following command. This command creates a new Repository class in the `packages/Webkul/Category/src/Repository` directory.
 
 ```bash
-php artisan package:make-repository CategoryRepository Webkul/Category
+php artisan package:make -repository CategoryRepository Webkul/Category
 ```
 
 ### Explanation
 
-- **Command:** The command `php artisan package:make-repository` is used to generate a new Repository class.
+- **Command:** The command `php artisan package:make -repository` is used to generate a new Repository class.
 - **Repository Name:** `CategoryRepository` is the name of the new Repository class that will be created.
 - **Package Path:** `Webkul/Category` specifies the package within the packages directory where the new Repository class will be created.
 

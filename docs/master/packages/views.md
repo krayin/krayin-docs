@@ -49,15 +49,16 @@ Below is an example of basic HTML content that you can add to each `index.blade.
 #### `index.blade.php` in the `category` Directory
 
 ```html
-@extends('admin::layouts.master')
+<x-admin::layouts>
+    <x-slot:title>
+        @lang('category::app.categories.index.title')
+    </x-slot>
 
-@section('page_title')
-    {{ __('category::app.categories.index.title') }}
-@endsection
+    <!-- Content -->
+    <div class="flex gap-4">
 
-@section('content-wrapper')
-
-@endsection
+    </div>
+</x-admin::layouts>
 ```
 
 ## Load Views from Package

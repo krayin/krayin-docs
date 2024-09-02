@@ -14,7 +14,7 @@ To learn in detail about Bundling Asset, you can visit the Laravel documentation
 
 ## Directory Structure
 
-To maintain organization and manage these assets effectively, developers typically structure them within dedicated folders in the project's `Resources\assets` directory. For instance:
+To maintain organization and manage these assets effectively, developers typically structure them within dedicated directories in the project's `Resources\assets` directory. For instance:
 
 - `/Resources/assets/images`: Stores image files used throughout the application.
 - `/Resources/assets/js`: Holds JavaScript files such as `app.js` for client-side scripting.
