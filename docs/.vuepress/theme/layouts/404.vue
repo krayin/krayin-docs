@@ -68,6 +68,18 @@ export default {
     getCurrentUrl(e, url) {
       e.preventDefault();
 
+      const currentPath = this.$route.path.split('/').pop();
+
+      for (let i = 0; i < url.children.length; i++) {
+        const [path, _] = url.children[i];
+
+        if (`${path}.html`.includes(currentPath)) {
+          window.location.href = `${path}.html`;
+
+          return;
+        }
+      }
+
       window.location.href = url.path;
     },
 

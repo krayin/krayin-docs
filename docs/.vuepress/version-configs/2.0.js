@@ -9,8 +9,6 @@ function setVersionPrefix(children) {
         });
     }
 
-    console.log(`/${version}/${children}`);
-    
     return `/${version}/${children}`;
 }
 

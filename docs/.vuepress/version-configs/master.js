@@ -8,8 +8,6 @@ function setVersionPrefix(children) {
             return child;
         });
     }
-
-    console.log(`/${version}/${children}`);
     
     return `/${version}/${children}`;
 }
