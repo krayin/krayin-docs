@@ -1,10 +1,12 @@
-# Introduction
+# Prologue
 
-**Krayin** is a hand tailored CRM framework built on some of the hottest opensource technologies such as [Laravel](https://laravel.com), a [PHP](https://php.net) framework and [Vue.js](https://vuejs.org/), a progressive Javascript framework.
+## Introduction to Krayin
+
+[Krayin](https://krayincrm.com/)  CRM is a hand tailored CRM framework built on some of the hottest opensource technologies such as [Laravel](https://laravel.com/) (a PHP framework), [Tailwind Css](https://tailwindcss.com/) and [Vue.js](https://vuejs.org/) a progressive Javascript framework.
 
 Free & Opensource Laravel CRM solution for SMEs and Enterprises for complete customer lifecycle management.
 
-To learn more about **Krayin's** features and try a demo, check out our website [https://devdocs.krayincrm.com/](https://devdocs.krayincrm.com).
+We also have a forum for any type of concerns, feature requests, or discussions. Please visit: [Krayin CRM Forums](https://forums.krayincrm.com/)
 
 ## Key Features of Krayin
 
@@ -56,8 +58,6 @@ Krayin has a vibrant and supportive community of developers and users who active
 
 - **Explore Krayin**: Visit our website at [https://krayincrm.com](https://krayincrm.com) to discover more about Krayin's features and experience a demo.
 
-- **Stay Updated**: Refer to the [Krayin roadmap](https://krayincrm.com/roadmap) for the latest version and recently added features.
-
-- **GitHub Repository**: Access the Krayin repository on [GitHub](https://github.com/krayin/krayin) with over 8.8K+ stars, reflecting its popularity and community support.
+- **GitHub Repository**: Access the Krayin repository on [GitHub](https://github.com/krayin/laravel-crm) with over 8.8K+ stars, reflecting its popularity and community support.
 
 Join the Krayin community today and manage your customer relationships with ease.

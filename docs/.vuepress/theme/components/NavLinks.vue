@@ -40,6 +40,22 @@
       {{ contactUs.text }}
       <OutboundLink />
     </a>
+
+    <div 
+      class="nav-item" 
+      v-if="$route.path.split('/')[1] !== ''"
+    >
+      <select 
+        v-model="version" 
+        @change="changeVersion"
+      >
+        <option value="master">Master</option>
+
+        <option value="2.0">2.0</option>
+
+        <option value="1.x">1.x</option>
+      </select>
+    </div>
   </nav>
 </template>
 
@@ -50,6 +66,18 @@ import NavLink from '@theme/components/NavLink.vue'
 
 export default {
   name: 'NavLinks',
+
+  data() {
+    return {
+      version: '1.x',
+    }
+  },
+
+  mounted() {
+    let currentPath = this.$route.path.split('/');
+
+    this.version = currentPath[1] || '2.0';
+  },
 
   components: {
     NavLink,
@@ -133,7 +161,17 @@ export default {
 
       return contactUs;
     },
-  }
+  },
+
+  methods: {
+    changeVersion() {
+      let currentPath = this.$route.path.split('/');
+
+      currentPath[1] = this.version;
+
+      this.$router.push(currentPath.join('/'));
+    },
+  },
 }
 </script>
 
