@@ -74,9 +74,13 @@ export default {
   },
 
   mounted() {
-    let currentPath = this.$route.path.split('/');
+    this.currentVersion();
+  },
 
-    this.version = currentPath[1] || '2.0';
+  watch: {
+    $route() {
+      this.currentVersion();
+    }
   },
 
   components: {
@@ -171,6 +175,10 @@ export default {
 
       this.$router.push(currentPath.join('/'));
     },
+
+    currentVersion() {
+      this.version = this.$route.path.split('/')[1] || '2.0';
+    }
   },
 }
 </script>
