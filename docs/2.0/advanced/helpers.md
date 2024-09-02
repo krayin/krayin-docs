@@ -74,30 +74,6 @@ Method to sort through the acl items and put them in order.
 core()->sortItems($items);
 ```
 
-### Set a value in an array using dot notation
-
-This method allows setting values in a nested array using dot notation for keys. If the key does not exist, it creates nested arrays as necessary to set the value. If the key already exists, it merges the existing value with the new value.
-
-```php
-core()->array_set($array, $key, $value);
-```
-
-### To converted associated array
-
-To converted associated array into the CRM, you can use the `core()->convertToAssociativeArray($items)` .
-
-```php
-core()->convertedToAssociativeArray($items);
-```
-
-### To merge the array
-
-To merge the array into the CRM, you can use the method of `core()->arrayMerge(array &array1, array &array2)`.
-
-```php
-core()->arrayMerge($items);
-```
-
 ### Create singleton object through single facade
 
 You can use the core method for singleton binding through the core helper methods.
