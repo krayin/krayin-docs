@@ -56,8 +56,6 @@ Krayin has a vibrant and supportive community of developers and users who active
 
 - **Explore Krayin**: Visit our website at [https://krayincrm.com](https://krayincrm.com) to discover more about Krayin's features and experience a demo.
 
-- **Stay Updated**: Refer to the [Krayin roadmap](https://krayincrm.com/roadmap) for the latest version and recently added features.
-
 - **GitHub Repository**: Access the Krayin repository on [GitHub](https://github.com/krayin/krayin) with over 8.8K+ stars, reflecting its popularity and community support.
 
 Join the Krayin community today and manage your customer relationships with ease.

@@ -1,7 +1,15 @@
 <template>
-  <div class="theme-container" style="padding-right: 20px;">
+  <div 
+    class="theme-container"
+    style="padding-right: 20px;"
+  >
     <div class="theme-default-content">
-      <img src="/logo.png" alt="Bagisto Documentation" class="logo" style="height: 86px; width: 200px;">
+      <img
+        src="/logo.svg"
+        alt="Krayin Documentation"
+        class="logo"
+        style="height: 86px; width: 200px;"
+      >
 
       <h1>Page not found.</h1>
 
@@ -16,7 +24,10 @@
       </div>
 
       <div class="link">
-        <div v-for="url in availableURLs" :key="url.version">
+        <div 
+          v-for="url in availableURLs"
+          :key="url.version"
+        >
           <a @click="e => getCurrentUrl(e, url.objects[0])">
             {{ url.version.replace(/\//g, '') }}
           </a>
@@ -28,8 +39,8 @@
 
 <script>
 const msgs = [
-  `This page does not exist for this version of Bagisto but was found in other versions.`,
-]
+  `This page does not exist for this version of Krayin but was found in other versions.`,
+];
 
 import configurations from '../../config';
 
