@@ -4,7 +4,7 @@
 
 Free & Opensource Laravel CRM solution for SMEs and Enterprises for complete customer lifecycle management.
 
-To learn more about **Krayin's** features and try a demo, check out our website [https://devdocs.krayincrm.com/](https://devdocs.krayincrm.com).
+To learn more about **Krayin's** features and try a demo, check out our website [Krayin](https://krayincrm.com/).
 
 ## Key Features of Krayin
 
@@ -54,7 +54,7 @@ Krayin features a modular design, providing developers with the flexibility to c
 
 Krayin has a vibrant and supportive community of developers and users who actively contribute to its growth and improvement.
 
-- **Explore Krayin**: Visit our website at [https://krayincrm.com](https://krayincrm.com) to discover more about Krayin's features and experience a demo.
+- **Explore Krayin**: Visit our website at [Krayin](https://krayincrm.com) to discover more about Krayin's features and experience a demo.
 
 - **GitHub Repository**: Access the Krayin repository on [GitHub](https://github.com/krayin/laravel-crm) with over 8.8K+ stars, reflecting its popularity and community support.
 

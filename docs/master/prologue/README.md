@@ -56,7 +56,7 @@ Krayin features a modular design, providing developers with the flexibility to c
 
 Krayin has a vibrant and supportive community of developers and users who actively contribute to its growth and improvement.
 
-- **Explore Krayin**: Visit our website at [https://krayincrm.com](https://krayincrm.com) to discover more about Krayin's features and experience a demo.
+- **Explore Krayin**: Visit our website at [Krayin](https://krayincrm.com) to discover more about Krayin's features and experience a demo.
 
 - **GitHub Repository**: Access the Krayin repository on [GitHub](https://github.com/krayin/laravel-crm) with over 8.8K+ stars, reflecting its popularity and community support.
 
