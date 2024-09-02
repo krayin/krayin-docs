@@ -78,23 +78,7 @@ For more information, please visit the [Krayin changelog on GitHub](https://gith
 
 ### Changes in the latest release
 
-We are excited to announce the release of version [master](https://github.com/krayin/laravel-crm/tree/2.x) of Krayin, which includes numerous enhancements and improvements. To ensure a smooth transition to this latest version.
-
-## Upgrading To v1.3.0 From master
-
-:::tip
-We strive to document every potential breaking change. However, as some of these alterations occur in lesser-known sections of Krayin, only a fraction of them may impact your application.
-:::
-
-### Updating Dependencies
-
-**Impact Probability: High**
-
-#### PHP 8.1.0 Required
-
-Laravel now requires PHP 8.1.0 or greater.
-
-#### Composer Dependencies
+We are excited to announce the release of version [master](https://github.com/krayin/laravel-crm) of Krayin, which includes numerous enhancements and improvements. To ensure a smooth transition to this latest version.
 
 ## Composer Dependencies
 
