@@ -74,7 +74,7 @@ export default {
         const [path, _] = url.children[i];
 
         if (`${path}.html`.includes(currentPath)) {
-          window.location.href = `${path}.html`;
+          this.$router.push(`${path}`);
 
           return;
         }
