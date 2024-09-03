@@ -91,7 +91,7 @@ Email Composition and Management
 
 - Compose Mail: Create and send new emails with a rich text editor that supports formatting, attachments, and inline images. Users can easily compose professional-looking emails with various formatting options.
 
-- Inbox Management: Manage received emails in the inbox. Features include reading, replying, forwarding, and organizing emails with labels or folders. Users can also mark emails as read or unread, star important emails, and filter messages based on various criteria.
+- Inbox Management: Manage received emails in the inbox. Features include reading, replying, forwarding, and organizing emails with labels or directories. Users can also mark emails as read or unread, star important emails, and filter messages based on various criteria.
 
 - Drafts: Save unfinished emails as drafts. Users can revisit and edit drafts before sending them, ensuring that they can work on emails over time without losing any information.
 
