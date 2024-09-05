@@ -14,7 +14,7 @@ Welcome to our API demo! Dive into the interactive showcase of our API functiona
 
 #### Click the Link below to access Admin API documentation 
 
-[Admin](https://demo.krayin.com/krayin-api-demo-common/api/admin/documentation)
+[Admin](https://demo.krayincrm.com/krayin-rest-api/)
 
 #### Installation of REST API
 
