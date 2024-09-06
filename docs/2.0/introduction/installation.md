@@ -13,7 +13,7 @@ To install Krayin using our GUI installer, you can follow any of the following m
 - Once you are in the desired directory, run the following command in your terminal to install Krayin:
 
     ```sh
-    composer create-project Krayin/Krayin
+    composer create-project krayin/laravel-crm
     ```
 
 - Configure your HTTP server to point to the **`public/`** directory of the project.
