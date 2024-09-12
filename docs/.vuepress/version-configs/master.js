@@ -74,7 +74,8 @@ module.exports = [
             ['advanced/override-core-model', 'Override Core Models'],
             ['advanced/render-event', 'View Render Event'],
             ['advanced/security-practice', 'Best Security Practices'],
-            ['advanced/sendgrid-inbound-parse-webhook', ' Email Integration via SendGrid Inbound Parse Webhook'],
+            ['advanced/sendgrid-inbound-parse-webhook', 'Email Integration via SendGrid Inbound Parse Webhook'],
+            ['advanced/data-transfer', 'Data Transfer'],
         ])
     },
     {
