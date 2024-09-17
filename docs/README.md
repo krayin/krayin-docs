@@ -3,7 +3,7 @@ home: true
 heroText: Krayin CRM Developer Portal
 tagline: Find detailed documentation and code examples.
 actionText: Get Started →
-actionLink: /1.x/introduction/
+actionLink: /2.0/introduction/
 features:
 - title: Package creation
   details: Learn how to create a new package for Krayin.
