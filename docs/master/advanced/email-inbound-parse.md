@@ -1,9 +1,21 @@
-### **Email Integration via SendGrid Inbound Parse Webhook**
+[[TOC]]
+
+### **SendGrid Inbound Parse**
 
 Krayin CRM can be integrated with SendGrid’s **Inbound Parse Webhook** to handle incoming emails. This allows emails sent to a specific domain to be automatically processed by Krayin and displayed in the **Mail > Inbox** section.
 
 #### **Overview**
 The **Inbound Parse Webhook** feature of SendGrid allows emails to be converted into HTTP POST requests and forwarded to a specified URL in your application. By integrating SendGrid with Krayin CRM, you can seamlessly receive and display incoming emails.
+
+#### **Set SendGrid as the Email Receiver Driver**
+
+In the `.env` file, ensure that the `MAIL_RECEIVER_DRIVER` is set to `sendgrid`:
+
+```env
+MAIL_RECEIVER_DRIVER=sendgrid
+```
+
+This tells Krayin CRM to use the SendGrid package to handle incoming emails.
 
 #### **Setting Up SendGrid Inbound Parse with Krayin CRM**
 
@@ -49,3 +61,50 @@ Krayin CRM is capable of handling attachments that are sent via email. These att
 1. A user sends an email to `contact@example.com`.
 2. SendGrid captures the email and forwards it to your Krayin webhook (`http://yourdomain.com/admin/mail/inbound-parse`).
 3. Krayin CRM processes the incoming email, stores the details, and displays the email in the **Mail > Inbox** section.
+
+
+### **IMAP Inbound Parse**
+
+Krayin CRM allows you to receive and manage your emails using the IMAP protocol. To integrate IMAP in Krayin CRM, we will use the **Webklex-IMAP** package as the email receiver driver.
+
+**IMAP** (Internet Message Access Protocol) allows you to access your emails from any device without downloading them to your computer. Emails stay on the server, and you view them directly, with attachments only downloaded if needed. IMAP is ideal for accessing email on multiple devices, as any changes (like reading or deleting) are synced across all devices, making email management efficient and ensuring data consistency everywhere.
+
+#### **Configure .env File**
+
+To enable IMAP in Krayin CRM, you need to configure the `.env` file. Open the `.env` file in the root directory of your Laravel project and make the following changes:
+
+```env
+MAIL_RECEIVER_DRIVER=webklex-imap
+
+IMAP_HOST=imap.example.com        # Replace with your IMAP host (e.g., imap.gmail.com)
+IMAP_PORT=993                     # Use port 993 for IMAP with SSL encryption
+IMAP_ENCRYPTION=ssl               # Choose 'ssl' or 'tls' based on your server settings
+IMAP_VALIDATE_CERT=true           # Set this to 'true' to validate SSL certificates
+IMAP_USERNAME=your_username       # Replace with your IMAP account username (email address)
+IMAP_PASSWORD=your_password       # Replace with your IMAP account password
+```
+
+#### **Explanation of the `.env` IMAP Variables:**
+
+- **IMAP_HOST**: The IMAP server host name (e.g., `imap.gmail.com` for Gmail, `imap.example.com` for other email providers).
+- **IMAP_PORT**: The port used for IMAP communication, typically `993` for SSL.
+- **IMAP_ENCRYPTION**: Defines the encryption method for secure communication. It can be `ssl` or `tls`.
+- **IMAP_VALIDATE_CERT**: Set to `true` to validate SSL certificates for secure communication.
+- **IMAP_USERNAME**: Your IMAP email account username, which is typically your email address.
+- **IMAP_PASSWORD**: Your IMAP email account password.
+
+#### **Set IMAP as the Email Receiver Driver**
+
+In the `.env` file, ensure that the `MAIL_RECEIVER_DRIVER` is set to `webklex-imap`:
+
+```env
+MAIL_RECEIVER_DRIVER=webklex-imap
+```
+
+This tells Krayin CRM to use the Webklex IMAP package to handle incoming emails.
+
+#### **Usage of IMAP in Krayin CRM**
+
+Once the IMAP settings are configured in the `.env` file, Krayin CRM will be able to use IMAP to fetch emails from the specified email account.
+
+Make sure to check your email provider’s documentation for the correct IMAP settings.
