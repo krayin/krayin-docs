@@ -10,11 +10,11 @@ Krayin REST API is a medium to use the features of the core Krayin System. By us
 
 Welcome to our API demo! Dive into the interactive showcase of our API functionalities to get a hands-on experience of how our platform works. Click the Link below to access the demo:
 
-[Access API Demo](https://demo.krayin.com/krayin-api-demo-common)
+[Access API Demo](https://apidoc.krayincrm.com/api/documentation)
 
 #### Click the Link below to access Admin API documentation 
 
-[Admin](https://demo.krayin.com/krayin-api-demo-common/api/admin/documentation)
+[Admin](https://apidoc.krayincrm.com/admin/login)
 
 #### Installation of REST API
 
