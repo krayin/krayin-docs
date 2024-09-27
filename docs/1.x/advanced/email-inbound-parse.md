@@ -1,4 +1,6 @@
-### **Email Integration via SendGrid Inbound Parse Webhook**
+[[TOC]]
+
+### **SendGrid Inbound Parse**
 
 Krayin CRM can be integrated with SendGrid’s **Inbound Parse Webhook** to handle incoming emails. This allows emails sent to a specific domain to be automatically processed by Krayin and displayed in the **Mail > Inbox** section.
 
