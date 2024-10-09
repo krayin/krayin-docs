@@ -69,29 +69,46 @@ Krayin CRM allows you to receive and manage your emails using the IMAP protocol.
 
 **IMAP** (Internet Message Access Protocol) allows you to access your emails from any device without downloading them to your computer. Emails stay on the server, and you view them directly, with attachments only downloaded if needed. IMAP is ideal for accessing email on multiple devices, as any changes (like reading or deleting) are synced across all devices, making email management efficient and ensuring data consistency everywhere.
 
-#### **Configure .env File**
 
-To enable IMAP in Krayin CRM, you need to configure the `.env` file. Open the `.env` file in the root directory of your Laravel project and make the following changes:
+#### Configuring IMAP Settings
 
-```env
-MAIL_RECEIVER_DRIVER=webklex-imap
+To properly configure your email service via IMAP, follow the steps below to set up the necessary parameters through the application’s configuration interface. 
 
-IMAP_HOST=imap.example.com        # Replace with your IMAP host (e.g., imap.gmail.com)
-IMAP_PORT=993                     # Use port 993 for IMAP with SSL encryption
-IMAP_ENCRYPTION=ssl               # Choose 'ssl' or 'tls' based on your server settings
-IMAP_VALIDATE_CERT=true           # Set this to 'true' to validate SSL certificates
-IMAP_USERNAME=your_username       # Replace with your IMAP account username (email address)
-IMAP_PASSWORD=your_password       # Replace with your IMAP account password
-```
+#### Step 1: Access IMAP Settings
 
-#### **Explanation of the `.env` IMAP Variables:**
+1. **Open Your Application Dashboard**:
+   - Navigate to the **Configuration** section in your application.
 
-- **IMAP_HOST**: The IMAP server host name (e.g., `imap.gmail.com` for Gmail, `imap.example.com` for other email providers).
-- **IMAP_PORT**: The port used for IMAP communication, typically `993` for SSL.
-- **IMAP_ENCRYPTION**: Defines the encryption method for secure communication. It can be `ssl` or `tls`.
-- **IMAP_VALIDATE_CERT**: Set to `true` to validate SSL certificates for secure communication.
-- **IMAP_USERNAME**: Your IMAP email account username, which is typically your email address.
-- **IMAP_PASSWORD**: Your IMAP email account password.
+2. **Select IMAP Settings**:
+   - Click on **IMAP Settings** from the menu.
+
+#### Step 2: Enter IMAP Configuration Details
+
+In the IMAP settings interface, you will find fields to input the following parameters:
+
+| Parameter           | Description                                                      | Example                   |
+|---------------------|------------------------------------------------------------------|---------------------------|
+| **Host**            | The hostname of your email server.                               | `imap.example.com`        |
+| **Port**            | The port used for IMAP connections.                              | `993` (for SSL)           |
+| **Encryption Type** | The encryption type for the connection (e.g., SSL, TLS).        | `SSL`                     |
+| **Validate SSL**    | Specify whether to validate the SSL certificate.                | `true` or `false`        |
+| **IMAP Username**   | Your email account username (usually the full email address).    | `user@example.com`        |
+| **IMAP Password**   | The password associated with your email account.                 | `yourpassword`            |
+
+#### Step 3: Example Configuration
+
+When filling out the IMAP settings, your input should resemble the following:
+
+- **Host**: `imap.example.com`
+- **Port**: `993`
+- **Encryption Type**: `SSL`
+- **Validate SSL**: `true` or `false`
+- **IMAP Username**: `user@example.com`
+- **IMAP Password**: `yourpassword`
+
+#### Step 4: Save Configuration
+
+After entering all required fields, click the **Save** button to store your IMAP configuration. This will ensure your application can connect to the email server using the provided settings.
 
 #### **Set IMAP as the Email Receiver Driver**
 
