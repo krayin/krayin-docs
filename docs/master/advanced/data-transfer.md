@@ -49,18 +49,11 @@ Errors during the import process are logged, and a detailed report is generated,
 
 The module supports three main actions during the import process:
 
-1. **Create**: Add new records.
-2. **Update**: Update existing records if they match based on the identifier.
-3. **Delete**: Remove records based on the provided data.
+1. **Create**: Add new records. If records do not exist, new records will be created.
 
-- **Create**:  
-  If records do not exist, new records will be created.
+2. **Update**: Update existing records if they match based on the identifier. If records exist, they will be updated.
 
-- **Update**:  
-  If records exist, they will be updated.
-
-- **Delete**:  
-  If records exist, they will be deleted, Before importing. If the data does not exist, a validation error will be displayed.
+3. **Delete**: Remove records based on the provided data. If records exist, they will be deleted, Before importing. If the data does not exist, a validation error will be displayed.
 
 ### Edit Import Data
 
