@@ -77,6 +77,61 @@ return [
 ];
 ```
 
+### Registering Your Package Using CLI
+
+#### Step 1: Verify the `composer.json` File
+
+Before proceeding, ensure that your package has a valid `composer.json` file. This file defines your package's configuration and dependencies. Below is an example of what the `composer.json` file for `krayin/laravel-admin` should look like:
+
+```json
+{
+    "name": "krayin/laravel-admin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Example",
+            "email": "admin@example.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Webkul\\Admin\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Webkul\\Admin\\Providers\\AdminServiceProvider"
+            ],
+            "aliases": {}
+        }
+    },
+    "minimum-stability": "dev"
+}
+```
+
+#### Key Elements of the `composer.json` File
+
+- **Package Name:** `"krayin/laravel-admin"` – The name of the package to be installed.
+- **License:** `"MIT"` – Defines the license for the package.
+- **Authors:** Information about the package authors, such as name and email.
+- **Autoloading:** 
+    - `"psr-4"` autoloading is used to map the `Webkul\Admin` namespace to the `src/` directory.
+- **Providers:** The `AdminServiceProvider` is listed as a provider to be registered with Laravel automatically.
+- **Minimum Stability:** Set to `"dev"` to allow development versions of the package to be installed.
+
+#### Step 2: Install the Package Locally
+
+Once the `composer.json` file is set up, you can install the package locally via Composer's command-line interface.
+
+Run the following command:
+
+```bash
+composer require krayin/laravel-admin dev-master
+```
+
+This command tells Composer to require the `krayin/laravel-admin` package and install it along with any other dependencies listed in the package's `composer.json`.
+
 ### Run the Commands
 
 Run the following commands to autoload your package and publish its assets and configurations:
