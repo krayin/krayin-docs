@@ -120,8 +120,6 @@ Before proceeding, ensure that your package has a valid `composer.json` file. Th
 - **Providers:** The `AdminServiceProvider` is listed as a provider to be registered with Laravel automatically.
 - **Minimum Stability:** Set to `"dev"` to allow development versions of the package to be installed.
 
----
-
 #### Step 2: Install the Package Locally
 
 Once the `composer.json` file is set up, you can install the package locally via Composer's command-line interface.
