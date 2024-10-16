@@ -22,6 +22,7 @@ module.exports = {
         logo: '/logo.svg',
         nav: [
             { text: 'Home', link: '/' },
+            { text: 'User Guide', link: 'https://docs.krayincrm.com/' },
             { text: 'Community Forum', link: 'https://forums.krayincrm.com/' },
         ],
 

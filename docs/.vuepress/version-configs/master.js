@@ -30,6 +30,7 @@ module.exports = [
         children: setVersionPrefix([
             ['introduction/requirements', 'Requirements'],
             ['introduction/installation', 'Installation'],
+            ['introduction/docker', 'Docker'],
         ]),
     },
     {
