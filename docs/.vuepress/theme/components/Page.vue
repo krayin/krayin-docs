@@ -3,12 +3,6 @@
     <slot name="top" />
 
     <Content class="theme-default-content" />
-    
-    <TopicNavigation 
-      :topics="sidebarItems"
-      :currentTopic="currentTopic" 
-    />
-    
     <PageEdit />
 
     <PageNav v-bind="{ sidebarItems }" />
@@ -20,10 +14,9 @@
 <script>
 import PageEdit from '@theme/components/PageEdit.vue'
 import PageNav from '@theme/components/PageNav.vue'
-import TopicNavigation from '@theme/components/TopicNavigation.vue'
 
 export default {
-  components: { PageEdit, PageNav, TopicNavigation },
+  components: { PageEdit, PageNav },
   props: ['sidebarItems']
 }
 </script>
