@@ -70,14 +70,8 @@ export default {
     },
 
     toggleGroup(index) {
-      console.log(this.openGroupIndex , index);
-      
       this.openGroupIndex = index === this.openGroupIndex ? -1 : index
     },
-
-    // toggleGroup(index) {
-    //   this.openGroupIndex = index !== null && index === this.openGroupIndex ? -1 : index;
-    // },
 
     isActive (page) {
       return isActive(this.$route, page.regularPath);
