@@ -46,12 +46,12 @@
 </template>
 
 <script>
-import Home from '@theme/components/Home.vue'
+import Home from '@theme/components/Home.vue';
 import TopNav from '@theme/components/TopNav.vue';
-import Navbar from '@theme/components/Navbar.vue'
-import Page from '@theme/components/Page.vue'
-import Sidebar from '@theme/components/Sidebar.vue'
-import { resolveSidebarItems } from '../util'
+import Navbar from '@theme/components/Navbar.vue';
+import Page from '@theme/components/Page.vue';
+import Sidebar from '@theme/components/Sidebar.vue';
+import { resolveSidebarItems } from '../util';
 
 export default {
   name: 'Layout',
@@ -66,12 +66,12 @@ export default {
 
   data () {
     return {
-      isSidebarOpen: false
-    }
+      isSidebarOpen: false,
+    };
   },
 
   computed: {
-    headMeta() {
+    headMeta () {
       const { frontmatter } = this.$page;
 
       const { title: siteTitle = 'Krayin CRM Developer Portal' } = this.$site;
@@ -86,8 +86,10 @@ export default {
     },
 
     shouldShowNavbar () {
-      const { themeConfig } = this.$site
-      const { frontmatter } = this.$page
+      const { themeConfig } = this.$site;
+
+      const { frontmatter } = this.$page;
+
       if (
         frontmatter.navbar === false
         || themeConfig.navbar === false) {
@@ -100,25 +102,26 @@ export default {
         || themeConfig.nav
         || themeConfig.contactUs
         || this.$themeLocaleConfig.nav
-      )
+      );
     },
 
     shouldShowSidebar () {
-      const { frontmatter } = this.$page
+      const { frontmatter } = this.$page;
+
       return (
         !frontmatter.home
         && frontmatter.sidebar !== false
         && this.sidebarItems.length
-      )
+      );
     },
 
-    sidebarItems () {
+    sidebarItems() {
       return resolveSidebarItems(
         this.$page,
         this.$page.regularPath,
         this.$site,
         this.$localePath
-      )
+      );
     },
 
     pageClasses () {
@@ -128,11 +131,23 @@ export default {
         {
           'no-navbar': !this.shouldShowNavbar,
           'sidebar-open': this.isSidebarOpen,
-          'no-sidebar': !this.shouldShowSidebar
+          'no-sidebar': !this.shouldShowSidebar,
         },
-        userPageClass
-      ]
-    }
+        userPageClass,
+      ];
+    },
+  },
+
+  metaInfo () {
+    const { title, description, keywords } = this.headMeta;
+
+    return {
+      title,
+      meta: [
+        { name: 'description', content: description },
+        { name: 'keywords', content: keywords },
+      ],
+    };
   },
 
   mounted() {
@@ -213,21 +228,21 @@ export default {
     onTouchStart (e) {
       this.touchStart = {
         x: e.changedTouches[0].clientX,
-        y: e.changedTouches[0].clientY
-      }
+        y: e.changedTouches[0].clientY,
+      };
     },
 
-    onTouchEnd (e) {
-      const dx = e.changedTouches[0].clientX - this.touchStart.x
-      const dy = e.changedTouches[0].clientY - this.touchStart.y
+    onTouchEnd(e) {
+      const dx = e.changedTouches[0].clientX - this.touchStart.x;
+      const dy = e.changedTouches[0].clientY - this.touchStart.y;
       if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
         if (dx > 0 && this.touchStart.x <= 80) {
-          this.toggleSidebar(true)
+          this.toggleSidebar(true);
         } else {
-          this.toggleSidebar(false)
+          this.toggleSidebar(false);
         }
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
