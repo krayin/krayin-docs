@@ -11,5 +11,5 @@ features:
   details: Learn advanced topics like payment methods, shipping methods.
 - title: API documentation
   details: Learn how to connect your existing systems with the Krayin API.
-footer: Copyright © 2024 Krayin
+footer: Copyright © 2025 Krayin
 ---
