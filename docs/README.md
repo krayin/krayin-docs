@@ -8,7 +8,7 @@ features:
 - title: Package creation
   details: Learn how to create a new package for Krayin.
 - title: Digging Deeper
-  details: Learn advanced topics like payment methods, shipping methods.
+  details: 'Explore advanced Krayin customization: events, helpers, and overriding core models.'
 - title: API documentation
   details: Learn how to connect your existing systems with the Krayin API.
 footer: Copyright © 2025 Krayin
