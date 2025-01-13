@@ -39,7 +39,7 @@ Otherwise you can download the zip file and install it using the following steps
 - Run the following command:
 
     ```sh
-    composer create project
+    composer create-project
     ```
 
 - Configure your HTTP server to point to the **`public/`** directory of the project.

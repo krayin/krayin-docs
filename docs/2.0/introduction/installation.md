@@ -39,7 +39,7 @@ Otherwise you can download the zip file and install it using the following steps
 - Run the following command:
 
     ```sh
-    composer create project
+    composer create-project
     ```
 
 - Configure your HTTP server to point to the **`public/`** directory of the project.
@@ -132,6 +132,75 @@ To log in as an admin, visit **`https://example.com/admin/`**. If you used the *
 Email: admin@example.com
 Password: admin123
 ```
+
+
+## Installing Krayin on Shared Hosting
+
+Follow these steps to install Krayin CRM on shared hosting:
+
+#### 1. Download Krayin
+
+- Visit the [official website](https://krayincrm.com/download/) and download the latest version of Krayin CRM.
+
+#### 2. Extract the Contents
+
+- Unzip the downloaded file and extract its contents to your local machine.
+
+#### 3. Upload Files to Your Hosting Account
+- Use an FTP client (e.g., FileZilla) or your hosting control panel's File Manager to upload the extracted files to the root directory (e.g., public_html) or a subdirectory of your hosting account.
+
+#### 4. Set File Permissions
+
+- Ensure the following directories are writable by setting proper permissions:
+    - storage/
+    - bootstrap/cache/
+
+#### 5. Set Up a Database
+
+- Log in to your hosting control panel and create a new database and user. Assign the user full privileges to the database.
+
+#### 6. Run the following command
+
+Access your hosting account's terminal or SSH (if available). Navigate to the project root directory and run
+
+```sh
+composer create-project
+```
+
+```sh
+php artisan krayin-crm:install
+```
+
+Follow the prompts during the installation process to provide the following details:
+
+```bash
+Please enter the application name : 
+Please enter the application URL : 
+Please select the default application locale : 
+Please select the default currency : 
+Please select the database connection : 
+Please select the database host : 
+Please select the database name : 
+Please enter your database username : 
+Please enter your database password : 
+```
+
+Create admin credentials...
+
+```bash
+Enter the name of the admin user: 
+Enter the email address of the admin user:
+Configure the password for the admin user:
+```
+
+
+Open your browser and navigate to:
+
+```bash
+http://yourdomain.com/
+```
+
+Now your application will be available in your browser.
 
 ### Contributing
 
