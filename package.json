@@ -23,6 +23,7 @@
     "vuepress-plugin-copy-code": "0.0.1"
   },
   "dependencies": {
+    "vue-meta": "^2.4.0",
     "vuepress-bar": "^0.3.6"
   }
 }
