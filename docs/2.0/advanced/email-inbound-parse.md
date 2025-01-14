@@ -63,7 +63,7 @@ Krayin CRM is capable of handling attachments that are sent via email. These att
 3. Krayin CRM processes the incoming email, stores the details, and displays the email in the **Mail > Inbox** section.
 
 
-### **IMAP Inbound Parse**
+<!-- ### **IMAP Inbound Parse**
 
 Krayin CRM allows you to receive and manage your emails using the IMAP protocol. To integrate IMAP in Krayin CRM, we will use the **Webklex-IMAP** package as the email receiver driver.
 
@@ -123,4 +123,4 @@ This tells Krayin CRM to use the Webklex IMAP package to handle incoming emails.
 
 Once the IMAP settings are configured in the `.env` file, Krayin CRM will be able to use IMAP to fetch emails from the specified email account.
 
-Make sure to check your email provider’s documentation for the correct IMAP settings.
+Make sure to check your email provider’s documentation for the correct IMAP settings. -->

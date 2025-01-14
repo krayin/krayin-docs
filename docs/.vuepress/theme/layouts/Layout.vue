@@ -71,6 +71,20 @@ export default {
   },
 
   computed: {
+    headMeta() {
+      const { frontmatter } = this.$page;
+
+      const { title: siteTitle = 'Krayin CRM Developer Portal' } = this.$site;
+
+      return {
+        title: frontmatter.title || this.$title || siteTitle,
+
+        description: frontmatter.description || 'Krayin CRM is an open-source, customizable CRM solution designed to streamline customer management and improve business workflows.',
+
+        keywords: frontmatter.keywords || 'krayin crm extension, extension development',
+      };
+    },
+
     shouldShowNavbar () {
       const { themeConfig } = this.$site
       const { frontmatter } = this.$page
@@ -121,17 +135,23 @@ export default {
     }
   },
 
-  mounted () {
-    this.updateTopNavStyles();
+  mounted() {
+    this.updatePageAttributes();
 
     this.$router.afterEach(() => {
       this.isSidebarOpen = false;
 
-      this.updateTopNavStyles();
+      this.updatePageAttributes();
     });
   },
 
   methods: {
+    updatePageAttributes() {
+      this.updateMetaTags();
+
+      this.updateTopNavStyles();
+    },
+
     updateTopNavStyles() {
       let currentPath = this.$route.path.split('/');
       
@@ -142,6 +162,28 @@ export default {
       } else {
         this.removeTopNavCustomStyles();
       }
+    },
+
+    updateMetaTags() {
+      const { title, description, keywords } = this.headMeta;
+
+      document.title = title;
+
+      const updateMetaTag = (name, content) => {
+        let metaTag = document.querySelector(`meta[name="${name}"]`);
+
+        if (! metaTag) {
+          metaTag = document.createElement('meta');
+          metaTag.name = name;
+          document.head.appendChild(metaTag);
+        }
+
+        metaTag.content = content;
+      };
+
+      updateMetaTag('description', description);
+
+      updateMetaTag('keywords', keywords);
     },
 
     applyTopNavCustomStyles() {
