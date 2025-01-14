@@ -39,7 +39,7 @@ Otherwise you can download the zip file and install it using the following steps
 - Run the following command:
 
     ```sh
-    composer create project
+    composer create-project
     ```
 
 - Configure your HTTP server to point to the **`public/`** directory of the project.
@@ -132,6 +132,81 @@ To log in as an admin, visit **`https://example.com/admin/`**. If you used the *
 Email: admin@example.com
 Password: admin123
 ```
+
+
+## Installing Krayin on Shared Hosting
+
+Follow these steps to install Krayin CRM on shared hosting:
+
+#### 1. Download Krayin
+
+Go to the [official website](https://krayincrm.com/download/) and download the latest version of Krayin CRM  in ZIP format..
+
+
+#### 2. Extract the Contents
+
+Unzip the downloaded file and extract the contents to your local machine.
+
+#### 3. Upload Files to Your Hosting Account
+ 
+Use an FTP client (e.g., FileZilla) or your hosting control panel's File Manager to upload all the extracted files, including hidden files (like .env.example), to the root directory (e.g., public_html) or a subdirectory of your hosting account (e.g., public_html/krayin).
+
+#### 4. Set File Permissions
+
+Make the following directories writable by setting appropriate permissions:
+
+    - storage/
+    - bootstrap/cache/
+
+#### 5. Set Up a Database
+
+Log in to your hosting control panel, create a new database, and assign a user with full privileges to this database. Note the database name, username, and password for later steps.
+
+#### 6. Install Dependencies and Run Installer
+
+- **With SSH Access:**
+
+If your hosting account provides terminal or SSH access, navigate to the project root directory and execute the following commands:
+
+```sh
+composer create-project
+
+php artisan krayin-crm:install
+```
+
+Provide the required details during the prompts, including application name, URL, locale, currency, database connection, and admin credentials.:
+
+```bash
+Please enter the application name : 
+Please enter the application URL : 
+Please select the default application locale : 
+Please select the default currency : 
+Please select the database connection : 
+Please select the database host : 
+Please select the database name : 
+Please enter your database username : 
+Please enter your database password : 
+```
+
+Next, create the admin user credentials:
+
+```bash
+Enter the name of the admin user: 
+Enter the email address of the admin user:
+Configure the password for the admin user:
+```
+
+- **Without SSH Access:**
+
+    1. Run `composer install` locally on your machine.
+    2. Upload the `vendor` directory to your hosting account via FTP.
+    3. Update the `.env` file with your database and application details.
+
+#### 7. Access the Application
+
+Open your browser and visit the application URL (e.g., `http://yourdomain.com/`).
+
+Now your application will be available in your browser.
 
 ### Contributing
 
