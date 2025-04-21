@@ -75,9 +75,10 @@ module.exports = [
             ['advanced/override-core-model', 'Override Core Models'],
             ['advanced/render-event', 'View Render Event'],
             ['advanced/security-practice', 'Best Security Practices'],
-            ['advanced/email-inbound-parse', ' Email Inbound Parse'],
+            ['advanced/email-inbound-parse', 'Email Inbound Parse'],
             ['advanced/data-transfer', 'Data Transfer'],
             ['advanced/ai-powered-lead-generation', 'AI-Powered Lead Generation'],
+            ['advanced/events-and-campaigns', 'Events and Campaigns'],
         ])
     },
     {
