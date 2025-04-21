@@ -1,22 +1,9 @@
 <template>
-  <nav
-    v-if="userLinks.length || repoLink"
-    class="nav-links"
-  >
+  <nav v-if="userLinks.length || repoLink" class="nav-links">
     <!-- user links -->
-    <div
-      v-for="item in userLinks"
-      :key="item.link"
-      class="nav-item"
-    >
-      <DropdownLink
-        v-if="item.type === 'links'"
-        :item="item"
-      />
-      <NavLink
-        v-else
-        :item="item"
-      />
+    <div v-for="item in userLinks" :key="item.link" class="nav-item">
+      <DropdownLink v-if="item.type === 'links'" :item="item" />
+      <NavLink v-else :item="item" />
     </div>
 
     <!-- repo link -->
@@ -31,25 +18,16 @@
       <OutboundLink />
     </a>
 
-    <a
-        :href="contactUs.link"
-        class="nav-item"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
+    <a :href="contactUs.link" class="nav-item" target="_blank" rel="noopener noreferrer">
       {{ contactUs.text }}
       <OutboundLink />
     </a>
 
-    <div 
-      class="nav-item" 
-      v-if="$route.path.split('/')[1] !== ''"
-    >
-      <select 
-        v-model="version" 
-        @change="changeVersion"
-      >
+    <div class="nav-item" v-if="$route.path.split('/')[1] !== ''">
+      <select v-model="version" @change="changeVersion">
         <option value="master">Master</option>
+
+        <option value="2.1">2.1</option>
 
         <option value="2.0">2.0</option>
 
@@ -60,17 +38,17 @@
 </template>
 
 <script>
-import DropdownLink from '@theme/components/DropdownLink.vue'
-import { resolveNavLinkItem } from '../util'
-import NavLink from '@theme/components/NavLink.vue'
+import DropdownLink from "@theme/components/DropdownLink.vue";
+import { resolveNavLinkItem } from "../util";
+import NavLink from "@theme/components/NavLink.vue";
 
 export default {
-  name: 'NavLinks',
+  name: "NavLinks",
 
   data() {
     return {
-      version: '1.x',
-    }
+      version: "1.x",
+    };
   },
 
   mounted() {
@@ -80,87 +58,85 @@ export default {
   watch: {
     $route() {
       this.currentVersion();
-    }
+    },
   },
 
   components: {
     NavLink,
-    DropdownLink
+    DropdownLink,
   },
 
   computed: {
-    userNav () {
-      return this.$themeLocaleConfig.nav || this.$site.themeConfig.nav || []
+    userNav() {
+      return this.$themeLocaleConfig.nav || this.$site.themeConfig.nav || [];
     },
 
-    nav () {
-      const { locales } = this.$site
+    nav() {
+      const { locales } = this.$site;
       if (locales && Object.keys(locales).length > 1) {
-        const currentLink = this.$page.path
-        const routes = this.$router.options.routes
-        const themeLocales = this.$site.themeConfig.locales || {}
+        const currentLink = this.$page.path;
+        const routes = this.$router.options.routes;
+        const themeLocales = this.$site.themeConfig.locales || {};
         const languageDropdown = {
-          text: this.$themeLocaleConfig.selectText || 'Languages',
-          ariaLabel: this.$themeLocaleConfig.ariaLabel || 'Select language',
-          items: Object.keys(locales).map(path => {
-            const locale = locales[path]
-            const text = themeLocales[path] && themeLocales[path].label || locale.lang
-            let link
+          text: this.$themeLocaleConfig.selectText || "Languages",
+          ariaLabel: this.$themeLocaleConfig.ariaLabel || "Select language",
+          items: Object.keys(locales).map((path) => {
+            const locale = locales[path];
+            const text = (themeLocales[path] && themeLocales[path].label) || locale.lang;
+            let link;
             // Stay on the current page
             if (locale.lang === this.$lang) {
-              link = currentLink
+              link = currentLink;
             } else {
               // Try to stay on the same page
-              link = currentLink.replace(this.$localeConfig.path, path)
+              link = currentLink.replace(this.$localeConfig.path, path);
               // fallback to homepage
-              if (!routes.some(route => route.path === link)) {
-                link = path
+              if (!routes.some((route) => route.path === link)) {
+                link = path;
               }
             }
-            return { text, link }
-          })
-        }
-        return [...this.userNav, languageDropdown]
+            return { text, link };
+          }),
+        };
+        return [...this.userNav, languageDropdown];
       }
-      return this.userNav
+      return this.userNav;
     },
 
-    userLinks () {
-      return (this.nav || []).map(link => {
+    userLinks() {
+      return (this.nav || []).map((link) => {
         return Object.assign(resolveNavLinkItem(link), {
-          items: (link.items || []).map(resolveNavLinkItem)
-        })
-      })
+          items: (link.items || []).map(resolveNavLinkItem),
+        });
+      });
     },
 
-    repoLink () {
-      const { repo } = this.$site.themeConfig
+    repoLink() {
+      const { repo } = this.$site.themeConfig;
       if (repo) {
-        return /^https?:/.test(repo)
-          ? repo
-          : `https://github.com/${repo}`
+        return /^https?:/.test(repo) ? repo : `https://github.com/${repo}`;
       }
-      return null
+      return null;
     },
 
-    repoLabel () {
-      if (!this.repoLink) return
+    repoLabel() {
+      if (!this.repoLink) return;
       if (this.$site.themeConfig.repoLabel) {
-        return this.$site.themeConfig.repoLabel
+        return this.$site.themeConfig.repoLabel;
       }
 
-      const repoHost = this.repoLink.match(/^https?:\/\/[^/]+/)[0]
-      const platforms = ['GitHub', 'GitLab', 'Bitbucket']
+      const repoHost = this.repoLink.match(/^https?:\/\/[^/]+/)[0];
+      const platforms = ["GitHub", "GitLab", "Bitbucket"];
       for (let i = 0; i < platforms.length; i++) {
-        const platform = platforms[i]
-        if (new RegExp(platform, 'i').test(repoHost)) {
-          return platform
+        const platform = platforms[i];
+        if (new RegExp(platform, "i").test(repoHost)) {
+          return platform;
         }
       }
 
-      return 'Source'
+      return "Source";
     },
-    contactUs () {
+    contactUs() {
       const { contactUs } = this.$site.themeConfig;
 
       return contactUs;
@@ -169,18 +145,18 @@ export default {
 
   methods: {
     changeVersion() {
-      let currentPath = this.$route.path.split('/');
+      let currentPath = this.$route.path.split("/");
 
       currentPath[1] = this.version;
 
-      this.$router.push(currentPath.join('/'));
+      this.$router.push(currentPath.join("/"));
     },
 
     currentVersion() {
-      this.version = this.$route.path.split('/')[1] || '2.0';
-    }
+      this.version = this.$route.path.split("/")[1] || "2.0";
+    },
   },
-}
+};
 </script>
 
 <style lang="stylus">

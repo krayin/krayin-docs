@@ -1,4 +1,4 @@
-let version = 'master';
+let version = '2.1';
 
 function setVersionPrefix(children) {
     if (children.constructor === Array) {
