@@ -80,6 +80,8 @@ To enable and configure AI-based lead creation, follow these steps:
 5. Select your preferred **AI model** from the available options.
 6. (Optional) You can add additional model IDs by referencing the models list available at [Openrouter Models](https://openrouter.ai/models).
 
+now enable the DOC Generation.
+
 Once configured, the AI engine will be activated and ready to process document uploads.
 
 ## Using the Feature – Lead Creation via File Upload
