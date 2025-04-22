@@ -1,12 +1,16 @@
 <!-- @format -->
 
-# Overriding a Controller or Controller Method
+# Overview
+
+Krayin CRM enables seamless customization through overrides and events. You can override controllers, models, and views to modify core logic, database behavior, or UI. Additionally, view render events allow dynamic content injection into Blade templates, making extensions modular and non-intrusive.
+
+## How to override controller
 
 In some scenarios, you may need to override a controller or a specific method from an existing controller provided by a Krayin or Webkul package. Krayin's modular architecture supports a clean and extensible way to achieve this without modifying the core package code.
 
 This guide outlines the proper steps to override a controller method.
 
-## Directory Structure
+### Directory Structure
 
 First, create a controller within your custom package by following the existing structure:
 
@@ -22,7 +26,7 @@ First, create a controller within your custom package by following the existing 
 
 > Replace `<PackageName>` with the actual name of your custom package.
 
-## Overriding a Method (Example: `store` Method)
+### Overriding a Method
 
 To override a method such as `store` from the base `ProductController`, extend the base controller and redefine the method in your custom controller.
 
@@ -60,7 +64,7 @@ class ProductController extends BaseProductController
 
 This approach ensures that all methods from the original controller are available while allowing you to customize specific ones.
 
-## Registering the Custom Controller
+### Registering the Custom Controller
 
 After creating the custom controller, bind it to the original controller in your package's service provider. This ensures that Laravel uses your overridden controller.
 
@@ -111,7 +115,7 @@ class ProductServiceProvider extends ServiceProvider
 }
 ```
 
-# Override Model
+## How to override Model
 
 Sometimes, it becomes necessary to override an existing Eloquent model in Krayin, especially when you need to:
 
@@ -122,8 +126,6 @@ Sometimes, it becomes necessary to override an existing Eloquent model in Krayin
 - Modify `$fillable`, `$casts`, or other Eloquent properties
 
 Instead of modifying the core model files directly (which is not recommended and will be lost on updates), Krayin supports model overriding using Laravel’s service container and Concord’s model registration system.
-
-## How to Override a Model
 
 Krayin uses **Contracts** (interfaces) for its models, which makes overriding clean and maintainable.
 
@@ -191,7 +193,7 @@ class ProductServiceProvider extends ServiceProvider
 
 > **Note:** Always register your service provider in the package’s `ModuleServiceProvider` or your Laravel application config to ensure it’s loaded.
 
-## Why Override a Model?
+### Why Override a Model?
 
 Model overriding gives you full flexibility to tailor Krayin to your business needs without touching the core package files. Some common use cases include:
 
@@ -204,7 +206,7 @@ By overriding via contract binding, Krayin will automatically resolve your versi
 
 Here's the cleaned-up and professional version of your documentation on **Overriding Blade View Files in Krayin**, with improved clarity, structure, and grammar — and no incorrect or misleading information:
 
-# Override Blade View Files
+## How to override Blade file
 
 In some cases, you may want to override the default blade view files provided by Krayin. This is typically required when:
 
@@ -214,12 +216,12 @@ In some cases, you may want to override the default blade view files provided by
 
 Krayin supports this via Laravel's **publishing mechanism**, which allows you to publish and override views in your own package.
 
-## Example: Overriding `create.blade.php` from the Category Package
+### Example: Overriding `create.blade.php` from the Admin Package
 
 Let’s say you want to override the following view:
 
 ```
-Webkul/Category/src/Resources/views/products/create.blade.php
+packages/Webkul/Admin/src/Resources/views/quotes/create.blade.php
 ```
 
 ### Step 1: Create the View File in Your Package
@@ -227,7 +229,7 @@ Webkul/Category/src/Resources/views/products/create.blade.php
 You can replicate the same directory structure or use a custom location inside your package. Example structure:
 
 ```
-Webkul/<PackageName>/src/Resources/views/category/products/create.blade.php
+Webkul/<PackageName>/src/Resources/views/quotes/create.blade.php
 ```
 
 > **Note:** The structure under the `views` folder should match the one you are overriding to ensure consistent publishing.
@@ -261,8 +263,8 @@ class ProductServiceProvider extends ServiceProvider
     protected function publishAssets(): void
     {
         $this->publishes([
-            __DIR__ . '/../Resources/views/category/products/create.blade.php' =>
-                resource_path('views/vendor/category/products/create.blade.php'),
+            __DIR__ . '/../Resources/views/quotes/create.blade.php' =>
+                resource_path('views/vendor/admin/quotes/create.blade.php'),
         ]);
     }
 }
@@ -281,3 +283,116 @@ php artisan vendor:publish
 You’ll see a list of providers. Select your package’s provider (e.g., `Webkul\<PackageName>\Providers\ProductServiceProvider`) to publish the file.
 
 After publishing, Laravel will use your version of the view instead of the default one provided by the core Krayin package.
+Here’s a professionally revised version of your documentation for **View Render Events in Krayin**, with corrected grammar, clear structure, and accurate technical guidance:
+
+## How to use View Render Event
+
+Sometimes, you may not want to override an entire Blade file just to add or remove a small HTML snippet. In such cases, **Krayin** supports dynamic template injection using Laravel’s **view render event** mechanism.
+
+This allows you to insert content into specific areas of the DOM without duplicating entire views, making your customizations modular and maintainable.
+
+### Example Usage in a Blade File
+
+Here’s how `view_render_event()` is used in a Blade view:
+
+```blade
+<div class="flex items-center gap-x-2.5">
+    {!! view_render_event('admin.contacts.quotes.create.save_button.before') !!}
+
+    <button type="submit" class="primary-button">
+        @lang('admin::app.quotes.create.save-btn')
+    </button>
+
+    {!! view_render_event('admin.contacts.quotes.create.save_button.after') !!}
+</div>
+```
+
+In the example above, the `view_render_event()` helper fires an event (`admin.contacts.quotes.create.save_button.before`) before and after the "Save" button. You can hook into these events to inject custom Blade views at runtime.
+
+### How to Listen to a View Render Event
+
+To listen to a render event and inject content, follow these steps:
+
+### Step 1: Create an `EventServiceProvider`
+
+Create a file named `EventServiceProvider.php` inside your package’s `Providers` directory:
+
+```
+└── Webkul
+    └── <PackageName>
+        └── src
+            ├── Providers
+            │   ├── ProductServiceProvider.php
+            │   └── EventServiceProvider.php
+```
+
+### Step 2: Define the Event Listener
+
+```php
+<?php
+
+namespace Webkul\<PackageName>\Providers;
+
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\ServiceProvider;
+
+class EventServiceProvider extends ServiceProvider
+{
+    /**
+     * Bootstrap services.
+     *
+     * @return void
+     */
+    public function boot(): void
+    {
+        Event::listen('admin.contacts.quotes.create.save_button.before', function ($viewRenderEventManager) {
+            $viewRenderEventManager->addTemplate('product::shop.quotes.create');
+        });
+    }
+}
+```
+
+In this example:
+
+- We’re listening to the event: `admin.contacts.quotes.create.save_button.before`
+- We're dynamically injecting the template: `product::shop.quotes.create`
+- The contents of that Blade file will be rendered at the position of the event in the DOM
+
+> **Note:** The event name is arbitrary—you can define it as needed for your use case.
+
+### Step 3: Register the EventServiceProvider
+
+Open your main service provider (e.g., `ProductServiceProvider.php`) and register the event service provider:
+
+```php
+<?php
+
+namespace Webkul\<PackageName>\Providers;
+
+use Illuminate\Support\ServiceProvider;
+use Webkul\<PackageName>\Providers\EventServiceProvider;
+
+class ProductServiceProvider extends ServiceProvider
+{
+    /**
+     * Register services.
+     *
+     * @return void
+     */
+    public function register(): void
+    {
+        $this->app->register(EventServiceProvider::class);
+    }
+}
+```
+
+- **Why use view render events?**  
+  To inject or modify parts of a view dynamically without overriding the entire Blade template.
+
+- **How does it work?**  
+  Use `view_render_event()` to mark injectable points and listen to them via Laravel events.
+
+- **Where should the event logic go?**  
+  In a dedicated `EventServiceProvider` registered in your main package service provider.
+
+This approach allows you to extend Krayin’s frontend in a clean, non-invasive way, ideal for custom packages or plugins.
