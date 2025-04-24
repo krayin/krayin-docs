@@ -78,7 +78,6 @@ module.exports = [
             ['advanced/events-and-campaigns', 'Events and Campaigns'],
             ['advanced/helpers', 'Helpers'],
             ['advanced/override-a-layout', 'Override a Layout'],
-            ['advanced/render-event', 'View Render Event'],
         ])
     },
     {
