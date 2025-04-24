@@ -2,7 +2,6 @@ module.exports = {
     base: '/',
     port: '8080',
     cache: false,
-    title: 'Krayin CRM Developer Portal',
     description: 'Krayin CRM Developer Portal',
     head: [
         ['link', { rel: "icon", type: "image/png", href: "/favicon.ico" }],

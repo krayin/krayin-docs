@@ -11,5 +11,7 @@ features:
     details: "Explore advanced Krayin customization: events, helpers, and overriding core models."
   - title: API documentation
     details: Learn how to connect your existing systems with the Krayin API.
-footer: Copyright © 2025 Krayin
+footer: © Copyright 2010-2025, Webkul Software (Registered in India/USA). All rights reserved.
 ---
+
+<!-- @format -->
