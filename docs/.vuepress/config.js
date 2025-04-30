@@ -27,10 +27,11 @@ module.exports = {
         ],
 
         contactUs: { text: 'Contact Us', link: 'https://krayincrm.com/contacts/' },
-        
+
         sidebar: {
             '/1.x/': require('./version-configs/1.x'),
             '/2.0/': require('./version-configs/2.0'),
+            '/2.1/': require('./version-configs/2.1'),
             '/master/': require('./version-configs/master'),
         },
     },
