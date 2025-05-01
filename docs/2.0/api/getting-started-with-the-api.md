@@ -46,21 +46,3 @@ http://localhost/public/api/admin/documentation
 
 * You can check the <a href="https://github.com/DarkaOnLine/L5-Swagger"> L5-Swagger </a> guidelines too regarding the configuration the API documentation.
 
--  For admin login, add Laravel Sanctum's API token to the Admin model follow the given path.
-
-~~~
-packages/Webkul/User/src/Models/Admin.php
-~~~
-
-~~~php
-<?php
-namespace Webkul\User\Models;
-
-use Laravel\Sanctum\HasApiTokens;
-
-class Admin extends Authenticatable implements AdminContract
-{
-    use HasApiTokens;
-    ...
-}
-~~~
