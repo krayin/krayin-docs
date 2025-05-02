@@ -1,5 +1,3 @@
-<!-- @format -->
-
 # Overview
 
 Krayin CRM enables seamless customization through overrides and events. You can override controllers, models, and views to modify core logic, database behavior, or UI. Additionally, view render events allow dynamic content injection into Blade templates, making extensions modular and non-intrusive.

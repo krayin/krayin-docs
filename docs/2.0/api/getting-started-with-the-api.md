@@ -2,11 +2,11 @@
 
 [[toc]]
 
-## REST API
+### REST API
 
 Krayin REST API is a medium to use the features of the core Krayin System. By using Krayin REST API, you can integrate your application to serve the default content of Krayin.
 
-## Explore REST API Demo
+### Explore REST API Demo
 
 Welcome to our API demo! Dive into the interactive showcase of our API functionalities to get a hands-on experience of how our platform works. Click the Link below to access the demo:
 
