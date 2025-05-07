@@ -92,7 +92,7 @@ module.exports = [
         path: setVersionPrefix('api'),
         collapsable: true,
         children: setVersionPrefix([
-            ['api/getting-started-with-the-api', 'Rest API'],
+            ['api/getting-started-with-the-api', 'Explore REST API'],
         ]),
     },
 ];

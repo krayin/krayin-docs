@@ -1,5 +1,3 @@
-<!-- @format -->
-
 [[TOC]]
 
 # AI-Powered Lead Generation
