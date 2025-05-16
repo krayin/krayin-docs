@@ -6,26 +6,71 @@ The **Data Transfer Module** allows you to import large amounts of data from CSV
 
 ### Features
 
-- **Queue and Non-Queue Based Import**: Supports importing via Laravel queues for background processing or direct imports for smaller datasets(Without Queue/Sync).
-- **CSV Data Validation**: Validate CSV data before importing to ensure data integrity.
-- **Validation Strategies**: Choose between different strategies to handle data errors (`Stop on Error`, `Skip Errors`).
-- **CSV Delimiter Customization**: Support for different CSV delimiters.
-- **Allowed Errors**: Configure the number of allowable errors before the process fails.
-- **CRUD Actions**: Supports Create, Update, and Delete operations.
+1. **Queue and Non-Queue Based Import**: Supports importing via Laravel queues for background processing or direct imports for smaller datasets(Without Queue/Sync).
+2. **CSV Data Validation**: Validate CSV data before importing to ensure data integrity.
+3. **Validation Strategies**: Choose between different strategies to handle data errors (`Stop on Error`, `Skip Errors`).
+4. **CSV Delimiter Customization**: Support for different CSV delimiters.
+5. **Allowed Errors**: Configure the number of allowable errors before the process fails.
+6. **CRUD Actions**: Supports Create, Update, and Delete operations.
 
 ### Usage
 
-#### Importing Data
+### Importing Data
 
 The module can import data for **Leads**, **Products**, and **Persons** entities from CSV files. You can run the import with or without Laravel's queue feature, depending on your dataset size.
 
-##### Import without Queue
+#### 1. Import without Queue
 
-If you prefer to import data without utilizing a queue system, you can achieve this by turning off the queue processing functionality. 
+If you prefer to import data without utilizing a queue system, you can achieve this by turning off the queue processing functionality.
 
-##### Import with Queue
+::: tip Note
+This is not recommended for large datasets.
+:::
 
-If you prefer to import data utilizing a queue system, you can achieve this by turning on the queue processing functionality. 
+#### 2. Import with Queue
+
+To import data using a queue system, enable queue processing and ensure the Laravel queue worker is running on your server. For automatic handling, use Supervisor to keep the queue worker running in the background.
+
+You can install Supervisor with this command:
+
+```bash
+sudo apt-get install supervisor
+````
+
+After installing, go to the `/etc/supervisor/conf.d` directory and create a file like `laravel-worker.conf`. Here's an example configuration:
+
+```ini
+[program:laravel-worker]
+process_name=%(program_name)s_%(process_num)02d
+command=php /path-to-your-project/artisan queue:work --sleep=3 --tries=3 --max-time=3600
+autostart=true
+autorestart=true
+stopasgroup=true
+killasgroup=true
+user=your-username
+numprocs=8
+redirect_stderr=true
+stdout_logfile=/path-to-your-project/worker.log
+stopwaitsecs=3600
+```
+
+Make sure to update the `command`, `user`, and paths (`/path-to-your-project/`) according to your server setup.
+
+> **Note**: `stopwaitsecs` should be set longer than your longest running job to prevent jobs from getting killed early.
+
+After creating the config, run these commands to activate it:
+
+```bash
+sudo supervisorctl reread
+sudo supervisorctl update
+sudo supervisorctl start "laravel-worker:*"
+```
+
+Or, if you don't want to set up Laravel Supervisor, you can manually run the queue worker using the terminal by executing the following command:
+
+```bash
+php artisan queue:work
+```
 
 ### Validation
 
@@ -58,14 +103,6 @@ The module supports three main actions during the import process:
 ### Edit Import Data
 
 Before finalizing the import, you can review and edit the data. The system allows you to preview the imported data and make corrections if needed.
-
-### Queue Configuration
-
-If you are using queues for import, make sure your Laravel queue worker is running:
-
-```bash
-php artisan queue:work
-```
 
 You can adjust the queue settings in the `config/queue.php` file if needed.
 
