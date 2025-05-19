@@ -9,7 +9,7 @@ The **Data Transfer Package** enables efficient import of large datasets from sp
 1. **Queue and Non-Queue Based Import**: Supports importing via Laravel queues for background processing or direct imports for smaller datasets (without queue/sync).
 2. **Spreadsheet Data Validation (CSV & XLSX)**: Validate data from spreadsheet files (CSV and XLSX) before importing to ensure data integrity.
 3. **Validation Strategies**: Choose between different strategies to handle data errors (`Stop on Error`, `Skip Errors`).
-4. **CSV Delimiter Customization**: Support for different delim iters in CSV files (e.g., `,`, `;`).
+4. **CSV Delimiter Customization**: Support for different delimiters in CSV files (e.g., `,`, `;`).
 5. **Allowed Errors**: Configure the number of allowable errors before the process fails.
 6. **CRUD Actions**: Supports Create, Update, and Delete operations.
 7. **Editable Import Preview**: Review and edit spreadsheet data before finalizing the import.
