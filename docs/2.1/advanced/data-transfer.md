@@ -1,74 +1,174 @@
 [[TOC]]
 
-### Introduction
+## Introduction
 
-The **Data Transfer Module** allows you to import large amounts of data from CSV files into your application, with support for leads, products, and persons entities. This module leverages Laravel's queue feature for efficient handling of large datasets, ensuring seamless imports even in high-volume scenarios. Additionally, it includes comprehensive validation and error-handling strategies to provide flexibility in dealing with data integrity.
+The **Data Transfer Package** enables efficient import of large datasets from spreadsheet files (CSV and XLSX) into your application, supporting entities such as leads, products, and persons. Leveraging Laravel's queue system, the package ensures smooth performance even during high-volume imports. It also includes robust validation and error-handling strategies to maintain data integrity throughout the process.
 
-### Features
+## Features
 
-- **Queue and Non-Queue Based Import**: Supports importing via Laravel queues for background processing or direct imports for smaller datasets(Without Queue/Sync).
-- **CSV Data Validation**: Validate CSV data before importing to ensure data integrity.
-- **Validation Strategies**: Choose between different strategies to handle data errors (`Stop on Error`, `Skip Errors`).
-- **CSV Delimiter Customization**: Support for different CSV delimiters.
-- **Allowed Errors**: Configure the number of allowable errors before the process fails.
-- **CRUD Actions**: Supports Create, Update, and Delete operations.
+1. **Queue and Non-Queue Based Import**: Supports importing via Laravel queues for background processing or direct imports for smaller datasets (without queue/sync).
+2. **Spreadsheet Data Validation (CSV & XLSX)**: Validate data from spreadsheet files (CSV and XLSX) before importing to ensure data integrity.
+3. **Validation Strategies**: Choose between different strategies to handle data errors (`Stop on Error`, `Skip Errors`).
+4. **CSV Delimiter Customization**: Support for different delimiters in CSV files (e.g., `,`, `;`).
+5. **Allowed Errors**: Configure the number of allowable errors before the process fails.
+6. **CRUD Actions**: Supports Create, Update, and Delete operations.
+7. **Editable Import Preview**: Review and edit spreadsheet data before finalizing the import.
 
-### Usage
+## Usage
 
-#### Importing Data
+### Accessing the DataTransfer
 
-The module can import data for **Leads**, **Products**, and **Persons** entities from CSV files. You can run the import with or without Laravel's queue feature, depending on your dataset size.
+![Index Page](../../assets/images/advanced-topics/data-imports/index-page.png)
 
-##### Import without Queue
+To access the **Data Transfer package**:
 
-If you prefer to import data without utilizing a queue system, you can achieve this by turning off the queue processing functionality. 
+1. Navigate to the **Settings** page.
+2. Search for **"Data Transfer"**.
+3. Click on it to reach the index page.
 
-##### Import with Queue
+### Create Page
 
-If you prefer to import data utilizing a queue system, you can achieve this by turning on the queue processing functionality. 
+![Create Page](../../assets/images/advanced-topics/data-imports/create-page.png)
 
-### Validation
+The **Create page** allows you to upload entities such as **persons**, **products**, and **leads** into the application.
 
-Before importing the CSV data, the module validates the records based on the rules defined for each entity. There are two validation strategies you can choose from:
+#### General Section (Left Side):
 
-#### Validation Strategies
+* **Download Sample CSV**: Select the entity type and click **"Download Sample"** to get a dummy CSV.
+* **Edit the Sample**: Modify the downloaded file with your actual data.
+* **Upload File**: Use the file input to upload the modified CSV.
 
-1. **Stop on Errors**: This strategy will halt the import process when an error is encountered.
-2. **Skip Errors**: This strategy skips the rows with errors and continues importing the valid data.
+#### Settings Panel (Right Side):
 
-#### CSV Delimiter
+* **Action**: Choose between `Create`, `Update`, or `Delete`.
+* **Validation Strategy**:
 
-The default delimiter is a comma (`,`). If your CSV uses a different delimiter, you can specify it during the import:
+  * `Stop on Error`: Halts on the first encountered error.
+  * `Skip Errors`: Continues processing by skipping invalid rows.
+* **Additional Options**:
 
-### Error Handling
+  * Set the number of **allowed errors**.
+  * Define the **CSV field separator** (e.g., `,` or `;`).
+  * Enable **"Process in Queue"** for background processing.
 
-You can configure the number of allowable errors before the process fails. If the error threshold is met, the import will be terminated and shows to display.
-Errors during the import process are logged, and a detailed report is generated, showing which rows failed and why.
+> **Note:**
+> If using queue processing, update your `.env` file with one of the following:
+>
+> ```env
+> QUEUE_CONNECTION=database
+> ```
+>
+> or
+>
+> ```env
+> QUEUE_CONNECTION=redis
+> ```
 
-### CRUD Actions
+Once everything is set, click **"Save Import"** to continue.
 
-The module supports three main actions during the import process:
+### Import without Queue
 
-1. **Create**: Add new records. If records do not exist, new records will be created.
+To import without using Laravel queues, simply turn off the queue option in the UI.
 
-2. **Update**: Update existing records if they match based on the identifier. If records exist, they will be updated.
+::: tip
+This is not recommended only for **small datasets**.
+:::
 
-3. **Delete**: Remove records based on the provided data. If records exist, they will be deleted, Before importing. If the data does not exist, a validation error will be displayed.
+### Import with Queue
 
-### Edit Import Data
+For large datasets, enable **queue processing** to improve performance. Make sure a queue worker is running.
 
-Before finalizing the import, you can review and edit the data. The system allows you to preview the imported data and make corrections if needed.
+#### Supervisor Setup
 
-### Queue Configuration
+To keep the Laravel queue worker running:
 
-If you are using queues for import, make sure your Laravel queue worker is running:
+```bash
+sudo apt-get install supervisor
+```
+
+Create a configuration file:
+
+```ini
+[program:laravel-worker]
+process_name=%(program_name)s_%(process_num)02d
+command=php /path-to-your-project/artisan queue:work --sleep=3 --tries=3 --max-time=3600
+autostart=true
+autorestart=true
+stopasgroup=true
+killasgroup=true
+user=your-username
+numprocs=8
+redirect_stderr=true
+stdout_logfile=/path-to-your-project/worker.log
+stopwaitsecs=3600
+```
+
+Update and start Supervisor:
+
+```bash
+sudo supervisorctl reread
+sudo supervisorctl update
+sudo supervisorctl start "laravel-worker:*"
+```
+
+Or run manually:
 
 ```bash
 php artisan queue:work
 ```
 
-You can adjust the queue settings in the `config/queue.php` file if needed.
+### Imported Page
 
-### Conclusion
+![Import Success Page](../../assets/images/advanced-topics/data-imports/import-success.png)
 
-The **Data Transfer Module** provides a robust solution for importing large datasets into your Krayin application, with flexible options for validation, error handling, and queue-based processing. Whether you're importing millions of records or just a few, this module simplifies the process while ensuring data integrity and flexibility.
+After clicking **"Save Import"**, you will be redirected to the **Imported page**. Here, you can:
+
+* **Preview and validate** the imported spreadsheet files (CSV and XLSX) data.
+* **Edit entries** before finalizing the import.
+
+This ensures that your data matches the application's validation rules. If no errors are detected and all configurations are correct, the application will **successfully import** the data into the database. The import completes, and the new records become available in your system.
+
+### Validation Results
+
+![Import Validation Success](../../assets/images/advanced-topics/data-imports/validate-success.png)
+
+This page shows validation results after checking your uploaded spreadsheet files (CSV and XLSX) file.
+
+If errors are found (e.g., unsupported formats, missing required fields):
+
+* They will be listed in detail.
+* You must correct the errors before proceeding.
+
+### Successful Import
+
+![Import Completed](../../assets/images/advanced-topics/data-imports/import-completed.png)
+
+If no errors are detected and all configurations are correct, the application will successfully import the data into the database. The import completes, and the new records become available in your system.
+
+## Error Handling
+
+* Configure the **allowed number of errors**.
+* If the threshold is exceeded, the import process will fail.
+* Detailed **error reports** are generated showing which rows failed and why.
+
+## CRUD Operations During Import
+
+1. **Create**: Adds new records if they do not exist.
+2. **Update**: Modifies existing records based on identifiers.
+3. **Delete**: Removes existing records. Validation error shown if data doesn’t exist.
+
+## Editing Imported Data
+
+Before finalizing, the system allows you to:
+
+* **Review and edit** the imported data.
+* Ensure accuracy before committing the data to the database.
+
+You can also adjust the queue configuration in `config/queue.php`.
+
+
+## Conclusion
+
+The **Data Transfer Package** in Krayin offers a comprehensive and flexible solution for importing spreadsheet files (CSV and XLSX) data. With queue support, validation strategies, customizable delimiters, and robust error handling, it ensures data is imported safely and efficiently.
+
+Whether you're importing a few records or millions, this package streamlines the process and ensures data integrity every step of the way.
