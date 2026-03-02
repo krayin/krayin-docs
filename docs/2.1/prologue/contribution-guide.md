@@ -79,3 +79,98 @@ protected function registerFacades($loader, $concrete = null, $shared = false): 
     //
 }
 ```
+
+## Skills
+
+Agent skills for Krayin CRM — a Laravel-based CRM platform.
+These skills provide domain-specific, reusable context for AI agents working inside a Krayin CRM codebase.
+
+### Agent Skills
+
+Agent Skills are domain-specific, reusable context modules designed for AI agents working within the Krayin CRM codebase. These skills help AI assistants understand Krayin's architecture, conventions, and best practices, enabling them to provide more accurate and contextual assistance during development.
+
+### What is krayin/agent-skills?
+
+The [krayin/agent-skills](https://github.com/krayin/agent-skills) repository is a collection of specialized knowledge modules for AI agents working with Krayin CRM. These skills are designed to enhance AI-powered development tools with deep understanding of Krayin's Laravel-based CRM platform, including its package structure, testing frameworks, and development patterns.
+
+### Benefits for Developers
+
+- **Enhanced AI Assistance**: AI agents gain contextual understanding of Krayin's architecture and conventions
+- **Faster Development**: Reduced time spent explaining Krayin-specific patterns to AI assistants
+- **Consistent Code Quality**: AI agents follow Krayin's best practices and coding standards
+- **Domain Expertise**: Specialized knowledge for CRM package development and testing
+- **Improved Accuracy**: More relevant suggestions and solutions specific to Krayin CRM
+- **Seamless Integration**: Works with popular AI development tools like Claude, Cursor, and others
+
+### Setup Instructions
+
+#### Install All Skills
+
+To install all available skills from the repository into your AI agent:
+
+```bash
+npx skills add ./agent-skills
+```
+
+You can also install for a specific agent:
+
+```bash
+npx skills add ./agent-skills -a claude-code
+npx skills add ./agent-skills -a cursor
+```
+
+#### Install a Specific Skill
+
+To install only a specific skill:
+
+```bash
+npx skills add ./agent-skills --skill "crm-package-development"
+npx skills add ./agent-skills --skill "pest-testing"
+```
+
+### Available Skills
+
+#### `crm-package-development`
+
+Package/module development in Krayin CRM. This skill provides comprehensive guidance for creating and modifying CRM packages, including:
+
+- Creating migrations, models, and repositories
+- Setting up routes and controllers
+- Building views and layouts
+- Configuring menus and ACL
+- System configuration
+
+**Activates when**: Creating or modifying CRM packages, migrations, models, repositories, routes, controllers, views, configs, menus, ACL, or system configuration.
+
+#### `pest-testing`
+
+Testing Krayin CRM using the Pest PHP framework. This skill helps with:
+
+- Writing unit and feature tests
+- Adding assertions
+- Debugging test failures
+- Working with datasets and mocking
+- Test coverage analysis
+
+**Activates when**: Writing tests, adding assertions, debugging test failures, working with datasets or mocking, or when mentions of test, spec, TDD, expects, assertion, coverage, or verifying behavior are detected.
+
+### Supported AI Tools
+
+The agent skills are compatible with various AI-powered development tools, including:
+
+- **Claude Code** (claude-code)
+- **Cursor** (cursor)
+- **GitHub Copilot**
+- Other AI assistants that support the skills protocol
+
+### Best Practices
+
+When using Krayin agent skills:
+
+1. **Install Relevant Skills**: Only install the skills you need for your current work to keep AI context focused
+2. **Keep Skills Updated**: Regularly update the agent-skills repository to get the latest improvements
+3. **Combine with Documentation**: Use agent skills alongside Krayin's official documentation for comprehensive understanding
+4. **Provide Context**: When working with AI agents, mention specific components or features to activate the appropriate skills
+5. **Review AI Suggestions**: Always review and test AI-generated code to ensure it meets your requirements
+6. **Contribute Back**: If you identify areas where skills can be improved, consider contributing to the agent-skills repository
+7. **Agent-Specific Installation**: Install skills for specific agents when working with multiple AI tools
