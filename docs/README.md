@@ -3,7 +3,7 @@ home: true
 heroText: Krayin CRM Developer Portal
 tagline: Find detailed documentation and code examples.
 actionText: Get Started →
-actionLink: /2.1/introduction/
+actionLink: /2.2/introduction/
 features:
   - title: Package creation
     details: Learn how to create a new package for Krayin.
@@ -11,5 +11,5 @@ features:
     details: "Explore advanced Krayin customization: events, helpers, and overriding core models."
   - title: API documentation
     details: Learn how to connect your existing systems with the Krayin API.
-footer: © Copyright 2010-2025, Webkul Software (Registered in India/USA). All rights reserved.
+footer: © Copyright 2010-2026, Webkul Software (Registered in India/USA). All rights reserved.
 ---
