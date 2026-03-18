@@ -27,6 +27,8 @@
       <select v-model="version" @change="changeVersion">
         <option value="master">Master</option>
 
+        <option value="2.2">2.2</option>
+
         <option value="2.1">2.1</option>
 
         <option value="2.0">2.0</option>
