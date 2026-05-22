@@ -39,5 +39,15 @@ module.exports = {
     markdown: {
         lineNumbers: false,
     },
-    plugins: ['@vuepress/pwa', 'copy-code', '@vuepress/back-to-top'],
+    plugins: [
+        '@vuepress/pwa',
+        'copy-code',
+        '@vuepress/back-to-top',
+        ['tabs', {
+            dedupeIds: true,
+            tabsAttributes: {
+                options: { useUrlFragment: false },
+            },
+        }],
+    ],
 };

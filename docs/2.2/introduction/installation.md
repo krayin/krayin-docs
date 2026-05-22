@@ -2,69 +2,281 @@
 
 [[TOC]]
 
-## Install Using GUI Installer
+Krayin supports **three installation methods**. Pick the one that fits your environment &mdash; you only need to follow **one**.
 
-To install Krayin using our GUI installer, you can follow any of the following methods:
+::: tip Choose ONE installation method &mdash; not all
+| Method | Best for |
+| --- | --- |
+| **Method 1 &mdash; GUI Installer** | Beginners who prefer a browser-based setup wizard. |
+| **Method 2 &mdash; Composer CLI** *(Recommended)* | Developers comfortable with the command line &mdash; the standard Laravel workflow. |
+| **Method 3 &mdash; Docker** | Quickest start with zero local PHP / MySQL setup. |
 
-#### Method 1:
+You only need **one** of these methods to get Krayin running.
+:::
 
-- Choose the directory where you want to install Krayin. Open your terminal and navigate to this directory. 
+## 📁 Where to install Krayin <small>*(Method 1 & 2)*</small>
 
-- Once you are in the desired directory, run the following command in your terminal to install Krayin:
+Krayin lives inside your web server's **document root**.
+
+::: tip What is a "document root"?
+It's the folder your web server treats as its public website. When someone visits `http://yoursite.com/`, the web server looks **inside this folder** and sends back whatever it finds.
+
+Think of it like a public shelf: **only files placed on the shelf are visible to the outside world.** If you put `index.html` inside the document root, visitors can open it at `http://yoursite.com/index.html`. Files outside the document root stay private.
+
+Krayin needs to sit *inside* this folder so your browser can reach it.
+:::
+
+Three things to know before you start:
+
+1. **Open a command line inside the document root.** Use `cd` to move into the folder you picked from the table above &mdash; every install command runs from there. (Use Terminal on macOS / Linux, or PowerShell on Windows.)
+2. **Install Krayin into that folder.** Running `composer create-project krayin/laravel-crm` downloads Krayin into a new sub-folder called `laravel-crm/`. So your full install path becomes something like `/var/www/laravel-crm/`.
+3. **Point the web server at `laravel-crm/public/` &mdash; not `laravel-crm/`.** Krayin's entry file lives inside `public/`, so the web server needs to serve that sub-folder specifically. See [Configure your web server to serve `public/`](#configure-your-web-server-to-serve-public) below for the NGINX / Apache snippet.
+
+### Default document-root paths
+
+Pick the tab for your OS &mdash; it shows the default for both NGINX (recommended) and Apache:
+
+:::: tabs
+
+::: tab macOS
+**NGINX** *(recommended)*
+- Homebrew, Apple Silicon &mdash; `/opt/homebrew/var/www/`
+- Homebrew, Intel &mdash; `/usr/local/var/www/`
+
+**Apache**
+- Homebrew, Apple Silicon &mdash; `/opt/homebrew/var/www/`
+- Homebrew, Intel &mdash; `/usr/local/var/www/`
+:::
+
+::: tab "Windows PowerShell"
+**NGINX** *(recommended)* &mdash; `C:\nginx\html\`
+
+**Apache** &mdash; `C:\Apache24\htdocs\`
+:::
+
+::: tab Linux
+**NGINX** *(recommended)* &mdash; `/var/www/`
+
+**Apache** &mdash; `/var/www/html/`
+:::
+
+::::
+
+Example &mdash; jumping into the document root before installing:
+
+```bash
+# Linux (Ubuntu) with NGINX
+cd /var/www/
+```
+
+::: tip Permissions
+On Linux / macOS the document root is usually owned by `root`. Either run install commands with `sudo`, or take ownership once so your user can write into it:
+
+```bash
+sudo chown -R $USER:$USER /var/www
+```
+:::
+
+### Configure your web server to serve `public/`
+
+Methods 1 and 2 require pointing your web server at Krayin's **`public/`** folder. Pick the config that matches the web server you installed on the [Requirements page](./requirements.md).
+
+#### NGINX + PHP-FPM *(recommended)*
+
+Create a new server block at `/etc/nginx/sites-available/krayin`:
+
+```nginx
+server {
+    listen 80;
+    server_name krayin.local;
+
+    root /var/www/laravel-crm/public;
+    index index.php index.html;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/run/php/php8.3-fpm.sock;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+}
+```
+
+Enable the site and reload NGINX:
+
+:::: tabs
+
+::: tab macOS
+```bash
+brew services reload nginx
+```
+:::
+
+::: tab "Windows PowerShell"
+Restart the NGINX service after editing `nginx.conf`:
+
+```powershell
+nginx -s reload
+```
+:::
+
+::: tab Linux
+```bash
+sudo ln -s /etc/nginx/sites-available/krayin /etc/nginx/sites-enabled/
+sudo nginx -t && sudo systemctl reload nginx
+```
+:::
+
+::::
+
+#### Apache + mod_php
+
+Create a VirtualHost at `/etc/apache2/sites-available/krayin.conf`:
+
+```apache
+<VirtualHost *:80>
+    ServerName krayin.local
+    DocumentRoot /var/www/html/laravel-crm/public
+
+    <Directory /var/www/html/laravel-crm/public>
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/krayin-error.log
+    CustomLog ${APACHE_LOG_DIR}/krayin-access.log combined
+</VirtualHost>
+```
+
+Enable `mod_rewrite` and the site, then reload Apache:
+
+:::: tabs
+
+::: tab macOS
+```bash
+sudo apachectl -k restart
+```
+:::
+
+::: tab "Windows PowerShell"
+Restart the Apache service:
+
+```powershell
+Restart-Service -Name Apache2.4
+```
+:::
+
+::: tab Linux
+```bash
+sudo a2enmod rewrite
+sudo a2ensite krayin.conf
+sudo systemctl reload apache2
+```
+:::
+
+::::
+
+#### Resolve `krayin.local` locally
+
+Add this line to your hosts file so the domain works on your machine:
+
+```text
+127.0.0.1   krayin.local
+```
+
+Edit your hosts file as Administrator (Windows) or with `sudo` (macOS / Linux):
+
+:::: tabs
+
+::: tab macOS
+```bash
+sudo nano /etc/hosts
+```
+:::
+
+::: tab "Windows PowerShell"
+Edit `C:\Windows\System32\drivers\etc\hosts` (run Notepad as Administrator):
+
+```powershell
+Start-Process notepad -Verb runAs -ArgumentList 'C:\Windows\System32\drivers\etc\hosts'
+```
+:::
+
+::: tab Linux
+```bash
+sudo nano /etc/hosts
+```
+:::
+
+::::
+
+---
+
+## 🪄 Method 1 — GUI Installer
+
+To install Krayin using our browser-based GUI installer, follow either of the sub-options below.
+
+#### Sub-option 1A &mdash; Composer create-project
+
+- Open your command line and `cd` into the web-server document root from the [Where to install Krayin](#where-to-install-krayin-needed-for-method-1-method-2) section above (for example, `cd /var/www/` on Ubuntu with NGINX).
+
+- Run the following command to download and install Krayin into a new `laravel-crm/` folder:
 
     ```sh
     composer create-project krayin/laravel-crm
     ```
 
-- Configure your HTTP server to point to the **`public/`** directory of the project.
+- If you haven't already, configure your web server to serve **`laravel-crm/public/`** using the NGINX or Apache snippet in [Configure your web server to serve `public/`](#configure-your-web-server-to-serve-public). Reload NGINX or Apache after saving the config.
 
-- Open your browser and access the following URL:
+- Open your browser and visit the URL you configured (for example, `http://krayin.local/`). This will launch the Krayin installer.
 
-    ```
-    http://localhost/krayin/public/
-    ```
-
-  This will launch the Krayin installer.
-
-#### Method 2:
+#### Sub-option 1B &mdash; Download the ZIP
 
 Otherwise you can download the zip file and install it using the following steps:
 
 - [Download Krayin](https://krayincrm.com/download/) from our website.
 
-- Extract the contents of the downloaded
+- Extract the contents of the downloaded archive into your web-server document root from the [Where to install Krayin](#where-to-install-krayin-needed-for-method-1-method-2) section &mdash; e.g. extract into `/var/www/laravel-crm/` on Ubuntu.
 
-- Navigate to the project root directory.
+- On the command line, navigate into that extracted project folder:
 
-- Run the following command:
+    ```sh
+    cd /var/www/laravel-crm
+    ```
+
+- Run the following command to install dependencies:
 
     ```sh
     composer create-project
     ```
 
-- Configure your HTTP server to point to the **`public/`** directory of the project.
+- If you haven't already, configure your web server to serve **`laravel-crm/public/`** using the NGINX or Apache snippet in [Configure your web server to serve `public/`](#configure-your-web-server-to-serve-public). Reload NGINX or Apache after saving the config.
 
-- Open your browser and access the following URL:
-
-    ```
-    http://localhost/krayin/public/
-    ```
-
-   This will launch the Krayin installer.
+- Open your browser and visit the URL you configured (for example, `http://krayin.local/`). This will launch the Krayin installer.
 
 ::: warning
-Ensure that Composer is installed on your system
+Ensure that Composer is installed on your system.
 :::
 
-## Install Using Composer
+---
 
-To install Krayin using Composer, use the following steps:
+**&mdash; OR &mdash;**
 
-- Choose the directory where you want to install Krayin. Open your terminal and navigate to this directory.
+---
 
-- Once you are in the desired directory, run the following command in your terminal to install Krayin:
+## ⌨️ Method 2 — Composer CLI <small>*(Recommended)*</small>
 
-- Run the following command:
+This is the **standard Laravel workflow** and the recommended path for most developers. You install Krayin via Composer and complete setup through interactive command-line prompts &mdash; no browser wizard needed.
+
+- Open your command line and `cd` into the web-server document root from the [Where to install Krayin](#where-to-install-krayin-needed-for-method-1-method-2) section above (for example, `cd /var/www/` on Ubuntu with NGINX).
+
+- Run the following command to download and install Krayin into a new `laravel-crm/` folder:
 
     ```bash
     composer create-project krayin/laravel-crm
@@ -113,14 +325,13 @@ To install Krayin using Composer, use the following steps:
 
     - To access Krayin on your local server, follow these steps:
 
-    1. Configure your HTTP server to point to the **`public/`** directory of the project.
-    2. Run the following command:
+    1. Configure your web server (NGINX or Apache) to point at **`laravel-crm/public/`** using the snippet in [Configure your web server to serve `public/`](#configure-your-web-server-to-serve-public), then reload NGINX / Apache. Or, for a quick local test without configuring a web server, run:
 
         ```bash
         php artisan serve
         ```
 
-    3. Open your browser and access the provided local server URL.
+    2. Open your browser and visit the URL you configured (or the local URL printed by `php artisan serve`).
 
 - Login as an Admin
 
@@ -131,80 +342,13 @@ To install Krayin using Composer, use the following steps:
     Password: admin123
     ```
 
-## Installing Krayin on Shared Hosting
+---
 
-Follow these steps to install Krayin CRM on shared hosting:
+**&mdash; OR &mdash;**
 
-#### 1. Download Krayin
+---
 
-Go to the [official website](https://krayincrm.com/download/) and download the latest version of Krayin CRM  in ZIP format..
-
-#### 2. Extract the Contents
-
-Unzip the downloaded file and extract the contents to your local machine.
-
-#### 3. Upload Files to Your Hosting Account
- 
-Use an FTP client (e.g., FileZilla) or your hosting control panel's File Manager to upload all the extracted files, including hidden files (like .env.example), to the root directory (e.g., public_html) or a subdirectory of your hosting account (e.g., public_html/krayin).
-
-#### 4. Set File Permissions
-
-Make the following directories writable by setting appropriate permissions:
-
-    - storage/
-    - bootstrap/cache/
-
-#### 5. Set Up a Database
-
-Log in to your hosting control panel, create a new database, and assign a user with full privileges to this database. Note the database name, username, and password for later steps.
-
-#### 6. Install Dependencies and Run Installer
-
-- **With SSH Access:**
-
-If your hosting account provides terminal or SSH access, navigate to the project root directory and execute the following commands:
-
-```sh
-composer create-project
-
-php artisan krayin-crm:install
-```
-
-Provide the required details during the prompts, including application name, URL, locale, currency, database connection, and admin credentials.:
-
-```bash
-Please enter the application name : 
-Please enter the application URL : 
-Please select the default application locale : 
-Please select the default currency : 
-Please select the database connection : 
-Please select the database host : 
-Please select the database name : 
-Please enter your database username : 
-Please enter your database password : 
-```
-
-Next, create the admin user credentials:
-
-```bash
-Enter the name of the admin user: 
-Enter the email address of the admin user:
-Configure the password for the admin user:
-```
-
-- **Without SSH Access:**
-
-    1. Run `composer install` locally on your machine.
-    2. Upload the `vendor` directory to your hosting account via FTP.
-    3. Update the `.env` file with your database and application details.
-
-#### 7. Access the Application
-
-Open your browser and visit the application URL (e.g., `http://yourdomain.com/`).
-
-Now your application will be available in your browser.
-
-## Docker Installation
+## 🐳 Method 3 — Docker
 
 [Docker](https://www.docker.com/) is an open platform for developing, shipping, and running applications. Docker enables you to separate your applications from your infrastructure so you can deliver software quickly. With Docker, you can manage your infrastructure in the same ways you manage your applications. Docker can also be used for defining and running multi-container Docker applications using the Docker Compose tool.
 
@@ -339,3 +483,75 @@ The Krayin GitHub Docker repository automatically handles the system requirement
   Register and log in as a customer at:  
   `http(s)://your_server_endpoint/customer/register`
 
+## ☁️ Installing Krayin on Shared Hosting
+
+The steps below describe how to deploy Krayin onto a shared-hosting account &mdash; this is a **deployment scenario**, not a separate install method. You can pair it with any of the three methods above (typically Method 1 or Method 2).
+
+#### 1. Download Krayin
+
+Go to the [official website](https://krayincrm.com/download/) and download the latest version of Krayin CRM  in ZIP format..
+
+#### 2. Extract the Contents
+
+Unzip the downloaded file and extract the contents to your local machine.
+
+#### 3. Upload Files to Your Hosting Account
+ 
+Use an FTP client (e.g., FileZilla) or your hosting control panel's File Manager to upload all the extracted files, including hidden files (like .env.example), to the root directory (e.g., public_html) or a subdirectory of your hosting account (e.g., public_html/krayin).
+
+#### 4. Set File Permissions
+
+Make the following directories writable by setting appropriate permissions:
+
+    - storage/
+    - bootstrap/cache/
+
+#### 5. Set Up a Database
+
+Log in to your hosting control panel, create a new database, and assign a user with full privileges to this database. Note the database name, username, and password for later steps.
+
+#### 6. Install Dependencies and Run Installer
+
+- **With SSH Access:**
+
+If your hosting account provides SSH or command-line access, navigate to the project root directory and execute the following commands:
+
+```sh
+composer create-project
+
+php artisan krayin-crm:install
+```
+
+Provide the required details during the prompts, including application name, URL, locale, currency, database connection, and admin credentials.:
+
+```bash
+Please enter the application name : 
+Please enter the application URL : 
+Please select the default application locale : 
+Please select the default currency : 
+Please select the database connection : 
+Please select the database host : 
+Please select the database name : 
+Please enter your database username : 
+Please enter your database password : 
+```
+
+Next, create the admin user credentials:
+
+```bash
+Enter the name of the admin user: 
+Enter the email address of the admin user:
+Configure the password for the admin user:
+```
+
+- **Without SSH Access:**
+
+    1. Run `composer install` locally on your machine.
+    2. Upload the `vendor` directory to your hosting account via FTP.
+    3. Update the `.env` file with your database and application details.
+
+#### 7. Access the Application
+
+Open your browser and visit the application URL (e.g., `http://yourdomain.com/`).
+
+Now your application will be available in your browser.

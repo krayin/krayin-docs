@@ -37,9 +37,8 @@ module.exports = [
         path: setVersionPrefix('architecture'),
         collapsable: true,
         children: setVersionPrefix([
-            ['architecture/packages', 'Packages'],
-            ['architecture/repository-pattern', 'Repository Pattern'],
-            ['architecture/modular-design', 'Modular Design']
+            ['architecture/overview', 'Overview'],
+            ['architecture/packages', 'Packages']
         ]),
     },
     {
