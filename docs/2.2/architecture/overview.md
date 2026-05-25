@@ -2,9 +2,7 @@
 
 This page is a comprehensive overview of Krayin CRM's architecture and core principles, designed to help developers understand the framework's structure and implementation approach.
 
-[[TOC]]
-
-## Technology Stack
+## 🛠️ Technology Stack
 
 Krayin is built on a modern, robust technology stack leveraging proven [open-source](https://en.wikipedia.org/wiki/Open_source) technologies:
 
@@ -13,20 +11,41 @@ Krayin is built on a modern, robust technology stack leveraging proven [open-sou
 - **[Vue.js](https://vuejs.org/)** — progressive JavaScript framework for user interfaces
 - **[Tailwind CSS](https://tailwindcss.com/)** — utility-first CSS framework for styling
 
-## Core Architecture Principles
+## 🧱 Core Architecture Principles
 
 ### Modular Package Structure
 
-Krayin follows a **modular architecture** where each core piece of functionality &mdash; Leads, Contacts, Organizations, Quotes, Activities, Mail, Settings, and so on &mdash; is encapsulated in its own Laravel package. This gives a clean separation of concerns and makes the application easy to customise and extend without touching the core. See [Modular Design](#modular-design) below for the full breakdown of how a module is laid out.
+Krayin follows a **modular architecture** where each core piece of functionality &mdash; Leads, Contacts, Organizations, Quotes, Activities, Mail, Settings, and so on &mdash; is encapsulated in its own Laravel package. This gives a clean separation of concerns and makes the application easy to customise and extend without touching the core. See [Modular Design](#module-structure-in-krayin) below for the full breakdown of how a module is laid out.
 
-### Component-Based Frontend
+### Component-Based Admin UI
 
-Krayin uses Vue.js built-in components to create:
+Krayin is an admin-only CRM &mdash; there is no customer-facing storefront. The whole admin interface is composed from reusable **Laravel Blade Components**, with Vue.js layered on top for the interactive bits (live filters, modals, dropdowns, kanban drag-and-drop).
 
-- Reusable UI elements
-- Interactive admin screens
-- Dynamic content rendering
-- A consistent user experience across the CRM
+Every admin screen pulls in the same building blocks:
+
+```blade
+<x-admin::layouts>
+    <x-slot:title>
+        @lang('admin::app.leads.index.title')
+    </x-slot>
+
+    <x-admin::breadcrumbs name="leads" />
+
+    <x-admin::datagrid.export :src="route('admin.leads.index')" />
+</x-admin::layouts>
+```
+
+- `<x-admin::layouts>` &mdash; wraps every page with the admin shell, sidebar, header, and theming.
+- `<x-admin::breadcrumbs name="...">` &mdash; renders the breadcrumb trail for the named route.
+- `<x-admin::datagrid.export>` &mdash; export controls for any DataGrid.
+
+Components live inside the package that owns them, at the conventional path:
+
+```text
+packages/Webkul/<Package>/src/Resources/views/components/
+```
+
+They're auto-registered through the package's view namespace (the `admin::` prefix above maps to the Admin package). To browse the built-in components and learn how to add your own, see the [Blade Components guide](../packages/blade-components.md).
 
 ### Event-Driven Architecture
 
@@ -37,7 +56,7 @@ The framework implements a comprehensive event system that:
 - Provides hooks for third-party integrations
 - Supports extensibility without core modifications
 
-## Repository Pattern
+## 🗂️ Repository Pattern
 
 Krayin uses the **Repository Pattern** on top of Laravel's ORM to add an extra layer of abstraction between business logic and data access. This keeps the codebase consistent, easy to maintain, and easier to change.
 
@@ -59,7 +78,7 @@ Krayin uses the [Prettus Repository](https://github.com/prettus/l5-repository) p
 
 [Eloquent](https://laravel.com/docs/11.x/eloquent), Laravel's ORM, provides a higher level of abstraction over raw SQL and is what Krayin's repositories sit on top of. With Eloquent you work with objects instead of writing SQL by hand &mdash; repositories give those objects a clean, reusable home.
 
-## Modular Design
+## 🧩 Modular Design
 
 The Modular Package Structure introduced above is what makes Krayin flexible, scalable, and maintainable in practice. Each feature ships as its own package with a predictable layout.
 

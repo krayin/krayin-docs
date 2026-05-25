@@ -1,61 +1,44 @@
 # Introduction
 
-**Krayin** is a hand tailored CRM framework built on some of the hottest opensource technologies such as [Laravel](https://laravel.com), a [PHP](https://php.net) framework and [Vue.js](https://vuejs.org/), a progressive Javascript framework.
+Welcome to the **Krayin CRM Developer Portal**. This section gets you from a fresh machine to a running Krayin install &mdash; and from there to AI-assisted development that understands Krayin's conventions out of the box.
 
-Free & Opensource Laravel CRM solution for SMEs and Enterprises for complete customer lifecycle management.
+Krayin is a free, open-source CRM framework for SMEs and enterprises, built on [Laravel](https://laravel.com), [Vue.js](https://vuejs.org/), and [Tailwind CSS](https://tailwindcss.com/). Try the [live demo](https://demo.krayincrm.com/) or browse the [Krayin website](https://krayincrm.com/) for the marketing tour.
 
-To learn more about **Krayin's** features and try a [demo](https://demo.krayincrm.com/), check out our website [Krayin](https://krayincrm.com/).
+## What's in this section
 
-## Key Features of Krayin
+- [Requirements](./requirements.md) &mdash; the PHP version, web server, database, and PHP extensions Krayin needs before you install.
+- [Installation](./installation.md) &mdash; four install methods: Composer create-project, GUI installer, Docker, and Cloud deployment.
+- [Agent Skills](./skills.md) &mdash; `krayin/agent-skills` for Claude Code and Cursor &mdash; on-demand context bundles for Krayin-aware AI assistance.
+- [AI Context Files](./ai-context.md) &mdash; `llms.txt` / `llms-full.txt` for any AI assistant that can read project files (Copilot, ChatGPT, Cursor, in-house RAG).
 
-Krayin offers a comprehensive suite of features designed to empower developers and companies to effectively engage with both current and potential customers.
+## Quick links
 
-### CRM Dashboard
+| You want to... | Go to |
+| --- | --- |
+| Install Krayin for the first time | [Requirements](./requirements.md) &rarr; [Installation](./installation.md) |
+| Configure Claude Code / Cursor for Krayin | [Agent Skills](./skills.md) |
+| Drop AI context into any other tool | [AI Context Files](./ai-context.md) |
+| Upgrade an existing install | [Upgrade Guide](../prologue/upgrade-guide.md) |
+| Build your first package | [Package Development](../packages/create-package.md) |
 
-Monitor new records in real-time with an intuitive dashboard. Quickly view your leads, activities, customers, and products, all at a glance.
+## Key features
 
-### Convert Opportunities into Revenue
+Krayin offers a comprehensive suite of CRM capabilities. The headlines:
 
-Our Open Source CRM equips you with all the tools needed to capture important leads and manage opportunities. Easily mark leads as won or lost and view live updates on your dashboard.
+| Feature | What it does |
+| --- | --- |
+| **CRM Dashboard** | Real-time view of leads, activities, customers, and products. |
+| **Lead pipeline** | Capture, qualify, and convert opportunities into revenue with stage tracking and kanban visualisation. |
+| **Activities** | Log calls, meetings, and notes; never miss a follow-up. |
+| **Contacts** | Persons and organizations with full relationship history. |
+| **Products & quotes** | Catalogue + formal quote generation with line items, discounts, tax, and totals. |
+| **Email** | Inbox-style mail inside the CRM &mdash; compose, reply, label, filter. |
+| **Custom fields** | Unlimited admin-defined attributes per entity &mdash; see [Custom Attributes](../custom-attributes/custom-attribute.md). |
+| **ACL** | Role + group based access control on every screen and action. |
+| **Modular design** | Every feature ships as a Laravel package under `Webkul/` &mdash; extend or replace without touching core. |
 
-### Manage Interaction
+## Community
 
-Efficient communication with customers is essential for sales success. Seamless interaction with customers increases the likelihood of closing deals faster. Manage and track all your email interactions with customers in one place and stay updated.
-
-### Access Control List (ACL)
-
-Assign users to specific roles to ensure they have appropriate access to records. Control who can edit, create, and delete records. As an administrator, you can configure both users and roles to manage access effectively.
-
-### Activities Management
-
-Keep track of various sales activities like meetings, calls, and notes with the activities section. View all activities to avoid missing opportunities. Add or delete activities and get real-time insights on the dashboard.
-
-### Kanban Visual Leads
-
-The Kanban view organizes data for better understanding. Leads are displayed based on their stages, providing a clear idea of their progress and the expected revenue.
-
-### Unlimited Custom Fields
-
-Custom fields are essential for adapting a CRM to any business. Add custom fields as needed for leads, persons, and organizations to tailor the CRM to your specific requirements.
-
-### Product Creation
-
-Manage all the products and services your company offers, and keep track of your sales to add value to your leads. Monitor which products and services perform well with customers and identify where sales are lost.
-
-### Contact Management
-
-Access comprehensive information about the individuals and organizations you do business with. Manage all your contact information in one place for easy and efficient communication.
-
-### Modular Design
-
-Krayin features a modular design, providing developers with the flexibility to customize and extend the platform's functionalities to meet specific company requirements. This allows for precise tailoring of your CRM to suit your unique needs.
-
-## Community and Support
-
-Krayin has a vibrant and supportive community of developers and users who actively contribute to its growth and improvement.
-
-- **Explore Krayin**: Visit our website at [Krayin](https://krayincrm.com) to discover more about Krayin's features and experience a demo.
-
-- **GitHub Repository**: Access the Krayin repository on [GitHub](https://github.com/krayin/laravel-crm) with over 8.8K+ stars, reflecting its popularity and community support.
-
-Join the Krayin community today and manage your customer relationships with ease.
+- [krayin.com](https://krayincrm.com) &mdash; product site and demo.
+- [GitHub: krayin/laravel-crm](https://github.com/krayin/laravel-crm) &mdash; source and issue tracker.
+- [Community forum](https://forums.krayincrm.com/) &mdash; questions and discussion.

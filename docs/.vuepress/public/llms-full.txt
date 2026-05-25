@@ -1,0 +1,582 @@
+# Krayin CRM &mdash; comprehensive developer context
+
+> Full architectural, conventional, and code-pattern reference for Krayin CRM. Designed to drop into an LLM's context so it can produce Krayin-idiomatic code without round-tripping to the documentation site for every question.
+
+Canonical URL: `https://devdocs.krayincrm.com/llms-full.txt`
+Companion (concise) file: `https://devdocs.krayincrm.com/llms.txt`
+Source documentation: `https://devdocs.krayincrm.com/2.2/`
+Source code: `https://github.com/krayin/laravel-crm`
+
+---
+
+## 1. What Krayin is
+
+Krayin is a free, open-source **CRM framework** for SMEs and enterprises &mdash; admin-only, no customer-facing storefront. Functionality is split across **Laravel packages** under the `Webkul/` namespace; each package owns one business domain (Lead, Contact, Activity, Quote, etc.) and registers itself through a service provider plus a `ModuleServiceProvider` (Concord).
+
+When writing code for Krayin, default to:
+- Adding a new feature in its own `packages/Webkul/<Name>/` package, not in the application root.
+- Concord-registered models with Contract + Proxy + Eloquent class.
+- Prettus L5 `Repository` subclasses for all data access.
+- Blade Components from the Admin package (`<x-admin::layouts>`, `<x-admin::breadcrumbs>`, `<x-admin::datagrid.*>`) for admin UI.
+- Events fired around every write (`<entity>.<action>.before` / `.after`).
+
+## 2. Tech stack and requirements
+
+- **PHP** 8.3+ (8.4 supported).
+- **Laravel** 11.x.
+- **Vue.js** 3 (admin interactive pieces only).
+- **Tailwind CSS** 3.
+- **Vite** for asset bundling (via the `krayin-vite` integration).
+- **Database** MySQL 8.0+ / MariaDB 10.3+.
+- **Web server** Apache 2 or Nginx 1.18+ with PHP-FPM.
+- **Node** 20+ for asset builds.
+- **PHP extensions**: BCMath, Ctype, cURL, DOM, Fileinfo, Filter, Hash, Mbstring, OpenSSL, PCRE, PDO (`pdo_mysql`), Session, Tokenizer, XML, GD or Imagick, intl, zip, exif.
+- **Recommended `php.ini`**: `memory_limit=4G`, `max_execution_time=360`, `date.timezone=Asia/Kolkata` (or your local), `file_uploads=On`, `allow_url_fopen=On`.
+
+## 3. Install methods
+
+1. **Composer create-project** &mdash; `composer create-project krayin/laravel-crm` then `php artisan krayin-crm:install`.
+2. **GUI installer** &mdash; serve the directory and visit `/installer` for a wizard.
+3. **Docker** &mdash; `docker-compose up` against the official compose file.
+4. **Cloud** &mdash; one-click deploys (DigitalOcean, AWS templates, etc.).
+
+`php artisan krayin-crm:install` runs migrations, seeds initial data, creates the admin user, and writes the final `.env`.
+
+## 4. Directory layout
+
+```
+laravel-crm/
+├── app/                       # Standard Laravel app code (kept thin)
+├── bootstrap/providers.php    # Service provider registration (Laravel 11 style)
+├── config/                    # Application config
+├── packages/Webkul/           # Krayin packages (one per domain)
+│   ├── Activity/
+│   ├── Admin/
+│   ├── Attribute/
+│   ├── Automation/
+│   ├── Contact/
+│   ├── Core/
+│   ├── DataGrid/
+│   ├── DataTransfer/
+│   ├── Email/
+│   ├── EmailTemplate/
+│   ├── Installer/
+│   ├── Lead/
+│   ├── Marketing/
+│   ├── Product/
+│   ├── Quote/
+│   ├── Tag/
+│   ├── User/
+│   ├── Warehouse/
+│   └── WebForm/
+├── public/                    # Document root for the web server
+├── resources/                 # Site-wide resource overrides
+├── routes/                    # Default Laravel route files (unused by core)
+└── storage/                   # Logs, cache, uploads
+```
+
+## 5. Anatomy of a package
+
+```
+packages/Webkul/Example/
+├── composer.json
+├── package.json               # (optional) for packages shipping assets
+├── vite.config.js             # (optional)
+└── src/
+    ├── Config/
+    │   ├── admin-menu.php
+    │   ├── acl.php
+    │   ├── system.php
+    │   └── attribute_entity_types.php  (optional)
+    ├── Contracts/
+    │   └── Example.php
+    ├── Database/
+    │   ├── Migrations/
+    │   └── Seeders/
+    ├── DataGrids/
+    │   └── Admin/
+    │       └── ExampleDataGrid.php
+    ├── Http/
+    │   ├── Controllers/
+    │   │   └── Admin/
+    │   │       └── ExampleController.php
+    │   └── Requests/
+    ├── Models/
+    │   ├── Example.php
+    │   └── ExampleProxy.php
+    ├── Providers/
+    │   ├── ExampleServiceProvider.php
+    │   ├── ModuleServiceProvider.php
+    │   └── EventServiceProvider.php
+    ├── Repositories/
+    │   └── ExampleRepository.php
+    ├── Resources/
+    │   ├── assets/{css,js,images,fonts}/
+    │   ├── lang/<locale>/app.php
+    │   └── views/
+    │       ├── admin/
+    │       │   └── examples/
+    │       │       ├── index.blade.php
+    │       │       └── edit.blade.php
+    │       └── components/
+    └── Routes/
+        └── admin-routes.php
+```
+
+## 6. Service provider boilerplate
+
+```php
+<?php
+
+namespace Webkul\Example\Providers;
+
+use Illuminate\Support\ServiceProvider;
+
+class ExampleServiceProvider extends ServiceProvider
+{
+    public function boot(): void
+    {
+        $this->loadRoutesFrom(__DIR__ . '/../Routes/admin-routes.php');
+        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
+        $this->loadViewsFrom(__DIR__ . '/../Resources/views', 'example');
+        $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'example');
+    }
+
+    public function register(): void
+    {
+        $this->mergeConfigFrom(dirname(__DIR__) . '/Config/admin-menu.php', 'menu.admin');
+        $this->mergeConfigFrom(dirname(__DIR__) . '/Config/acl.php', 'acl');
+        $this->mergeConfigFrom(dirname(__DIR__) . '/Config/system.php', 'core');
+
+        $this->app->register(EventServiceProvider::class);
+    }
+}
+```
+
+Register the provider in `bootstrap/providers.php`:
+
+```php
+return [
+    App\Providers\AppServiceProvider::class,
+    Webkul\Example\Providers\ExampleServiceProvider::class,
+];
+```
+
+Also register the `ModuleServiceProvider` in `config/concord.php`:
+
+```php
+return [
+    'modules' => [
+        Webkul\Example\Providers\ModuleServiceProvider::class,
+    ],
+];
+```
+
+Always run `composer dump-autoload` after creating a new package.
+
+## 7. The Concord three-part model
+
+Every Krayin model is split into three classes so any downstream package can swap the implementation without touching the contract.
+
+```php
+// Contract (interface)
+namespace Webkul\Example\Contracts;
+
+interface Example
+{
+}
+```
+
+```php
+// Eloquent model implementing the contract
+namespace Webkul\Example\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Webkul\Example\Contracts\Example as ExampleContract;
+
+class Example extends Model implements ExampleContract
+{
+    protected $table = 'examples';
+
+    protected $fillable = ['name', 'slug', 'description'];
+}
+```
+
+```php
+// Proxy used by Concord
+namespace Webkul\Example\Models;
+
+use Konekt\Concord\Proxies\ModelProxy;
+
+class ExampleProxy extends ModelProxy
+{
+}
+```
+
+```php
+// ModuleServiceProvider registers the model against the contract
+namespace Webkul\Example\Providers;
+
+use Konekt\Concord\BaseModuleServiceProvider;
+
+class ModuleServiceProvider extends BaseModuleServiceProvider
+{
+    protected $models = [
+        \Webkul\Example\Models\Example::class,
+    ];
+}
+```
+
+Resolving the contract from the container returns the registered Eloquent class:
+
+```php
+$model = app(\Webkul\Example\Contracts\Example::class);
+```
+
+## 8. Repositories (Prettus L5)
+
+All data access happens through a repository that extends `Webkul\Core\Eloquent\Repository`.
+
+```php
+<?php
+
+namespace Webkul\Example\Repositories;
+
+use Webkul\Core\Eloquent\Repository;
+
+class ExampleRepository extends Repository
+{
+    public function model(): string
+    {
+        return 'Webkul\Example\Contracts\Example';
+    }
+}
+```
+
+Standard methods inherited:
+
+- `all()`, `find($id)`, `findOrFail($id)`, `findWhere(array $where)`, `findWhereIn($field, array $values)`
+- `paginate($perPage)`, `with(array $relations)`, `orderBy($column, $dir)`
+- `create(array $data)`, `update(array $data, $id, $attribute = 'id')`, `delete($id)`
+
+Inject the repository where you need it &mdash; Krayin uses constructor promotion:
+
+```php
+public function __construct(
+    protected ExampleRepository $exampleRepository,
+) {}
+```
+
+## 9. Routes
+
+`packages/Webkul/Example/src/Routes/admin-routes.php`:
+
+```php
+<?php
+
+use Illuminate\Support\Facades\Route;
+use Webkul\Example\Http\Controllers\Admin\ExampleController;
+
+Route::group([
+    'middleware' => ['web', 'admin'],
+    'prefix' => config('app.admin_url'),
+], function () {
+    Route::prefix('examples')->group(function () {
+        Route::get('', [ExampleController::class, 'index'])->name('admin.examples.index');
+        Route::get('create', [ExampleController::class, 'create'])->name('admin.examples.create');
+        Route::post('', [ExampleController::class, 'store'])->name('admin.examples.store');
+        Route::get('{id}', [ExampleController::class, 'show'])->name('admin.examples.show');
+        Route::put('{id}', [ExampleController::class, 'update'])->name('admin.examples.update');
+        Route::delete('{id}', [ExampleController::class, 'destroy'])->name('admin.examples.destroy');
+    });
+});
+```
+
+The `admin` middleware enforces admin authentication. `config('app.admin_url')` returns the configurable admin path prefix.
+
+## 10. Controllers
+
+```php
+<?php
+
+namespace Webkul\Example\Http\Controllers\Admin;
+
+use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\Example\DataGrids\Admin\ExampleDataGrid;
+use Webkul\Example\Repositories\ExampleRepository;
+
+class ExampleController extends Controller
+{
+    public function __construct(
+        protected ExampleRepository $exampleRepository,
+    ) {}
+
+    public function index()
+    {
+        if (request()->ajax()) {
+            return datagrid(ExampleDataGrid::class)->process();
+        }
+
+        return view('example::admin.examples.index');
+    }
+
+    public function store()
+    {
+        $data = request()->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $this->exampleRepository->create($data);
+
+        session()->flash('success', trans('example::app.examples.create-success'));
+
+        return redirect()->route('admin.examples.index');
+    }
+}
+```
+
+## 11. Blade views and components
+
+```blade
+{{-- packages/Webkul/Example/src/Resources/views/admin/examples/index.blade.php --}}
+<x-admin::layouts>
+    <x-slot:title>
+        @lang('example::app.examples.title')
+    </x-slot>
+
+    <x-admin::breadcrumbs name="examples" />
+
+    <div class="flex justify-between items-center">
+        <p class="text-xl font-bold">@lang('example::app.examples.title')</p>
+
+        <a href="{{ route('admin.examples.create') }}" class="primary-button">
+            @lang('example::app.examples.create')
+        </a>
+    </div>
+
+    <x-admin::datagrid :src="route('admin.examples.index')" />
+</x-admin::layouts>
+```
+
+Core admin components shipped by the Admin package include:
+
+- `<x-admin::layouts>` &mdash; full admin page shell (sidebar, header, footer).
+- `<x-admin::layouts.with-empty>` &mdash; minimal layout for full-bleed pages.
+- `<x-admin::breadcrumbs name="..." />` &mdash; breadcrumb trail.
+- `<x-admin::datagrid src="..." />` &mdash; DataGrid renderer (AJAX `src` is the index endpoint).
+- `<x-admin::form>`, `<x-admin::form.control-group>`, `<x-admin::form.field>` &mdash; form primitives.
+- `<x-admin::modal>` &mdash; reusable modal.
+- `<x-admin::tabs>` &mdash; tabbed interface.
+- `<x-admin::confirm-modal>` &mdash; confirm prompt.
+
+## 12. Admin menu config
+
+`packages/Webkul/Example/src/Config/admin-menu.php`:
+
+```php
+<?php
+
+return [
+    [
+        'key' => 'examples',
+        'name' => 'example::app.menu.examples',
+        'route' => 'admin.examples.index',
+        'sort' => 6,
+        'icon-class' => 'icon-example',
+    ],
+];
+```
+
+Merged into the `menu.admin` config key by the service provider.
+
+## 13. ACL config
+
+`packages/Webkul/Example/src/Config/acl.php`:
+
+```php
+<?php
+
+return [
+    [
+        'key' => 'examples',
+        'name' => 'example::app.acl.examples',
+        'route' => 'admin.examples.index',
+        'sort' => 6,
+    ],
+    [
+        'key' => 'examples.create',
+        'name' => 'example::app.acl.create',
+        'route' => 'admin.examples.create',
+        'sort' => 1,
+    ],
+];
+```
+
+Check permissions in controllers / views with `bouncer()->can('examples.create')`.
+
+## 14. DataGrid
+
+```php
+<?php
+
+namespace Webkul\Example\DataGrids\Admin;
+
+use Webkul\DataGrid\DataGrid;
+
+class ExampleDataGrid extends DataGrid
+{
+    public function prepareQueryBuilder()
+    {
+        return app(\Webkul\Example\Repositories\ExampleRepository::class)
+            ->scopeQuery(fn ($query) => $query->select('id', 'name', 'created_at'));
+    }
+
+    public function prepareColumns(): void
+    {
+        $this->addColumn([
+            'index' => 'id',
+            'label' => trans('example::app.examples.datagrid.id'),
+            'type' => 'integer',
+            'searchable' => true,
+            'filterable' => true,
+            'sortable' => true,
+        ]);
+
+        $this->addColumn([
+            'index' => 'name',
+            'label' => trans('example::app.examples.datagrid.name'),
+            'type' => 'string',
+            'searchable' => true,
+            'filterable' => true,
+            'sortable' => true,
+        ]);
+    }
+
+    public function prepareActions(): void
+    {
+        $this->addAction([
+            'icon' => 'icon-edit',
+            'title' => trans('example::app.examples.datagrid.edit'),
+            'method' => 'GET',
+            'url' => fn ($row) => route('admin.examples.edit', $row->id),
+        ]);
+    }
+}
+```
+
+## 15. Events
+
+Krayin fires `<entity>.<action>.before` and `<entity>.<action>.after` around every write. Listen from your `EventServiceProvider::boot()`:
+
+```php
+Event::listen('lead.create.after', 'Webkul\Example\Listeners\LeadListener@onCreated');
+```
+
+Common events:
+
+- Activity &mdash; `activity.create.{before,after}`, `activity.update.{before,after}`, `activity.delete.{before,after}`, `activities.file.create.{before,after}`.
+- Contacts &mdash; `contacts.organization.*`, `contacts.person.*`.
+- Leads &mdash; `lead.{create,update,delete}.{before,after}`, `leads.quote.create.{before,after}`, `leads.tag.create.{before,after}`.
+- Email &mdash; `email.{create,update,delete}.{before,after}`.
+- Products &mdash; `product.{create,update,delete}.{before,after}`.
+- Quotes &mdash; `quote.{create,update,delete}.{before,after}`.
+- Core &mdash; `core.configuration.save.{before,after}`.
+- Settings (attributes, email templates, groups, pipelines, roles, sources, tags, types, users, workflows, web forms) &mdash; `settings.<entity>.{create,update,delete}.{before,after}`.
+- User account &mdash; `user.account.update-password`.
+
+Dispatch your own events the same way in repositories:
+
+```php
+Event::dispatch('example.create.before', $data);
+$example = $this->exampleRepository->create($data);
+Event::dispatch('example.create.after', $example);
+```
+
+## 16. Custom Attributes
+
+Admins create custom attributes (Settings &rarr; Attributes) and attach them to Leads, Persons, Organizations, Products, Quotes, Warehouses. Field types: text, textarea, price, boolean, date, datetime, email, phone, select, multiselect, lookup, image, file, address, **subheading** (layout-only divider). The `Quick Add` toggle on each attribute controls whether the field appears in the entity's quick-create modal.
+
+To expose your own package entity to the attribute system:
+
+1. Create `Config/attribute_entity_types.php` returning `['examples' => ['name' => 'Examples', 'repository' => ExampleRepository::class]]`.
+2. Merge it: `$this->mergeConfigFrom(dirname(__DIR__) . '/Config/attribute_entity_types.php', 'attribute_entity_types');`.
+3. Add the `Webkul\Attribute\Traits\CustomAttribute` trait to the model.
+4. In the repository's `create()` and `update()`, call `$this->attributeValueRepository->save($data, $entity->id);`.
+
+## 17. Overriding core code
+
+- **Controller**: extend the core controller, override methods, then `$this->app->bind(BaseController::class, YourController::class)` in `register()`.
+- **Model**: extend the core model, then `$this->app->concord->registerModel(Contract::class, YourModel::class)` in `boot()`.
+- **Blade view**: publish a replacement via `$this->publishes([...])` and run `php artisan vendor:publish`.
+- **Snippet injection**: listen for a `view_render_event(...)` name and call `$viewRenderEventManager->addTemplate('your::template')` from your `EventServiceProvider`.
+
+## 18. Code conventions
+
+- **Formatter**: Laravel Pint (`pint.json` at repo root). Single space before `=>`, no aligned `=>`, no trailing commas in single-line arrays. PSR-12 base.
+- **PHP version**: target 8.3 (use constructor promotion, `: void` return types, readonly properties where applicable).
+- **Strings**: single quotes unless interpolating.
+- **Imports**: alphabetical order, grouped per Pint.
+- **Namespaces**: `Webkul\<Package>\<Layer>\<Class>`; never put code in the application root for package work.
+- **Tests**: Pest PHP (feature tests for HTTP endpoints, unit tests for repositories / services). Use `RefreshDatabase` plus the admin auth helper.
+
+## 19. The `core()` helper
+
+Shared utility helper available globally:
+
+- `core()->timezones()`, `core()->locales()`, `core()->countries()`, `core()->states($countryCode)`
+- `core()->country_name($code)`, `core()->state_name($code)`, `core()->findStateByCountryCode($countryCode, $stateCode)`
+- `core()->currencySymbol($code)`, `core()->formatBasePrice($price)`
+- `core()->formatDate($date, $format = 'd M Y h:iA')`
+- `core()->getConfigField($name)`, `core()->getConfigData($name)`
+- `core()->getSingletonInstance($className)`
+
+## 20. REST API (krayin/rest-api)
+
+Optional Composer package installed with `composer require krayin/rest-api`. Provides:
+
+- Sanctum-token auth.
+- L5-Swagger UI at `/api/admin/documentation`.
+- CRUD endpoints for every core entity: `/api/admin/leads`, `/api/admin/contacts/persons`, `/api/admin/contacts/organizations`, `/api/admin/quotes`, `/api/admin/products`, etc.
+- Auth: `POST /api/admin/login` returns `{ data: { token: "1|..." } }`; send as `Authorization: Bearer 1|...`.
+- Required env: `SANCTUM_STATEFUL_DOMAINS=<your-host>`.
+- Install: `php artisan krayin-rest-api:install` after composer.
+
+API writes fire the same `*.create.after` / `*.update.after` events as admin writes &mdash; listeners written against those events also handle API traffic.
+
+## 21. Inbound email (Mail &rarr; Inbox)
+
+Two drivers selectable via `MAIL_RECEIVER_DRIVER`:
+
+- `sendgrid` &mdash; SendGrid Inbound Parse webhook POSTs to `/admin/mail/inbound-parse`.
+- `webklex-imap` &mdash; Krayin polls an IMAP mailbox configured at `Configuration &rarr; IMAP Settings`.
+
+## 22. Marketing campaigns
+
+`php artisan campaign:process` (scheduled `daily` by `MarketingServiceProvider`) processes every active campaign whose linked event date is `today` or NULL, then queues one `Mail::queue(new CampaignMail($email, $campaign))` per Person email address. Requires a queue worker (`php artisan queue:work` or Supervisor) and a real `QUEUE_CONNECTION` (not `sync`). Set up Laravel's scheduler cron: `* * * * * php /path/to/krayin/artisan schedule:run >> /dev/null 2>&1`.
+
+## 23. Asset pipeline (per-package Vite)
+
+A package shipping assets includes `Config/krayin-vite.php`:
+
+```php
+return [
+    'example' => [
+        'hot_file' => 'example-vite.hot',
+        'build_directory' => 'example/build',
+        'package_assets_directory' => 'src/Resources/assets',
+    ],
+];
+```
+
+Merge into `krayin-vite.viters`. Provide `vite.config.js`, `tailwind.config.js`, `postcss.config.js`, `package.json` at the package root. Inject via a `view_render_event('admin.layout.head.before')` listener that calls `$viewRenderEventManager->addTemplate('example::example-style')`, where that template contains `{{ vite()->set([...], 'example') }}`.
+
+## 24. Glossary
+
+- **Concord** &mdash; the modular-Laravel framework Krayin uses for Contract/Model/Proxy registration.
+- **Prettus Repository** &mdash; the `l5-repository` package Krayin extends in `Webkul\Core\Eloquent\Repository`.
+- **DataGrid** &mdash; Krayin's tabular UI/data abstraction (columns, filters, sort, pagination, mass actions).
+- **Bouncer** &mdash; the ACL package gating routes/views via `bouncer()->can('...')`.
+- **View render event** &mdash; `view_render_event($name)` Blade helper that lets external packages inject snippets without forking the view.
+- **Quick Add** &mdash; per-attribute flag controlling whether the field appears in the entity's quick-create modal.
+- **Subheading attribute** &mdash; layout-only attribute type used to group fields on a form.
+- **Admin URL** &mdash; configurable URL prefix for the admin (default `admin`), exposed as `config('app.admin_url')`.

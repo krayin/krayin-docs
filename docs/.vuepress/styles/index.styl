@@ -1,3 +1,27 @@
+@require './home'
+@require './dark-mode'
+
+// Anchor-link offset: the admin theme has a ~60px sticky header. Without this,
+// clicking an in-page heading anchor scrolls the heading behind the bar.
+h1, h2, h3, h4, h5, h6
+  scroll-margin-top 80px
+
+// Three-column layout (Bagisto-style): left sidebar + centred content + right
+// "On this page" TOC. The TOC is `position: fixed` and ~16rem wide, so reserve
+// matching right-padding on the page so content doesn't slide under it. On
+// narrower screens (<= 1199px) the TOC hides itself (see OnThisPage.vue) — we
+// don't apply the padding there.
+@media (min-width: 1200px)
+  .page
+    padding-right 17rem
+
+// Centred search input. The default VuePress 1.x SearchBox renders an input
+// with `.search-box input`; centring its placeholder + typed text matches the
+// requested top-bar layout.
+.search-box
+  input
+    text-align center
+
 // Monokai-themed OS tabs.
 //
 // Palette

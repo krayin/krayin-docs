@@ -1,0 +1,149 @@
+// Home-page custom sections (CTA banner + Resources grid).
+// Light-mode palette here; dark-mode overrides live in dark-mode.styl.
+
+$ctaBg = #f6f9ff
+$cardBg = #fff
+$cardBorder = #e5e7eb
+$cardShadow = 0 1px 2px rgba(15, 23, 42, .04), 0 1px 6px rgba(15, 23, 42, .04)
+$cardShadowHover = 0 4px 8px rgba(15, 23, 42, .06), 0 10px 24px rgba(15, 23, 42, .08)
+
+// ─── CTA banner ──────────────────────────────────────────────────────────────
+
+.krayin-cta
+  margin 3rem 2rem 0
+  border-radius 14px
+  background linear-gradient(135deg, $ctaBg 0%, #eef2ff 100%)
+  padding 2.5rem 2rem
+  text-align center
+
+.krayin-cta__inner
+  max-width 36rem
+  margin 0 auto
+
+.krayin-cta__title
+  font-size 1.75rem
+  font-weight 700
+  margin 0 0 .75rem
+  color #111
+  border-bottom 0
+
+.krayin-cta__lead
+  margin 0 0 1.5rem
+  font-size 1.05rem
+  line-height 1.55
+  color #455064
+
+.krayin-cta__buttons
+  display flex
+  flex-wrap wrap
+  gap .75rem
+  justify-content center
+
+.krayin-btn
+  display inline-flex
+  align-items center
+  gap .5rem
+  padding .75rem 1.5rem
+  border-radius 8px
+  font-size 1rem
+  font-weight 600
+  text-decoration none
+  transition transform .12s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease
+  &:hover
+    transform translateY(-1px)
+    text-decoration none
+
+.krayin-btn--primary
+  background $accentColor
+  color #fff
+  box-shadow 0 4px 10px rgba(0, 65, 255, .25)
+  &:hover
+    background darken($accentColor, 8%)
+    color #fff
+    box-shadow 0 6px 14px rgba(0, 65, 255, .32)
+
+.krayin-btn--secondary
+  background #fff
+  color $accentColor
+  border 1px solid $accentColor
+  &:hover
+    background #f0f4ff
+    color $accentColor
+
+// ─── Quick access menu ──────────────────────────────────────────────────────
+
+.krayin-quick
+  margin 4rem auto 3rem
+  padding 0 2rem
+  max-width 68rem
+
+.krayin-quick__header
+  margin 0 0 1.75rem
+
+.krayin-quick__title
+  font-size 1.6rem
+  font-weight 700
+  margin 0 0 .35rem
+  color #0f172a
+  border-bottom 0
+
+.krayin-quick__lead
+  margin 0
+  color #475569
+  font-size 1rem
+  line-height 1.5
+
+.krayin-quick__grid
+  display grid
+  grid-template-columns repeat(auto-fit, minmax(15rem, 1fr))
+  gap 1.5rem 2rem
+
+.krayin-quick__col
+  min-width 0
+
+.krayin-quick__heading
+  font-size .95rem
+  font-weight 700
+  text-transform uppercase
+  letter-spacing .04em
+  color #0f172a
+  margin 0 0 .75rem
+  padding-bottom .4rem
+  border-bottom 1px solid $cardBorder
+
+.krayin-quick__list
+  list-style none
+  padding 0
+  margin 0
+  li
+    margin 0
+    padding 0
+    line-height 1.5
+  a
+    display block
+    padding .3rem 0
+    color #475569
+    font-size .9rem
+    text-decoration none
+    transition color .12s ease, transform .12s ease
+    &:hover
+      color $accentColor
+      transform translateX(2px)
+      text-decoration none
+
+@media (max-width: $MQMobile)
+  .krayin-quick
+    padding 0 1rem
+    margin-top 3rem
+
+// Mobile tweaks
+@media (max-width: $MQMobile)
+  .krayin-cta
+    margin-left 1rem
+    margin-right 1rem
+    padding 1.75rem 1.25rem
+  .krayin-cta__title
+    font-size 1.4rem
+  .krayin-resources
+    margin-left 1rem
+    margin-right 1rem

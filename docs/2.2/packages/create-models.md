@@ -1,218 +1,206 @@
 # Models
 
-[[TOC]]
+Krayin uses Laravel's [Eloquent ORM](https://laravel.com/docs/11.x/eloquent), with one extra layer on top: the [konekt/concord](https://packagist.org/packages/konekt/concord) module system. Every Krayin model is built from **three pieces** so other packages can override it without touching your code:
 
-## Introduction
+- **Contract** &mdash; an interface that declares the public shape of the model.
+- **Model** &mdash; the Eloquent class itself.
+- **Proxy** &mdash; the binding Concord resolves at runtime, so callers ask for the contract and get the implementation registered for it.
 
-Laravel includes Eloquent, an object-relational mapper (ORM) that makes it enjoyable to interact with your database. When using Eloquent, each database table has a corresponding "Model" that is used to interact with that table. In addition to retrieving records from the database table, Eloquent models allow you to insert, update, and delete records from the table as well. 
-To understand Models in detail, you can visit the Laravel documentation [here](https://laravel.com/docs/10.x/eloquent).
+This page picks up from [Migrations](./create-migrations.md) &mdash; you've created the `examples` table and now you need the model that maps to it.
 
-We are using the [konekt/concord](https://packagist.org/packages/konekt/concord) package, which is an extension of Laravel. It helps in building modular Laravel applications.
+## 📁 Create the model files
 
-Let's create a new model for your application. We will assume that the package name is "**Category**". Follow these steps:
+There are two ways to scaffold the three pieces. Pick the path you used in [Getting Started](./create-package.md).
 
-## Using Krayin Package Generator
+### Option A &mdash; Krayin Package Generator <small>*(recommended)*</small>
 
-To create a new `Category` Model inside your package using the Krayin Package Generator, follow these steps
+A single command creates all three files in the right place:
 
-Execute the following command in your terminal:
+```bash
+php artisan package:make-model Example Webkul/Example
+```
 
-  ```sh
-  php artisan package:make-model Category Webkul/Category
-  ```
+Files created:
 
-This command creates the following files:
+| File | Purpose |
+| --- | --- |
+| `packages/Webkul/Example/src/Contracts/Example.php` | Contract interface |
+| `packages/Webkul/Example/src/Models/Example.php` | Eloquent model |
+| `packages/Webkul/Example/src/Models/ExampleProxy.php` | Concord proxy |
 
-- New model **`Category.php`** in the **`packages/Webkul/Category/src/Models`** directory.
-- New model proxy **`CategoryProxy.php`** in the **`packages/Webkul/Category/src/Models`** directory.
-- New model contract **`Category.php`** in the **`packages/Webkul/Category/src/Contracts`** directory.
+Skip ahead to [Edit the model body](#edit-the-model-body) below.
 
-## Using Laravel Artisan Command
+### Option B &mdash; Manual setup
 
-Before creating the model class, it's essential to create two additional components: the `Contract` and the `Proxy`.
+Create each file by hand.
 
-### Create the Contract
+#### 1. Contract
 
-Laravel's Contracts are a set of interfaces that define the core services provided by the framework. For example, the **`Illuminate\Contracts\Queue\Queue`** contract defines the methods needed for queueing jobs, while the **`Illuminate\Contracts\Mail\Mailer`** contract defines the methods needed for sending an email.
+Create `packages/Webkul/Example/src/Contracts/Example.php`:
 
-Each contract has a corresponding implementation provided by the framework. For example, Laravel provides a queue implementation with various drivers and a mailer implementation powered by SwiftMailer.
-
-All Laravel contracts are stored in their own GitHub repository. This provides a quick reference for all available contracts and a single, decoupled package that can be used by package developers.
-
-Now, create a directory named **`Contracts`** inside **`Webkul/Category/src/`** and create an interface file named **`Category.php`**.
-
-```structure
+```text
 packages
 └── Webkul
-    └── Category
+    └── Example
         └── src
             └── Contracts
-                └── Category.php
+                └── Example.php
 ```
-
-Copy the following code into the **`Category.php`** file.
-
-  ```php
-  <?php
-
-  namespace Webkul\Category\Contracts;
-
-  interface Category
-  {
-  }
-  ```
-
-### Create the Proxy
-
-Proxies, as their name suggests, act as intermediaries to the actual model class. Model proxies are used to override the functionality of existing models without creating a new database table.
-
-Navigate to the directory `packages/Webkul/Category/src/` and create a new directory named `Models`.
-
-```
-└── packages
-  └── Webkul
-    └── Category
-    └── src
-      ├── ...
-      └── Models
-```
-
-Inside the `Models` directory, create a new PHP file named `CategoryProxy.php`.
-
-  ```
-  └── packages
-      └── Webkul
-          └── Category
-              └── src
-                  ├── ...
-                  ├── Contracts
-                  │   └── Category.php
-                  └── Models
-                      └── CategoryProxy.php
-  ```
-
-Copy the following code into the **`CategoryProxy.php`** file.
-
-  ```php
-  <?php
-
-  namespace Webkul\Category\Models;
-
-  use Konekt\Concord\Proxies\ModelProxy;
-
-  class CategoryProxy extends ModelProxy
-  {
-  }
-  ```
-
-### Create the Model
-
-The simple way to create a model is to execute the `make:model` artisan command
-
-  ```sh
-  php artisan make:model Category
-  ```
-
-Now, move your **`Category`** model from the project root directory (i.e., **`App/Models`**) to the **`packages/Webkul/Category/src/Models`** directory.
-
-  ```
-  └── packages
-      └── Webkul
-          └── Category
-              └── src
-                  ├── ...
-                  ├── Contracts
-                  │   └── Category.php
-                  └── Models
-                      ├── Category.php
-                      └── CategoryProxy.php
-  ```
-
-Copy the following code into the **`Category.php`** file.
 
 ```php
 <?php
 
-namespace Webkul\Category\Models;
+namespace Webkul\Example\Contracts;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Webkul\User\Models\Admin;
-use Webkul\Category\Contracts\Category as CategoryContract;
-
-class Category extends Model implements CategoryContract
+interface Example
 {
-  // ...
-
-  /**
-   * The attributes that are mass assignable.
-   *
-   * @var $fillable
-   */
-  protected $fillable = [
-    'parent_id'
-    'title',
-    'description',
-    'status'
-  ];
-
-  // ...
 }
 ```
 
-The `Category` model represents a Category Category in the application. It implements the `CategoryContract` and is part of the `Webkul\Category\Models` namespace.
+The contract is intentionally empty &mdash; you can declare methods on it later if other packages need to call them through the interface.
 
-`public function author(): BelongsTo` This method defines a `BelongsTo` relationship between the Category model and the Admin model.
+#### 2. Proxy
 
-### Create Module Service Provider
+Create `packages/Webkul/Example/src/Models/ExampleProxy.php`:
 
-To create a provider named `ModuleServiceProvider.php` inside `Webkul/Category/src/Providers` for your Laravel package, follow these steps. 
-
+```text
+packages
+└── Webkul
+    └── Example
+        └── src
+            ├── ...
+            └── Models
+                └── ExampleProxy.php
 ```
-└── packages
-  └── Webkul
-      └── Category
-          └── src
-              ├── ...
-              └── Providers
-                  ├── CategoryServiceProvider.php
-                  └── ModuleServiceProvider.php
-```
-
-In this file, we register the models used in this package. You can see the code below.
 
 ```php
 <?php
 
-namespace Webkul\Category\Providers;
+namespace Webkul\Example\Models;
+
+use Konekt\Concord\Proxies\ModelProxy;
+
+class ExampleProxy extends ModelProxy
+{
+}
+```
+
+The proxy is the indirection layer Concord uses so other packages can swap your model out without rewriting callers.
+
+#### 3. Model
+
+Scaffold the Eloquent model with Laravel's generator, then move it into the package:
+
+```bash
+php artisan make:model Example
+```
+
+Move `app/Models/Example.php` into `packages/Webkul/Example/src/Models/`:
+
+```text
+packages
+└── Webkul
+    └── Example
+        └── src
+            ├── ...
+            ├── Contracts
+            │   └── Example.php
+            └── Models
+                ├── Example.php
+                └── ExampleProxy.php
+```
+
+## 🧱 Edit the model body
+
+Open `packages/Webkul/Example/src/Models/Example.php` and replace its body with the schema from your [migration](./create-migrations.md):
+
+```php
+<?php
+
+namespace Webkul\Example\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Webkul\Example\Contracts\Example as ExampleContract;
+
+class Example extends Model implements ExampleContract
+{
+    protected $fillable = [
+        'parent_id',
+        'title',
+        'description',
+        'status',
+    ];
+}
+```
+
+The model `implements ExampleContract` so Concord can bind the interface to this class. The `$fillable` array lists the columns Eloquent will accept on `create()` / `update()` calls &mdash; keep it in sync with the migration.
+
+## ⚙️ Register the model with Concord
+
+Concord needs to know about the model so callers can resolve it through the contract. This is done in a dedicated `ModuleServiceProvider`.
+
+### 1. Create `ModuleServiceProvider.php`
+
+Add the file alongside your main service provider:
+
+```text
+packages
+└── Webkul
+    └── Example
+        └── src
+            └── Providers
+                ├── ExampleServiceProvider.php
+                └── ModuleServiceProvider.php
+```
+
+```php
+<?php
+
+namespace Webkul\Example\Providers;
 
 use Konekt\Concord\BaseModuleServiceProvider;
 
 class ModuleServiceProvider extends BaseModuleServiceProvider
 {
     protected $models = [
-        \Webkul\Category\Models\Category::class,
+        \Webkul\Example\Models\Example::class,
     ];
 }
 ```
 
-The `ModuleServiceProvider` class registers models used in the Category package. It extends `BaseModuleServiceProvider` from the `Konekt\Concord` package.
+### 2. Register it in `config/concord.php`
 
-### Registering ModuleServiceProvider
-
-To integrate the `ModuleServiceProvider` with the Concord module system in Laravel, you need to register it in the `config/concord.php` configuration file.
-
-- Navigate to Configuration File Locate and open the `config/concord.php` file in your Laravel application.
-
-- Add ServiceProvider Inside the `modules` array, add the `ModuleServiceProvider` class to register it with Concord.
+Add the provider to the `modules` array in the root `config/concord.php`:
 
 ```php
 <?php
 
 return [
     'modules' => [
-        // Other service providers
-        \Webkul\Category\Providers\ModuleServiceProvider::class,
-    ]
+        // ...
+        \Webkul\Example\Providers\ModuleServiceProvider::class,
+    ],
 ];
 ```
+
+Concord will now bind `Webkul\Example\Contracts\Example` → `Webkul\Example\Models\Example` automatically, and the `ExampleProxy` will resolve to the same implementation.
+
+## 🧪 Verify
+
+Drop into Tinker and resolve the model through the contract:
+
+```bash
+php artisan tinker
+```
+
+```php
+app(\Webkul\Example\Contracts\Example::class);
+// => Webkul\Example\Models\Example {...}
+```
+
+If you get an unresolved-binding error, re-check the entry in `config/concord.php` and run `php artisan optimize:clear`.
+
+## 📝 Next steps
+
+- [Repository](./store-data-through-repositories.md) &mdash; build the repository layer that controllers use to query and persist your model.
+- [Validation](./validation.md) &mdash; add form-request rules for the fields in `$fillable`.

@@ -1,123 +1,136 @@
 # Access Control List
 
-[[TOC]]
+ACL is how Krayin gates admin features by role. Each permission node is declared in a small PHP config file inside your package and merged into the core `acl` config from your service provider &mdash; from then on, Krayin shows the matching checkboxes on the role-edit screen and your code can ask `bouncer()->hasPermission('your.key')` to gate UI or routes.
 
-## Introduction
+This page picks up from [Admin Menu](./add-menu-in-admin.md) &mdash; you'll usually add an ACL entry for every menu entry, so admins can hide things from users who shouldn't see them.
 
-Krayin's Access Control List (ACL) feature enhances security by allowing administrators to finely manage user access across different application sections. It enables precise control over permissions, ensuring users only access authorized resources and actions. By defining roles and assigning privileges based on organizational structures or responsibilities, Krayin's ACL strengthens governance, safeguards sensitive data, and ensures compliance with policies. This capability supports a secure and customizable user experience, adapting permissions dynamically to meet evolving organizational needs, thereby enhancing operational efficiency.
+## 📁 Create the ACL config file
 
-## Directory Structure
+Inside your package's `Config/` folder (the same one that holds [`menu.php`](./add-menu-in-admin.md)), add `acl.php`:
 
-To configure Access Control List (ACL) settings in Krayin, follow these structured steps:
-
-### Create Configuration File
-
- Begin by creating a new file named `acl.php` within the `Config` directory of your package located at `packages/Webkul/Category/src/Config`:
-
-```
-└── packages
-      └── Webkul
-         └── Category
-            └── src
-                  ├── ...
-                  └── Config
-                     ├── acl.php
-                     └── ...
+```text
+packages
+└── Webkul
+    └── Example
+        └── src
+            ├── ...
+            └── Config
+                ├── acl.php
+                └── menu.php
 ```
 
-### Define ACL Configuration
+### Permission entry schema
 
-Inside `acl.php`, define ACL settings using an array format. Each array element represents a menu item or resource with parameters such as key, `name`, `route`, and `sort`. Here’s an example:
- 
-Add the following code to `acl.php`:
+Each array element describes a single permission:
+
+| Key | Required | Purpose |
+| --- | --- | --- |
+| `key` | yes | Unique identifier. Use dot-notation to nest (`examples.create`, `examples.delete`). |
+| `name` | yes | Translation key for the label shown on the role-edit screen. |
+| `route` | yes | The named route this permission protects. |
+| `sort` | no | Display order on the role-edit screen. |
+
+### Example
 
 ```php
 <?php
 
 return [
-      [
-         'key'   => 'category',
-         'name'  => 'category',
-         'route' => 'category.admin.index',
-         'sort'  => 2
-      ]
+    [
+        'key' => 'examples',
+        'name' => 'example::app.acl.examples',
+        'route' => 'admin.examples.index',
+        'sort' => 2,
+    ],
+    [
+        'key' => 'examples.create',
+        'name' => 'example::app.acl.create',
+        'route' => 'admin.examples.create',
+        'sort' => 1,
+    ],
+    [
+        'key' => 'examples.delete',
+        'name' => 'example::app.acl.delete',
+        'route' => 'admin.examples.destroy',
+        'sort' => 3,
+    ],
 ];
 ```
 
-In the above code, we have defined an array for each menu item with the parameters (key, name, route, and sort). You need to define the menus you want to include in the ACL here.
+A top-level entry (`examples`) acts as the group; the dotted child entries (`examples.create`, `examples.delete`) become sub-permissions under it.
 
-## Merge ACL Configuration
+## ⚙️ Merge the config into the service provider
 
-To merge the ACL configuration, follow these steps:
-
-### Modify Service Provider
-
-Navigate to the `CategoryServiceProvider` class within the `Webkul\Category\Providers` namespace.
-
-### Register Method
-
-Inside the `register` method of your service provider, use the mergeConfigFrom method to merge your ACL configuration file:
+Add a `mergeConfigFrom()` call inside `register()`:
 
 ```php
-   <?php
+<?php
 
-   namespace Webkul\Category\Providers;
+namespace Webkul\Example\Providers;
 
-   use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\ServiceProvider;
 
-   class CategoryServiceProvider extends ServiceProvider
-   {
-      /**
-      * Register services.
-      *
-      * @return void
-      */
-      public function register()
-      {
-         //  ...
-         
-         $this->mergeConfigFrom(
-            dirname(__DIR__) . '/Config/acl.php', 'acl'
-         );
-      }
-   }
-   ```
+class ExampleServiceProvider extends ServiceProvider
+{
+    public function register(): void
+    {
+        $this->mergeConfigFrom(
+            dirname(__DIR__) . '/Config/acl.php',
+            'acl',
+        );
+    }
+}
+```
 
-Ensure that the path specified in mergeConfigFrom matches the location of your acl.php file.
+Same rule as the [menu config](./add-menu-in-admin.md#merge-the-config-into-the-service-provider) &mdash; `mergeConfigFrom()` belongs in `register()`, not `boot()`.
 
-This will merge the ACL configuration with the existing configuration.
+## ⌨️ Clear cached config
 
-### Clear Configuration Cache
-
-After making changes, clear the configuration cache to apply the latest ACL configuration:
-
-```sh
+```bash
 php artisan optimize:clear
 ```
 
-### Verify in Admin Panel
+## 🛡️ Gate code with `bouncer()`
 
-Check the updated ACL configuration within the admin panel to confirm that menu items are correctly displayed and sorted according to your configuration.
+Once your permissions are registered, use the `bouncer()` helper anywhere in your package to check them:
 
-This will ensure that the latest ACL configuration is used.
-
-## Checking Roles and Permissions
-
-To manage roles and permissions effectively:
-
-### Access Roles
-
-In the Admin model located in `Webkul\User\Models`, utilize the relationship with the Role model to manage `roles` associated with users.
-
-### Permission Checks
-
-Use the `bouncer()` helper function to verify if a user has specific permissions. Example usage:
+### In a controller
 
 ```php
-bouncer()->hasPermission($permission)
+public function destroy(int $id)
+{
+    if (! bouncer()->hasPermission('examples.delete')) {
+        abort(401, trans('admin::app.unauthorized'));
+    }
+
+    $this->exampleRepository->delete($id);
+
+    return response()->json([
+        'message' => trans('example::app.examples.delete-success'),
+    ]);
+}
 ```
 
-Replace `$permission` with the actual permission you want to check.
+### In a Blade view
 
-By following these steps, you can seamlessly configure and manage Access Control List (ACL) settings in Krayin, ensuring secure and controlled access to administrative functionalities.
+Wrap UI in a permission check so unauthorised users don't see (or click) actions they can't perform:
 
+```blade
+@if (bouncer()->hasPermission('examples.create'))
+    <a href="{{ route('admin.examples.create') }}" class="primary-button">
+        @lang('example::app.examples.create-btn')
+    </a>
+@endif
+```
+
+## 🧪 Verify
+
+1. Open **Settings → Roles** in the admin and edit any role &mdash; the new permissions should be listed under your group.
+2. Sign in as a user assigned to a role *without* `examples.delete`. The Delete action should be hidden in the UI; if they try to call the route directly, they should get a 401.
+
+If permissions don't appear on the role-edit screen, re-run `php artisan optimize:clear` and confirm `mergeConfigFrom()` is in `register()`.
+
+## 📝 Next steps
+
+- [Localization](./localization.md) &mdash; add the translation keys referenced by `name` in your `acl.php` entries.
+- [Blade Components](./blade-components.md) &mdash; reusable UI primitives that already respect permission checks where relevant.

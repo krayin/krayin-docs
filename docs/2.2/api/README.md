@@ -1,19 +1,24 @@
 # Krayin APIs
 
-[[toc]]
+Krayin exposes its core entities through a first-party **REST API** &mdash; install one Composer package, run an artisan command, and every Lead / Person / Organization / Quote / Product action available in the admin is reachable over HTTP.
 
-## REST API
+The REST API is the integration surface for:
 
-The Krayin REST API enables seamless integration and interaction with the Krayin CRM system. It follows the REST (Representational State Transfer) architecture, providing a robust set of endpoints for managing CRM-related data.
+- **Progressive Web Apps** &mdash; build a custom CRM front-end against Krayin as the back-end.
+- **Mobile apps** &mdash; iOS / Android clients that read and write CRM records.
+- **External systems** &mdash; sync leads from a marketing tool, push quotes to an ERP, mirror contacts into a marketing-automation platform.
+- **Internal automations** &mdash; one-off scripts that bulk-process records without needing a session in the admin.
 
-Key Features
+## What's in this section
 
-- CRUD Operations: The API supports all basic CRUD (Create, Read, Update, Delete) operations, allowing for comprehensive management of CRM data including customers, leads, contacts, and more.
+- [Explore the REST API](./getting-started-with-the-api.md) &mdash; install `krayin/rest-api`, configure Sanctum, open the Swagger UI, and make your first authenticated request.
 
-- Pagination: To enhance performance and manage large datasets efficiently, the API includes support for pagination. This helps in retrieving data in chunks rather than loading large volumes of data at once.
+## At a glance
 
-Integration Capabilities: The REST API is designed to integrate seamlessly with various external systems and applications, including:
-
-- PWA (Progressive Web Applications): Use the API to develop PWAs that interact with the CRM, offering a modern, app-like experience on the web.
-Mobile Applications: Integrate with mobile apps to enable functionalities such as customer management, lead tracking, and reporting directly from the mobile interface.
-Data Access and Manipulation: The API provides endpoints to access, update, and manage CRM data, ensuring that you can build custom solutions and integrations tailored to your specific business needs.
+| Capability | Detail |
+| --- | --- |
+| **Auth** | Laravel Sanctum &mdash; bearer tokens for API clients, cookie sessions for SPAs. |
+| **Docs UI** | L5-Swagger UI mounted at `/api/admin/documentation` &mdash; live, interactive, generated from PHP annotations. |
+| **CRUD** | `POST/GET/PUT/DELETE` for every core entity. |
+| **Pagination** | `page`, `per_page`, and standard Laravel paginator metadata on list endpoints. |
+| **Events** | API writes fire the same listener events as admin writes &mdash; see [Events Listeners](../digging-deeper/events.md). |

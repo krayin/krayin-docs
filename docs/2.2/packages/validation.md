@@ -1,113 +1,149 @@
 # Validation
 
-[[TOC]]
+Validation is what keeps bad data out of the database. Krayin uses Laravel's built-in validator on the server side (the source of truth) and VeeValidate on the front end (for instant feedback in forms). This page picks up from [Controllers](./controllers.md) &mdash; you're replacing `$request->all()` with validated data.
 
-## Validation Using Laravel
+For deeper rule references see the [Laravel validation docs](https://laravel.com/docs/11.x/validation) and the [VeeValidate docs](https://vee-validate.logaretm.com/v4/).
 
-### Introduction
+## 🛡️ Server-side validation <small>*(required)*</small>
 
-Laravel provides various approaches to validate incoming data in your application. The most common method is to use the **`validate`** method available on incoming HTTP requests.
+This is the line of defence that actually protects your data. Never rely on JS validation alone.
 
-For detailed information about validation in Laravel, refer to the [Laravel documentation](https://laravel.com/docs/10.x/validation).
+### Option A &mdash; Inline `$request->validate()`
 
-### Usage
-
-To use the **`validate`** method, you can follow this example:
+The simplest path &mdash; rules live in the controller action. Good for tiny forms; gets noisy quickly:
 
 ```php
-/**
- * Store the newly created resource.
- */
 public function store(Request $request)
 {
-    $request->validate([
-        'title' => 'required|max:255|min:3Krayin',
-        'body'  => 'required',
+    $data = $request->validate([
+        'title' => 'required|string|min:3|max:255',
+        'description' => 'nullable|string',
+        'status' => 'required|boolean',
     ]);
+
+    $this->exampleRepository->create($data);
+
+    return redirect()->route('admin.examples.index');
 }
 ```
 
-Alternatively, you can manually create a validator instance using the Validator facade, as shown in this example:
+If validation fails, Laravel automatically redirects back with the input and the errors &mdash; no extra code needed.
+
+### Option B &mdash; The `Validator` facade
+
+Use this when you need to react to errors yourself (e.g. return JSON for an AJAX call) or pass custom messages:
 
 ```php
 <?php
- 
-namespace App\Http\Controllers;
-    
-use App\Http\Controllers\Controller;
+
+namespace Webkul\Example\Http\Controllers\Example;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-    
-class CategoryController extends Controller
+use Webkul\Example\Http\Controllers\Controller;
+
+class ExampleController extends Controller
 {
-    /**
-     * Store the newly created resource.
-     */
     public function store(Request $request)
     {
-        $rules = [
-            'name'    => 'required',
-            'email'   => 'required|email',
-            'message' => 'required|max:250',
-        ];
-
-        $customMessages = [
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:120',
+            'email' => 'required|email',
+            'message' => 'required|string|max:250',
+        ], [
             'required' => 'The :attribute field is required.',
-        ];
+        ]);
 
-        $this->validate($request, $rules, $customMessages);
+        if ($validator->fails()) {
+            return back()
+                ->withInput()
+                ->withErrors($validator);
+        }
+
+        // …persist the validated data
     }
 }
 ```
 
-## Validation Using Vue
+### Option C &mdash; Form Request classes <small>*(recommended for non-trivial forms)*</small>
 
-### Introduction
+Move the rules into a dedicated `FormRequest` class so the controller stays thin:
 
-VeeValidate is a validation library for Vue.js that provides plenty of validation rules out of the box, along with support for custom rules. It is template-based and similar to the HTML5 validation API, making it easy to validate HTML5 inputs as well as custom Vue components. VeeValidate also supports localization with 44 languages maintained by the community.
-
-For detailed information about validation in Vue.js using VeeValidate, refer to the [VeeValidate documentation](https://vee-validate.logaretm.com/v2/guide/).
-
-### Installation
-
-Krayin already comes with the VeeValidate library, so there is no need to install it separately.
-
-### Configuration
-
-Krayin includes the configuration for **`vee-validate`**. For example, you can find the configuration in the following path: **`krayin/packages/Webkul/Admin/src/Resources/assets/js/app.js`**.
-
-```js
-import Vue from 'vue';
-import VeeValidate from 'vee-validate';
-
-/**
- * Language imports.
-*/
-import de from 'vee-validate/dist/locale/en';
-import de from 'vee-validate/dist/locale/de';
-import fa from 'vee-validate/dist/locale/fa';
-
-/**
- * Vue plugins.
-*/
-Vue.use(VeeValidate, {
-    dictionary: {
-        en: en,
-        de: de,
-        fa: fa,
-    },
-    events: 'input|change|blur'
-});
+```text
+packages
+└── Webkul
+    └── Example
+        └── src
+            └── Http
+                └── Requests
+                    └── ExampleRequest.php
 ```
+
+```php
+<?php
+
+namespace Webkul\Example\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class ExampleRequest extends FormRequest
+{
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    public function rules(): array
+    {
+        return [
+            'title' => 'required|string|min:3|max:255',
+            'description' => 'nullable|string',
+            'status' => 'required|boolean',
+        ];
+    }
+}
+```
+
+Type-hint it in the controller and the framework runs validation before the action body executes:
+
+```php
+public function store(ExampleRequest $request)
+{
+    $this->exampleRepository->create($request->validated());
+}
+```
+
+`$request->validated()` returns *only* the rule-checked fields &mdash; safer than `$request->all()` because attackers can't slip in extra columns.
+
+## ⚡ Client-side validation with VeeValidate
+
+VeeValidate ships with Krayin out of the box (no install step) and is configured in [`packages/Webkul/Admin/src/Resources/assets/js/app.js`](https://github.com/krayin/laravel-crm/blob/2.2/packages/Webkul/Admin/src/Resources/assets/js/app.js). It mirrors Laravel's rule syntax so you can keep front- and back-end rules in sync.
 
 ### Examples
 
-Here are some examples of Vue validation using VeeValidate:
-
 ```html
-<input v-validate="'alpha'" type="text" name="username">
-
-<input v-validate="'required|email'" name="email" type="text">
-
-<input v-validate="'required|min:6'" type="password" name="password">
+<input v-validate="'alpha'"               type="text"     name="username">
+<input v-validate="'required|email'"      type="text"     name="email">
+<input v-validate="'required|min:6'"      type="password" name="password">
 ```
+
+VeeValidate also exposes localised messages, custom rules, and async validators &mdash; the full guide is on the [VeeValidate site](https://vee-validate.logaretm.com/v4/).
+
+::: warning Client-side is *only* for UX
+VeeValidate makes forms snappy, but a determined user can disable JavaScript and POST anything they like. Always pair it with server-side validation from the previous section.
+:::
+
+## 🧪 Verify
+
+Submit your form with deliberately bad data (empty title, oversized field, wrong type) and confirm:
+
+1. The controller returns to the form with the input pre-filled (`old('field')`).
+2. The error message renders under the offending field.
+3. The database row is **not** created.
+
+If invalid data still reaches `create()`, re-check that you're using `$request->validated()` (not `$request->all()`) when persisting.
+
+## 📝 Next steps
+
+- [Admin Menu](./add-menu-in-admin.md) &mdash; once your forms work, surface the routes in the sidebar.
+- [Access Control List](./create-acl.md) &mdash; gate the create/update/delete routes by permission.

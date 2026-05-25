@@ -1,145 +1,110 @@
 # Routes
 
-[[TOC]]
+Routes map URLs to controller actions. Every page in your package &mdash; the index list, the edit form, the delete handler &mdash; needs a route entry, and Krayin discovers them by loading a routes file from your package's service provider.
 
-## Introduction
+This page picks up where [Getting Started](./create-package.md) left off &mdash; you already have a `packages/Webkul/Example/src/` skeleton and a registered service provider. For background on Laravel routing, see the [Laravel routing docs](https://laravel.com/docs/11.x/routing).
 
-Routes in Laravel define the entry points of your application, mapping HTTP requests to specific controllers or closures. They play a crucial role in defining how users interact with your web application's endpoints.
+## 📁 Create the routes file
 
-Routes can be defined to handle various HTTP methods (GET, Category, PUT, DELETE, etc.) and can include parameters and route parameters to capture dynamic values from the URL. Laravel's routing system is powerful and flexible, allowing for easy RESTful routing and middleware application to routes.
+### 1. Add a `Routes/` folder
 
-For detailed information on Laravel routes, including how to define routes, use route parameters, and apply middleware, refer to the [Laravel Documentation on Routing](https://laravel.com/docs/11.x/routing).
+Inside `packages/Webkul/Example/src/`, create a `Routes/` folder and a `routes.php` file:
 
-## Create a new Route
-
-Let's start by creating a route to display the categories. We will assume that the package name is "Category".
-
-Start by creating a `Routes` directory inside `packages/Webkul/Category/src`.
-
-Inside the `Routes` directory, create file named `routes.php`.
-
-The updated directory structure will look like this:
-
-```php
+```text
 packages
 └── Webkul
-    └── Category
+    └── Example
         └── src
             ├── ...
             └── Routes
                 └── routes.php
 ```
 
-### Routes
+### 2. Define your first route
 
-`routes.php` This file is for Routes. Add the following code to this file:
+Paste this into `routes.php`:
 
 ```php
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Webkul\Category\Http\Controllers\Admin\CategoryController;
+use Webkul\Example\Http\Controllers\Admin\ExampleController;
 
 Route::group([
     'middleware' => ['web', 'admin_locale'],
-    'prefix'     => config('app.admin_path')
+    'prefix' => config('app.admin_path'),
 ], function () {
-    Route::get('/categories', [CategoryController::class, 'index']);
+    Route::get('/examples', [ExampleController::class, 'index'])
+        ->name('admin.examples.index');
 });
 ```
 
-#### Explanation
+The group prefixes every route with the admin URL (`config('app.admin_path')`) and applies the `web` and `admin_locale` middleware. Adjust the middleware list to match your route's needs &mdash; if it needs admin auth, add `'admin'`; if it should be public, drop `admin_locale`.
 
-Routes inside `routes.php` are prefixed with the admin URL (`config('app.admin_path')`) and apply the `web` and `admin_locale` middleware groups. Adjust the middleware and URL prefix according to your application's configuration.
+::: tip Always name your routes
+Naming the route (`->name('admin.examples.index')`) lets you reference it later with `route('admin.examples.index')` from controllers, views, and the [Admin Menu](./add-menu-in-admin.md) config &mdash; without hard-coding the URL.
+:::
 
-## Loading Routes
+## ⚙️ Wire the routes into the service provider
 
-### Register Routes in ServiceProvider
-
-In the CategoryServiceProvider.php` class, load the routes using the loadRoutesFrom method inside the boot method.
+Open `packages/Webkul/Example/src/Providers/ExampleServiceProvider.php` and call `loadRoutesFrom()` inside `boot()`:
 
 ```php
 <?php
 
-namespace Webkul\Category\Providers;
+namespace Webkul\Example\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-CategoryServiceProvider extends ServiceProvider
+class ExampleServiceProvider extends ServiceProvider
 {
-    /**
-     * Bootstrap services.
-     *
-     * @return void
-     */
-    public function boot()
+    public function boot(): void
     {
-       // ...
-        
         $this->loadRoutesFrom(__DIR__ . '/../Routes/routes.php');
     }
 
-    /**
-     * Register services.
-     * 
-     * @return void
-     */
-    public function register()
+    public function register(): void
     {
-        // ...
+        //
     }
 }
 ```
 
-#### Explanation
+`loadRoutesFrom()` is what tells Laravel to include your package's routes during the framework's route-registration phase. Without it, your routes silently never load.
 
-The `loadRoutesFrom` method registers the routes defined in `routes.php`, within the Laravel application, integrating them into the routing system.
+## 🔌 HTTP method reference
 
-## Available HTTP methods
-
-Basic routes are the most common type of routes in Laravel. They respond to HTTP requests like `GET`, `POST`, `PUT`, `DELETE`, etc., and map the URL to a specific controller method or closure function. For example:
-
-### GET
-
-The `GET` method is used to retrieve data from the server. It is typically used to display pages or retrieve information.
+A single Krayin resource typically needs five routes &mdash; one per HTTP verb. Here's the full set for the Example example:
 
 ```php
-// Define a route that responds to a GET request
-Route::get('categories', [CategoryController::class, 'index']);
+Route::get('examples',           [ExampleController::class, 'index'])->name('admin.examples.index');
+Route::post('examples',          [ExampleController::class, 'store'])->name('admin.examples.store');
+Route::put('examples/{id}',      [ExampleController::class, 'update'])->name('admin.examples.update');
+Route::patch('examples/{id}',    [ExampleController::class, 'partialUpdate'])->name('admin.examples.partial-update');
+Route::delete('examples/{id}',   [ExampleController::class, 'destroy'])->name('admin.examples.destroy');
 ```
 
-### POST
+| Method | When to use it |
+| --- | --- |
+| `GET` | Fetch / display a resource (list page, detail page, edit form) |
+| `POST` | Create a new resource (form submit on `create`) |
+| `PUT` | Replace an existing resource entirely (full update) |
+| `PATCH` | Update one or two fields on an existing resource (partial update) |
+| `DELETE` | Remove a resource |
 
-The `POST` method is used to submit data to the server. It is commonly used for form submissions.
+## 🧪 Verify
 
-```php
-// Define a route that responds to a Category request
-Route::post('categories', [CategoryController::class, 'store']);
+Confirm your routes are registered:
+
+```bash
+php artisan route:list --path=examples
 ```
 
-### PUT
+You should see your route listed with its URL, method, name, and the controller action it maps to. If nothing appears, run `composer dump-autoload` and re-check that `loadRoutesFrom()` is inside `boot()` (not `register()`).
 
-The `PUT` method is used to update existing data on the server. It is usually used for updating resources.
+## 📝 Next steps
 
-```php
-// Define a route that responds to a PUT request
-Route::put('categories/{id}', [CategoryController::class, 'update']);
-```
-
-### DELETE
-
-The `DELETE` method is used to delete data from the server. It is used to remove resources.
-
-```php
-// Define a route that responds to a DELETE request
-Route::delete('categories/{id}', [CategoryController::class, 'destroy']);
-```
-
-### PATCH
-
-The `PATCH` method is similar to `PUT`, but it is used to make partial updates to data on the server.
-
-```php
-// Define a route that responds to a PATCH request
-Route::patch('categories/{id}', [CategoryController::class, 'partialUpdate']);
-```
+- [Migrations](./create-migrations.md) &mdash; create the `examples` table the routes will read and write.
+- [Controllers](./controllers.md) &mdash; build the `ExampleController` that each route points at.
+- [Access Control List](./create-acl.md) &mdash; gate admin routes by user permission.
+- [Admin Menu](./add-menu-in-admin.md) &mdash; surface your `admin.examples.index` route in the sidebar.

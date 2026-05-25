@@ -1,7 +1,5 @@
 # Installation
 
-[[TOC]]
-
 Krayin supports **three installation methods**. Pick the one that fits your environment &mdash; you only need to follow **one**.
 
 ::: tip Choose ONE installation method &mdash; not all
@@ -218,11 +216,22 @@ sudo nano /etc/hosts
 
 ---
 
-## 🪄 Method 1 — GUI Installer
+## 🚀 Install Krayin
+
+Krayin ships four install paths. Pick the one that fits your workflow &mdash; they all produce the same running CRM, so the choice comes down to *how* you want to drive the install.
+
+| Method | Best for |
+| --- | --- |
+| **[Method 1 &mdash; GUI Installer](#method-gui-installer)** | First-time users who prefer a browser wizard. |
+| **[Method 2 &mdash; Composer CLI](#method-composer-cli-recommended)** *(recommended)* | Developers comfortable with the command line. Standard Laravel workflow. |
+| **[Method 3 &mdash; Docker](#method-docker)** | Anyone who wants a self-contained, throwaway environment with no host setup. |
+| **[Method 4 &mdash; Shared Hosting](#method-shared-hosting)** | Deploying onto cPanel / shared-hosting accounts (works with Method 1 or 2). |
+
+### 🪄 Method 1 — GUI Installer
 
 To install Krayin using our browser-based GUI installer, follow either of the sub-options below.
 
-#### Sub-option 1A &mdash; Composer create-project
+##### Sub-option 1A &mdash; Composer create-project
 
 - Open your command line and `cd` into the web-server document root from the [Where to install Krayin](#where-to-install-krayin-needed-for-method-1-method-2) section above (for example, `cd /var/www/` on Ubuntu with NGINX).
 
@@ -236,7 +245,7 @@ To install Krayin using our browser-based GUI installer, follow either of the su
 
 - Open your browser and visit the URL you configured (for example, `http://krayin.local/`). This will launch the Krayin installer.
 
-#### Sub-option 1B &mdash; Download the ZIP
+##### Sub-option 1B &mdash; Download the ZIP
 
 Otherwise you can download the zip file and install it using the following steps:
 
@@ -270,7 +279,7 @@ Ensure that Composer is installed on your system.
 
 ---
 
-## ⌨️ Method 2 — Composer CLI <small>*(Recommended)*</small>
+### ⌨️ Method 2 — Composer CLI <small>*(Recommended)*</small>
 
 This is the **standard Laravel workflow** and the recommended path for most developers. You install Krayin via Composer and complete setup through interactive command-line prompts &mdash; no browser wizard needed.
 
@@ -348,18 +357,18 @@ This is the **standard Laravel workflow** and the recommended path for most deve
 
 ---
 
-## 🐳 Method 3 — Docker
+### 🐳 Method 3 — Docker
 
 [Docker](https://www.docker.com/) is an open platform for developing, shipping, and running applications. Docker enables you to separate your applications from your infrastructure so you can deliver software quickly. With Docker, you can manage your infrastructure in the same ways you manage your applications. Docker can also be used for defining and running multi-container Docker applications using the Docker Compose tool.
 
 With the help of Docker Compose, you can define containers to be built, their configuration, links, volumes, ports, etc., in a single file, and it gets launched by a single command. You can also add multiple servers and services just by adding them to the Docker Compose configuration file. This configuration file is in [YAML](https://en.wikipedia.org/wiki/YAML) format.
 
-#### Application Data and Database Volume Persistence
+##### Application Data and Database Volume Persistence
 
 It is recommended to keep your application files and database data volume on the Docker host and mount them on the running container. This ensures that the application and database data persistence even in the case of containers' failure or termination. In this way, even if you destroy containers, your data won't get lost unless you remove them forcefully.
 This compose configuration file mounts the application directory **`app`** and database volume **`dbvolume`** from the host to running Docker containers at the time of containers' launch.
 
-### Docker Setup for Krayin
+#### Docker Setup for Krayin
 
 You can configure Krayin using Docker in two different ways:
 
@@ -368,11 +377,11 @@ You can configure Krayin using Docker in two different ways:
 
 Both approaches allow you to set up the application quickly, managing all system requirements like Nginx, MySQL, and PHPMyAdmin within isolated containers. Below is a detailed guide for each method.
 
-### 1. **Docker Image from Docker Hub**
+#### 1. **Docker Image from Docker Hub**
 
 Follow the steps below to set up Krayin using Docker Hub. This approach provides a pre-configured Docker image of Krayin, allowing for a quick and easy installation.
 
-#### Step 1: Pull Krayin Docker Image
+##### Step 1: Pull Krayin Docker Image
 
 To pull the Krayin Docker image from Docker Hub, use the following command:
 
@@ -380,7 +389,7 @@ To pull the Krayin Docker image from Docker Hub, use the following command:
 docker pull webkul/krayin:latest
 ```
 
-#### Step 2: Run a New Container
+##### Step 2: Run a New Container
 
 Once the image is pulled, you can run a new Docker container using the command below. This will bind your local port 80 to the container’s port 80, so Krayin can be accessed via the browser.
 
@@ -396,26 +405,26 @@ docker run -d -p 80:80 --name krayin-container webkul/krayin:latest
 > ```
 > After this, you can access the application at `http://localhost:8082/` instead of `http://localhost:80`
 
-#### Step 3: Access Krayin in Your Browser
+##### Step 3: Access Krayin in Your Browser
 
 After the container is up and running, open your browser and navigate to `http://localhost`. This will load the Krayin setup.
 
-#### Step 4: Admin Login Credentials
+##### Step 4: Admin Login Credentials
 
 Use the following credentials to log in to the Krayin admin panel:
 
 - **Admin Username**: `admin@example.com`
 - **Admin Password**: `admin123`
 
-### 2. **Using Krayin GitHub Docker Repository**
+#### 2. **Using Krayin GitHub Docker Repository**
 
-#### System Requirements
+##### System Requirements
 
 The Krayin GitHub Docker repository automatically handles the system requirements for running Krayin, including the necessary Apache and MySQL configurations. Before proceeding, ensure that you have the latest version of **Docker** and **Docker Compose** installed. You can find installation instructions for your operating system at the following links:
 - [Docker Installation Guide](https://docs.docker.com/install/)
 - [Docker Compose Installation Guide](https://docs.docker.com/compose/install/)
 
-#### Docker Configuration
+##### Docker Configuration
 
 1. **Adjust Ports and Paths**  
    Open the `docker-compose.yml` file and configure the ports for Apache, MySQL, and PHPMyAdmin. You can also specify the volumes and MySQL credentials. Here's an example configuration:
@@ -470,7 +479,7 @@ The Krayin GitHub Docker repository automatically handles the system requirement
    sh setup.sh
    ```
 
-#### Accessing Krayin
+##### Accessing Krayin
 
 - **Admin Panel**  
   Access the admin panel at:  
@@ -483,34 +492,40 @@ The Krayin GitHub Docker repository automatically handles the system requirement
   Register and log in as a customer at:  
   `http(s)://your_server_endpoint/customer/register`
 
-## ☁️ Installing Krayin on Shared Hosting
+---
+
+**&mdash; OR &mdash;**
+
+---
+
+### ☁️ Method 4 — Shared Hosting
 
 The steps below describe how to deploy Krayin onto a shared-hosting account &mdash; this is a **deployment scenario**, not a separate install method. You can pair it with any of the three methods above (typically Method 1 or Method 2).
 
-#### 1. Download Krayin
+##### 1. Download Krayin
 
 Go to the [official website](https://krayincrm.com/download/) and download the latest version of Krayin CRM  in ZIP format..
 
-#### 2. Extract the Contents
+##### 2. Extract the Contents
 
 Unzip the downloaded file and extract the contents to your local machine.
 
-#### 3. Upload Files to Your Hosting Account
+##### 3. Upload Files to Your Hosting Account
  
 Use an FTP client (e.g., FileZilla) or your hosting control panel's File Manager to upload all the extracted files, including hidden files (like .env.example), to the root directory (e.g., public_html) or a subdirectory of your hosting account (e.g., public_html/krayin).
 
-#### 4. Set File Permissions
+##### 4. Set File Permissions
 
 Make the following directories writable by setting appropriate permissions:
 
     - storage/
     - bootstrap/cache/
 
-#### 5. Set Up a Database
+##### 5. Set Up a Database
 
 Log in to your hosting control panel, create a new database, and assign a user with full privileges to this database. Note the database name, username, and password for later steps.
 
-#### 6. Install Dependencies and Run Installer
+##### 6. Install Dependencies and Run Installer
 
 - **With SSH Access:**
 
@@ -550,7 +565,7 @@ Configure the password for the admin user:
     2. Upload the `vendor` directory to your hosting account via FTP.
     3. Update the `.env` file with your database and application details.
 
-#### 7. Access the Application
+##### 7. Access the Application
 
 Open your browser and visit the application URL (e.g., `http://yourdomain.com/`).
 

@@ -1,104 +1,137 @@
-# Controller
+# Controllers
 
-[[TOC]]
+Controllers sit between your [routes](./routes.md) and your [repositories](./store-data-through-repositories.md). They take the request, ask the repository for data, and return a view or redirect. Keeping controllers thin &mdash; no SQL, no business rules &mdash; is what makes the [Repository Pattern](../architecture/overview.md#repository-pattern) worth the effort.
 
-## Introduction
+For Laravel-specific guidance, see the [Laravel controllers docs](https://laravel.com/docs/11.x/controllers).
 
-In Laravel, controllers are responsible for handling the request logic of an application. They act as intermediaries between the models and views, processing user input, interacting with the data layer, and returning the appropriate responses. By organizing related request handling logic into separate classes, controllers make it easier to manage and maintain the application's codebase.
+## 📁 Create the controller files
 
-To learn in detail about Controllers, you can visit the Laravel documentation [here](https://laravel.com/docs/11.x/controllers).
+Krayin keeps controllers under `Http/Controllers/<Domain>/` inside each package, with a thin base `Controller.php` at the root of the `Controllers/` folder.
 
-## How to create Controllers
+### 1. Add the folder structure
 
-To start building a controller for our category within the Laravel package named "Category," follow the steps below:
+```text
+packages
+└── Webkul
+    └── Example
+        └── src
+            ├── ...
+            └── Http
+                └── Controllers
+                    ├── Controller.php
+                    └── Example
+                        └── ExampleController.php
+```
 
-### Directory Structure
+### 2. Create the base controller
 
-Create the necessary directory structure within the `packages/Webkul/Category/src` path. To create the directory structure follow the following steps:
-
-1. Navigate to the `packages/Webkul/Category/src` directory.
-2. Create an `Http` directory inside `src`.
-3. Inside the `Http` directory, create another directory named `Controllers`.
-4. Inside the `Controllers` directory, create base controller named `Controller.php` which is extends the `Laravel` core controller:
+`packages/Webkul/Example/src/Http/Controllers/Controller.php` extends Laravel's base controller and pulls in the standard traits so every concrete controller in your package gets them for free:
 
 ```php
 <?php
 
-namespace Webkul\Admin\Http\Controllers;
+namespace Webkul\Example\Http\Controllers;
 
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
 {
-  use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 }
 ```
 
-5. Now create a new directory named Category inside this directory, create a new file named `CategoryController.php` file.
+### 3. Create the concrete controller
 
-In `packages/Webkul/Category/src/Http/Controllers/Category/CategoryController.php`, define the CategoryController:
+`packages/Webkul/Example/src/Http/Controllers/Example/ExampleController.php`:
 
 ```php
 <?php
 
-namespace Webkul\Category\Http\Controllers;
+namespace Webkul\Example\Http\Controllers\Example;
 
-use Webkul\Category\Http\Controllers\Controller;
-use Webkul\Category\Repository\CategoryRepository;
+use Webkul\Example\Http\Controllers\Controller;
+use Webkul\Example\Repositories\ExampleRepository;
 
-class CategoryController extends Controller
+class ExampleController extends Controller
 {
-  /**
-   * Create a controller instance.
-   * 
-   * @return void
-   */
-  public function __construct(protected CategoryRepository $categoryRepository)
-  {
-  }
+    public function __construct(
+        protected ExampleRepository $exampleRepository
+    ) {}
 
-  /**
-   * Display the listing of the resource.
-   * 
-   * @return \Illuminate\View\View
-   */
-  public function index()
-  {
-    $categories = $this->categoryRepository->all();
+    public function index()
+    {
+        $examples = $this->exampleRepository->all();
 
-    return view('category::admin.index', compact('categories'));
-  }
+        return view('example::admin.index', compact('examples'));
+    }
 
-  /**
-   * Category details.
-   * 
-   * @return \Illuminate\View\View
-   */
-  public function show(int $id) 
-  {
-    // ...
-  }
+    public function show(int $id)
+    {
+        $example = $this->exampleRepository->findOrFail($id);
 
-  // ...
+        return view('example::admin.show', compact('example'));
+    }
+
+    public function store(Request $request)
+    {
+        $example = $this->exampleRepository->create($request->all());
+
+        return redirect()
+            ->route('admin.examples.index')
+            ->with('success', trans('example::app.examples.create-success'));
+    }
+
+    public function update(Request $request, int $id)
+    {
+        $this->exampleRepository->update($request->all(), $id);
+
+        return redirect()
+            ->route('admin.examples.index')
+            ->with('success', trans('example::app.examples.update-success'));
+    }
+
+    public function destroy(int $id)
+    {
+        $this->exampleRepository->delete($id);
+
+        return response()->json([
+            'message' => trans('example::app.examples.delete-success'),
+        ]);
+    }
 }
 ```
 
-The Updated directory structure will look like this.
+::: tip Constructor property promotion
+The `protected ExampleRepository $exampleRepository` in the constructor argument list is PHP 8 property promotion &mdash; it declares the property *and* assigns it in one line. No `$this->exampleRepository = $exampleRepository;` needed.
+:::
 
-```php
-└── packages
-    └── Webkul
-        └── Category
-            └── src
-                ├── ...
-                └── Http
-                    └── Controllers
-                        ├── Controller.php
-                        └── Category
-                            └── CategoryController.php
+## 🧱 How the pieces connect
+
+The controller is the meeting point of every other layer you've built:
+
+1. The [route](./routes.md) names the controller method (`[ExampleController::class, 'index']`).
+2. Laravel's container sees `ExampleRepository` in the constructor and injects an instance.
+3. The action calls a method on the repository.
+4. The repository talks to the [model](./create-models.md), which talks to the database.
+5. The action returns a [view](./views.md) or a redirect.
+
+Keep the controller small. If a method grows past 20–30 lines, push the work down to the repository (custom query method) or up to a [form request](./validation.md) (validation rules) &mdash; not the controller.
+
+## 🧪 Verify
+
+Hit the route from your browser or with `curl`:
+
+```bash
+curl -i http://your-krayin.local/admin/examples
 ```
 
-By following these steps, you will have created the necessary structure and files for handling category within your "Category" package. You can now add the specific logic for each method to handle the functionality required for your category into the admin.
+You should get a `200 OK` (or `302` redirect to the login screen if the route is gated). If you get `500`, check the Laravel log at `storage/logs/laravel.log` &mdash; the most common causes are a typo in the repository import or a missing `index` view.
+
+## 📝 Next steps
+
+- [Views](./views.md) &mdash; build the Blade templates this controller returns.
+- [Validation](./validation.md) &mdash; replace `$request->all()` with a form request that sanitises input.
+- [Admin Menu](./add-menu-in-admin.md) &mdash; surface `admin.examples.index` in the sidebar.

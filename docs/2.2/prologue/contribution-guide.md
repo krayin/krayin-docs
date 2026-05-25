@@ -1,176 +1,178 @@
 # Contribution Guide
 
-[[Toc]]
+Krayin is open source and runs on community contributions. This page covers everything you need to send your first patch &mdash; how to report bugs, where to target your PR, how to format code, and how to disclose security issues responsibly.
 
-## Bug Reports
+## 🐛 Bug Reports
 
-At Krayin, we highly value active collaboration among our community members to continually enhance our platform's performance and reliability. To facilitate this collaborative effort, we extend a warm invitation to both report bugs and submit pull requests.
+We *prefer pull requests over bug reports*. If you can reproduce a bug, sending a failing test or a fix alongside the report turns a "thanks, we'll look into it" into a one-day merge.
 
-Rather than solely reporting bugs, we encourage you to take an active role in resolving issues by submitting pull requests containing fixes or negative test cases that effectively highlight the problem. This approach not only identifies issues but also provides practical solutions for their resolution.
+A useful bug report includes:
 
-When filing a bug report, we kindly request you to include a clear and descriptive title, along with a detailed description of the encountered problem. Additionally, please provide as much relevant information as possible, including a code sample that can reproduce the bug. Such comprehensive reports significantly expedite the troubleshooting process and enable swift resolution.
+- A clear, specific title (`Lead.create fails when value is null`, not `bug in leads`).
+- A description with the exact steps to reproduce.
+- The expected vs. actual behaviour.
+- A minimal code sample, stack trace, or screenshot.
+- Your environment &mdash; PHP version, Krayin version, database, OS.
 
-It is our collective goal to foster collaboration and find effective solutions to the challenges encountered. By actively participating in bug reporting, you not only engage fellow community members in problem-solving but also contribute significantly to the ongoing enhancement of the Krayin project.
+File against the right repo (see [Projects to contribute to](#-projects-to-contribute-to)).
 
-## Projects to Contribute
+## 🧩 Projects to contribute to
 
-You can contribute to the following projects:
+Krayin is split across several repositories &mdash; pick the one that owns the code you're changing.
 
-- [Krayin](https://github.com/krayin/laravel-crm/)
-- [Krayin docs](https://github.com/krayin/krayin-docs)
-- [Krayin rest-api](https://github.com/krayin/rest-api)
+| Repository | What's in it |
+| --- | --- |
+| [krayin/laravel-crm](https://github.com/krayin/laravel-crm) | The CRM itself &mdash; every core package under `packages/Webkul/`. Most contributions go here. |
+| [krayin/krayin-docs](https://github.com/krayin/krayin-docs) | This documentation site. |
+| [krayin/rest-api](https://github.com/krayin/rest-api) | The optional Sanctum + L5-Swagger REST API package. |
+| [krayin/agent-skills](https://github.com/krayin/agent-skills) | AI agent skills (see [Agent Skills](../introduction/skills.md)). |
 
-## Feature Requests
+## ✨ Feature requests
 
-We welcome proposals for new features and enhancements to the existing Krayin app. If you have a new feature in mind, please be prepared to contribute some of the code required to implement it.
+We welcome proposals for new features &mdash; the best ones come paired with at least a sketch of the implementation. Open an issue first to align on scope and design *before* writing a large PR; landing a 2,000-line PR is harder than landing the same change after a 10-minute design discussion.
 
-## Branch Selection
+## 🌿 Branch selection
 
-Before submitting a pull request, it's important to consider the following points to help you choose the appropriate branch:
+Pick the right base branch *before* you start work &mdash; rebasing later is harder than starting in the right place.
 
-- **Bug Fixes**: If you're fixing a bug, make sure to port the fix to the master version. 
-- **Critical Bug Fixes**: If you're fixing a critical bug, make sure to port the fix to the latest stable version that supports it (currently vmaster).
-- **Feature Requests**: If your request involves a feature with potential breaking changes, send it to the master branch, which corresponds to the upcoming release (v2.1).
+| Type of change | Target branch | Why |
+| --- | --- | --- |
+| **Bug fix** | The current `master` branch. | Bug fixes land in the upcoming release and are backported only when necessary. |
+| **Critical bug fix** | The latest stable release branch (e.g. `2.2`). | So the fix can ship as a patch release before the next minor. |
+| **Feature** | `master`. | Features always go to the upcoming release, never to a stable branch. |
+| **Breaking change** | `master`. | Stable branches never accept breaking changes. |
+| **Documentation** | `master` on [krayin/krayin-docs](https://github.com/krayin/krayin-docs). | The docs deploy from `master`. |
 
-## Compiled Assets
+When in doubt, target `master` and the maintainers will guide you on whether to retarget the PR.
 
-To determine the sorting order for Tailwind CSS classes, consult the official Tailwind CSS documentation for guidelines on class organization. Additionally, consider using the Tailwind Raw Reorder extension for VS Code to streamline the sorting process.
+## 🎨 Tailwind class ordering
 
-## Tailwind Class Reordering
+When editing Blade files, keep Tailwind utility classes in the order produced by the official Prettier plugin (the same order Tailwind itself documents). This keeps diffs readable and avoids merge churn caused by class re-ordering.
 
-When making changes to blade files that utilize Tailwind CSS classes, it's essential to maintain consistency and organization. Tailwind CSS classes should be ordered according to a predefined structure to enhance readability and maintain a clean codebase.
+- Reference: [Automatic class sorting with Prettier](https://tailwindcss.com/blog/automatic-class-sorting-with-prettier#how-classes-are-sorted)
+- VS Code helper: the **Tailwind Raw Reorder** extension auto-orders classes on save.
 
-To determine how Tailwind CSS classes should be sorted, refer to the official Tailwind CSS documentation for guidelines on class ordering. 
+## 🧹 Pint formatting
 
-[Class Reordering](https://tailwindcss.com/blog/automatic-class-sorting-with-prettier#how-classes-are-sorted)
+Krayin uses [Laravel Pint](https://laravel.com/docs/11.x/pint) for PHP formatting. Run it before sending a PR &mdash; CI will reject anything Pint would change.
 
+From the project root:
 
-## Pint Tests
-
-Pint tests are an essential part of ensuring the quality and reliability of code changes in Krayin. When making changes to the code, ensure that all Pint tests pass before submitting your pull request.Before submitting your changes, run the Pint tests locally to verify that all test cases pass. It is important to confirm that the modifications do not cause any Pint test failures or regressions.
-
-* To run the Pint tests locally, execute the following command in your terminal:
-```php
+```bash
 vendor/bin/pint
 ```
 
-## Security Vulnerabilities
+To only check (without writing changes):
 
-If you discover a security vulnerability within Krayin, please notify us immediately by sending an email to Jitendra Singh at [jitendra@webkul.in](mailto:jitendra@webkul.in). We take security vulnerabilities seriously and will address them promptly.
+```bash
+vendor/bin/pint --test
+```
 
-## Coding Style
+Pint follows PSR-12 plus Krayin-specific conventions baked into `pint.json` at the repo root. The key one to remember when hand-writing PHP: **single space before `=>`, no aligned `=>`**.
 
-Krayin follows the [PSR-2](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md) coding standard and the [PSR-4](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md) autoloading standard. These standards ensure consistency and readability in the codebase, similar to Laravel.
+```php
+// ✅ Pint-formatted
+$config = [
+    'name' => 'Example',
+    'route' => 'admin.examples.index',
+    'sort' => 6,
+];
+```
 
-## PHPDoc
+```php
+// ❌ Aligned `=>` &mdash; Pint will rewrite this
+$config = [
+    'name'  => 'Example',
+    'route' => 'admin.examples.index',
+    'sort'  => 6,
+];
+```
 
-Below is an example of a valid Krayin doc block that follows the coding style:
+## 🔒 Security vulnerabilities
+
+If you find a security issue, **do not file a public GitHub issue** &mdash; that exposes the vulnerability to attackers before a fix is available. Use one of the two private channels below.
+
+### Preferred &mdash; raise a UVdesk ticket
+
+Open a ticket at [webkul.uvdesk.com/en/](https://webkul.uvdesk.com/en/). UVdesk gives every report a tracked ticket ID, routes it to the security triage team, and keeps the full conversation history in one place &mdash; that's the fastest path to acknowledgement.
+
+When raising the ticket include:
+
+| Field | What to put in it |
+| --- | --- |
+| **Subject** | `[Security] <short summary>` &mdash; e.g. `[Security] Stored XSS in lead notes`. |
+| **Product** | Pick *Krayin CRM*. |
+| **Severity** | Your best guess &mdash; Critical / High / Medium / Low. The triage team adjusts as needed. |
+| **Krayin version** | The exact version you reproduced on (e.g. `2.2.3`). |
+| **Description** | What the vulnerability is and what an attacker could achieve. |
+| **Steps to reproduce** | Minimal click-by-click or request-by-request reproduction. |
+| **Proof of concept** | Payload, screenshot, or short video. |
+| **Suggested mitigation** | Optional, but speeds up the fix. |
+
+Attach files (PoC scripts, HTTP captures, screenshots) directly to the ticket rather than linking to external storage.
+
+### What happens next
+
+- **Acknowledgement** within a few business days, with the UVdesk ticket ID for tracking.
+- **Triage and severity assessment** &mdash; the security team confirms the issue and assigns a CVSS-style severity.
+- **Coordinated fix and disclosure** &mdash; we ship a patch, then publish a security advisory crediting the reporter (unless you ask to stay anonymous).
+
+See [Best Security Practices](../digging-deeper/security-practice.md) for the production-hardening guidance every Krayin install should follow.
+
+## 📐 Coding style
+
+Krayin follows:
+
+- **[PSR-12](https://www.php-fig.org/psr/psr-12/)** &mdash; the extended coding-style guide.
+- **[PSR-4](https://www.php-fig.org/psr/psr-4/)** &mdash; the autoloading standard.
+
+Pint enforces both automatically &mdash; if Pint passes, your style passes.
+
+In addition, default to modern PHP 8.3 idioms:
+
+- Constructor property promotion.
+- `: void` / `: string` return types.
+- Single-quoted strings unless you're interpolating.
+- Readonly properties where the field never changes after construction.
+
+## 📝 PHPDoc
+
+PHPDoc blocks are required on public methods that aren't fully described by their signature. Krayin's house style:
 
 ```php
 /**
  * Register a service with CoreServiceProvider.
- *
- * @param  string|array  $loader
- * @param  \Closure|string|null  $concrete
- * @param  bool  $shared
  */
-protected function registerFacades($loader, $concrete = null, $shared = false): void
+protected function registerFacades(string|array $loader, \Closure|string|null $concrete = null, bool $shared = false): void
 {
     //
 }
 ```
 
-## Skills
+Skip `@param` and `@return` lines when the parameter and return types are already in the signature &mdash; they're redundant noise. Only add them when you need to clarify what a parameter *means*, not what its type is.
 
-Agent skills for Krayin CRM — a Laravel-based CRM platform.
-These skills provide domain-specific, reusable context for AI agents working inside a Krayin CRM codebase.
+## 🤖 AI assistants
 
-### Agent Skills
+If you're using an AI coding assistant (Claude Code, Cursor, GitHub Copilot, ...), point it at Krayin's context resources first so its suggestions follow these conventions automatically:
 
-Agent Skills are domain-specific, reusable context modules designed for AI agents working within the Krayin CRM codebase. These skills help AI assistants understand Krayin's architecture, conventions, and best practices, enabling them to provide more accurate and contextual assistance during development.
+- [Agent Skills](../introduction/skills.md) &mdash; richer, on-demand context for Claude Code and Cursor.
+- [AI Context Files](../introduction/ai-context.md) &mdash; `llms.txt` / `llms-full.txt` for any assistant that can read project files.
 
-### What is krayin/agent-skills?
+Suggestions that don't match Krayin's conventions are still your responsibility to fix before opening a PR.
 
-The [krayin/agent-skills](https://github.com/krayin/agent-skills) repository is a collection of specialized knowledge modules for AI agents working with Krayin CRM. These skills are designed to enhance AI-powered development tools with deep understanding of Krayin's Laravel-based CRM platform, including its package structure, testing frameworks, and development patterns.
+## 🧪 Verify before opening a PR
 
-### Benefits for Developers
-
-- **Enhanced AI Assistance**: AI agents gain contextual understanding of Krayin's architecture and conventions
-- **Faster Development**: Reduced time spent explaining Krayin-specific patterns to AI assistants
-- **Consistent Code Quality**: AI agents follow Krayin's best practices and coding standards
-- **Domain Expertise**: Specialized knowledge for CRM package development and testing
-- **Improved Accuracy**: More relevant suggestions and solutions specific to Krayin CRM
-- **Seamless Integration**: Works with popular AI development tools like Claude, Cursor, and others
-
-### Setup Instructions
-
-#### Install All Skills
-
-To install all available skills from the repository into your AI agent:
+Run all of these locally before pushing:
 
 ```bash
-npx skills add ./agent-skills
+vendor/bin/pint --test    # formatting check
+php artisan test          # full test suite
 ```
 
-You can also install for a specific agent:
+If you're touching the admin UI, also exercise the feature in the browser &mdash; type-checks and unit tests verify code correctness, not feature correctness.
 
-```bash
-npx skills add ./agent-skills -a claude-code
-npx skills add ./agent-skills -a cursor
-```
+## 📝 Next steps
 
-#### Install a Specific Skill
-
-To install only a specific skill:
-
-```bash
-npx skills add ./agent-skills --skill "crm-package-development"
-npx skills add ./agent-skills --skill "pest-testing"
-```
-
-### Available Skills
-
-#### `crm-package-development`
-
-Package/module development in Krayin CRM. This skill provides comprehensive guidance for creating and modifying CRM packages, including:
-
-- Creating migrations, models, and repositories
-- Setting up routes and controllers
-- Building views and layouts
-- Configuring menus and ACL
-- System configuration
-
-**Activates when**: Creating or modifying CRM packages, migrations, models, repositories, routes, controllers, views, configs, menus, ACL, or system configuration.
-
-#### `pest-testing`
-
-Testing Krayin CRM using the Pest PHP framework. This skill helps with:
-
-- Writing unit and feature tests
-- Adding assertions
-- Debugging test failures
-- Working with datasets and mocking
-- Test coverage analysis
-
-**Activates when**: Writing tests, adding assertions, debugging test failures, working with datasets or mocking, or when mentions of test, spec, TDD, expects, assertion, coverage, or verifying behavior are detected.
-
-### Supported AI Tools
-
-The agent skills are compatible with various AI-powered development tools, including:
-
-- **Claude Code** (claude-code)
-- **Cursor** (cursor)
-- **GitHub Copilot**
-- Other AI assistants that support the skills protocol
-
-### Best Practices
-
-When using Krayin agent skills:
-
-1. **Install Relevant Skills**: Only install the skills you need for your current work to keep AI context focused
-2. **Keep Skills Updated**: Regularly update the agent-skills repository to get the latest improvements
-3. **Combine with Documentation**: Use agent skills alongside Krayin's official documentation for comprehensive understanding
-4. **Provide Context**: When working with AI agents, mention specific components or features to activate the appropriate skills
-5. **Review AI Suggestions**: Always review and test AI-generated code to ensure it meets your requirements
-6. **Contribute Back**: If you identify areas where skills can be improved, consider contributing to the agent-skills repository
-7. **Agent-Specific Installation**: Install skills for specific agents when working with multiple AI tools
+- [Upgrade Guide](./upgrade-guide.md) &mdash; the cross-version compatibility shape your PR has to fit into.
+- [Architecture Overview](../architecture/overview.md) &mdash; the conventions your PR should match.
+- [Package Development](../packages/create-package.md) &mdash; if your contribution is a new package, start here.

@@ -1,169 +1,134 @@
 # Localization
 
-[[TOC]]
+Localization is how Krayin renders the same UI in any supported language. Each package ships its own translation files under `Resources/lang/<locale>/app.php` and registers a translation namespace so callers can reference strings with `package::path.to.key`.
 
-## Introduction
+For deeper Laravel-specific guidance see the [Laravel localization docs](https://laravel.com/docs/11.x/localization).
 
-Laravel's localization features provide a convenient way to retrieve strings in various languages, allowing you to easily support multiple languages within your application.
+## ⚙️ Configure the default and fallback locale
 
-Language strings may be stored in files within the application's lang directory. Within this directory, there may be subdirectories for each language supported by the application. This is the approach Laravel uses to manage translation strings for built-in Laravel features such as validation error messages:
-
-To learn in detail about Localization, you can visit the Laravel documentation [here](https://laravel.com/docs/11.x/localization).
-
-## Publishing the Language Files
-
-By default, the Laravel application skeleton does not include the lang directory. If you would like to customize Laravel's language files or create your own, you should scaffold the lang directory via the lang:publish Artisan command. The lang:publish command will create the lang directory in your application and publish the default set of language files used by Laravel:
-
-```
-php artisan lang:publish
-```
-
-## Configuring the Locale
-
-The default language for your application is stored in the `config/app.php` configuration file's `locale` configuration option, which is typically set using the `APP_LOCALE` environment variable. You are free to modify this value to suit the needs of your application.
-
-You may also configure a `"fallback language"`, which will be used when the default language does not contain a given translation string. Like the default language, the fallback language is also configured in the `config/app.php` configuration file, and its value is typically set using the APP_FALLBACK_LOCALE environment variable.
+The application-wide default lives in `config/app.php`:
 
 ```php
-  /*
-  |--------------------------------------------------------------------------
-  | Application Locale Configuration
-  |--------------------------------------------------------------------------
-  |
-  | The application locale determines the default locale that will be used
-  | by the translation service provider. You are free to set this value
-  | to any of the locales which will be supported by the application.
-  |
-  */
-
-  'locale' => env('APP_LOCALE', 'en'),
-
-  /*
-  |--------------------------------------------------------------------------
-  | Application Fallback Locale
-  |--------------------------------------------------------------------------
-  |
-  | The fallback locale determines the locale to use when the current one
-  | is not available. You may change the value to correspond to any of
-  | the language directories that are provided through your application.
-  |
-  */
-
-  'fallback_locale' => 'en',
+'locale' => env('APP_LOCALE', 'en'),
+'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
 ```
 
-## Create a new Locale
+| Setting | Why |
+| --- | --- |
+| `locale` | Which language Laravel renders if the user has no other preference. |
+| `fallback_locale` | Used when a string is missing from the requested locale &mdash; keep this set to `en` so untranslated keys still render something readable. |
 
-To support localization in your package, you need to create language files. Follow the steps below to set up a language file for English translations.
+Set both via your `.env`:
 
-#### Create the `lang` Folder
-
-- Navigate to the `packages/Webkul/Category/src/Resources` directory.
-- Create a directory named `lang`.
-
-#### Create Language Code Folders
-
-- Inside the `lang` directory, create different directories for each language you want to support. For example, you can create directories for English (`en`), Hindi (`hi`), etc.
-- For now, let's create a directory named `en` to represent English.
-
-#### Create the `app.php` File
-
-- Inside the `en` directory, create a file named `app.php` for language translations.
-
-### Directory Structure
-
-The updated directory structure will look like this:
-
-```bash
-  └── packages
-      └── Webkul
-          └── Category
-              └── src
-                  ├── ...
-                  └── Resources
-                      ├── ...
-                      └── lang
-                          └── en
-                              └── app.php
+```ini
+APP_LOCALE=en
+APP_FALLBACK_LOCALE=en
 ```
 
-### Writing a Translation in `app.php`
+## 📁 Create the language files
 
-To add translations for your package, you can edit the `app.php` file located in the language directory (`en` in this case). Below is an example of how you can define translations:
+By convention each package keeps translations under `src/Resources/lang/<locale>/app.php`. Add a folder per language &mdash; we'll start with English:
 
-#### Open the `app.php` File
+```text
+packages
+└── Webkul
+    └── Example
+        └── src
+            ├── ...
+            └── Resources
+                └── lang
+                    └── en
+                        └── app.php
+```
 
-- Navigate to `packages/Webkul/Category/src/Resources/lang/en`.
-- Open the `app.php` file.
-
-#### Add the Translation
-
-- Inside `app.php`, define your translations as an associative array. For example:
+Inside `app.php`, return an associative array of keys. Nest the array to match your view's dot-notation:
 
 ```php
 <?php
 
 return [
-  'categories' => [
-    'index' => [
-      'title' => 'Categories',
+    'examples' => [
+        'index' => [
+            'title' => 'Examples',
+        ],
+
+        'create-btn' => 'Create Example',
+        'create-success' => 'Example created successfully.',
+        'update-success' => 'Example updated successfully.',
+        'delete-success' => 'Example deleted successfully.',
     ],
-  ],
+
+    'acl' => [
+        'examples' => 'Examples',
+        'create' => 'Create',
+        'delete' => 'Delete',
+    ],
 ];
 ```
 
-## Load Translation from Package
+To add another language, copy `en/` to `fr/`, `de/`, `hi/`, etc. and translate the values &mdash; keep the keys identical.
 
-To make translations from your package accessible, you need to register the language file in the service provider and then use them in your Blade templates.
+## 🔌 Register translations with the service provider
 
-### Update the Service Provider
-
-- Open the `CategoryServiceProvider.php` file located in `packages/Webkul/Category/src/Providers`.
-- Add the following code to the `boot` method:
+The translation namespace is what lets you write `@lang('example::examples.index.title')`. Register it in `boot()`:
 
 ```php
 <?php
 
-namespace Webkul\Category\Providers;
+namespace Webkul\Example\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class CategoryServiceProvider extends ServiceProvider
+class ExampleServiceProvider extends ServiceProvider
 {
-  /**
-   * Bootstrap the services.
-   *
-   * @return void
-   */
-  public function boot()
-  {
-    //  ... 
-
-    $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'category');
-  }
+    public function boot(): void
+    {
+        $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'example');
+    }
 }
 ```
 
-#### Explanation
+`loadTranslationsFrom()` takes the absolute path to the `lang/` folder and a short namespace (`'example'`). After this, callers anywhere in the app can use the `example::` prefix.
 
-- This code uses `$this->loadTranslationsFrom` to register translations from the lang directory of your package (`packages/  Webkul/Category/src/Resources/lang`) under the namespace `'category'`.
+## 🌐 Use translations
 
-- The `loadTranslationsFrom` method registers translations for the `'category'` namespace from the specified path (`__DIR__ . '/../Resources/lang'`).
+### In Blade templates
 
-- This makes translations accessible throughout your Laravel application using the `'category'` namespace prefix.
-
-### Use Translations in Blade Files
-
-In your Blade templates (`.blade.php` files), you can use the `@lang` helper function to retrieve translations. Use the namespace 'category' followed by the translation key. For example:
-
-```html
-@lang('category::categories.index.title')
+```blade
+@lang('example::app.examples.index.title')
 ```
 
-#### Explanation
+### In PHP code
 
-- The `@lang('category::categories.index.title')` syntax fetches the translation for for `categories` > `index` > `title`
+```php
+trans('example::app.examples.create-success');
+__('example::app.examples.create-success'); // alias for trans()
+```
 
-- Replace `'categories.index.title'` with your actual translation keys to use different translations as needed in your application.
+### With placeholders
 
-By following these steps, you've effectively loaded translations from your package and integrated them into your Laravel application's Blade templates. This allows you to maintain language-specific content and support localization within your package.
+Add named placeholders in your language file with `:` prefix:
+
+```php
+'welcome' => 'Welcome back, :name!',
+```
+
+Then pass the replacement when calling the helper:
+
+```blade
+{{ __('example::app.welcome', ['name' => $user->name]) }}
+```
+
+## 🧪 Verify
+
+Pick a string you just translated and:
+
+1. Visit a page that renders it &mdash; confirm the value comes from your `app.php`, not the raw key (`example::app.examples.index.title`).
+2. Change `APP_LOCALE` in `.env` to a locale you've translated for, run `php artisan config:clear`, reload, and confirm the page switches language.
+
+If you see the raw key on the page, `loadTranslationsFrom()` didn't run &mdash; check it's inside `boot()` and re-run `php artisan optimize:clear`.
+
+## 📝 Next steps
+
+- [Assets](./assets.md) &mdash; once your package speaks the user's language, ship JS / CSS with it.
+- [DataGrid](./datagrid.md) &mdash; uses translation keys for column labels and filter options.

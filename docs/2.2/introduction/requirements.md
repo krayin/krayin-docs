@@ -1,7 +1,5 @@
 # Requirements
 
-[[TOC]]
-
 Before installing Krayin please make sure your server meets the following requirements,
 
 ## 🖥️ Server configuration
@@ -224,7 +222,7 @@ sudo apt install php8.3-intl php8.3-gd
 
 ### 2. Restart PHP
 
-Apply the change with the restart command for your stack &mdash; see [Restart so the changes apply](#_3-restart-so-the-changes-apply) below.
+Apply the change with the restart command for your stack &mdash; see [Restart so the changes apply](#restart-so-the-changes-apply) below.
 
 ### 3. Verify
 
