@@ -3,36 +3,25 @@ on:
   push:
     branches:
       - master
-
 jobs:
   publish-docs:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       # https://github.com/actions/checkout
       - name: Checkout 🛎️
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
         with:
           persist-credentials: false
 
-      - name: Setup Node 📦
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      - name: NPM install
-        run: npm ci
+      - name: NPM install 📦
+        uses: bahmutov/npm-install@v1
 
       - name: Build docs 🏗
-        env:
-          NODE_OPTIONS: --openssl-legacy-provider
-        run: npm run docs:build --no-cache
+        run: export NODE_OPTIONS=--openssl-legacy-provider && npm run docs:build --no-cache
 
       # https://github.com/marketplace/actions/github-pages-action
       - name: Deploy 🚀
-        uses: peaceiris/actions-gh-pages@v4
+        uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs/.vuepress/dist
