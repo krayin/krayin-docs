@@ -1,180 +1,134 @@
-# Bundling Assets
+# Assets
 
-[[TOC]]
+Krayin uses [Vite](https://vite.dev/) to bundle JavaScript and CSS for the admin. Each package ships its own Vite config and registers itself with the central `krayin-vite` integration so that hot-module-reload, builds, and asset URLs all work the same way as the core packages.
 
-## Introduction
+This page walks through wiring a package called **Example** end to end &mdash; from where the source files live, to compiling them with Vite, to injecting them into the admin layout.
 
-Assets in web development refer to files such as stylesheets, scripts, and images that are utilized to enhance the functionality, design, and interactivity of a web application or website. These files are essential for providing styling, behavior, and media content to the user interface.
+For Laravel-side context see the [Laravel Vite docs](https://laravel.com/docs/11.x/vite).
 
-- **CSS**: Cascading Style Sheets (CSS) define the presentation and layout of HTML elements, ensuring consistent styling across pages.
-- **JavaScript**: JavaScript (JS) adds interactivity and dynamic behavior to web pages, enabling features like form validation, animations, and AJAX requests.
-- **Images**: Images enhance visual content, including logos, illustrations, and photographs, making web pages more engaging and informative.
+## 📁 Where assets live
 
-To learn in detail about Bundling Asset, you can visit the Laravel documentation [here](https://laravel.com/docs/10.x/frontend#bundling-assets).
+Source files live under `src/Resources/assets/` inside your package. Standard sub-folders:
 
-## Adjust Vite in Krayin
+```text
+packages
+└── Webkul
+    └── Example
+        └── src
+            ├── ...
+            └── Resources
+                └── assets
+                    ├── css
+                    │   └── app.css
+                    ├── js
+                    │   └── app.js
+                    ├── images
+                    └── fonts
+```
 
-### Step 1: Create a New Vite Configuration File
+| Folder | Holds |
+| --- | --- |
+| `css/` | Stylesheets (Tailwind input + custom CSS) |
+| `js/` | JavaScript entry point and any modules |
+| `images/` | Static image assets |
+| `fonts/` | Web fonts |
 
-Create a new file named `krayin-vite.php` in the packages/Webkul/`<PackageName>`/src/Config directory.
+To make Vite track images and fonts (so it copies them into the build output), add this single line to your `js/app.js`:
 
+```js
+// Track all images and fonts for publishing.
+import.meta.glob(['../images/**', '../fonts/**']);
+```
 
-### Step 2: Define Vite Configuration
+## ⚙️ Register the package with `krayin-vite`
 
-In the `krayin-vite.php` file, paste this code.
+Krayin discovers your package's assets through a config file you merge into `krayin-vite.viters`.
+
+### 1. Create `Config/krayin-vite.php`
 
 ```php
 <?php
 
 return [
-    'custom-package' => [
-        'hot_file'                 => 'custom-package-vite.hot', // change the vite name from custom-package-vite.hot to your custom package name
-        'build_directory'          => 'custom-package/build', // change the build directory from custom-package/build to your custom package name
+    'example' => [
+        'hot_file' => 'example-vite.hot',
+        'build_directory' => 'example/build',
         'package_assets_directory' => 'src/Resources/assets',
     ],
 ];
 ```
 
-### Step 3: Make it Available in the Service Provider of Your Package
+| Key | Purpose |
+| --- | --- |
+| `hot_file` | Filename Vite writes to `public/` while the dev server is running. Must be unique per package. |
+| `build_directory` | Where compiled assets land under `public/`. |
+| `package_assets_directory` | Path inside your package to the source files. |
 
-In your package's service provider, include this code in the `register` method:
+### 2. Merge it in your service provider
+
+In `register()`:
 
 ```php
 $this->mergeConfigFrom(
     dirname(__DIR__) . '/Config/krayin-vite.php',
-    'krayin-vite.viters'
+    'krayin-vite.viters',
 );
 ```
 
-### Step 4: Publish the Assets to the Public Directory
+### 3. Publish the build output
 
-In your package's service provider, include this code in the `boot` method:
+In `boot()`:
 
 ```php
 $this->publishes([
-    __DIR__ . '/../../publishable/build' => public_path('custom-package/build'), // change the build directory from custom-package/build to your custom package name
+    __DIR__ . '/../../publishable/build' => public_path('example/build'),
 ], 'public');
 ```
 
+## 🛠️ Configure Vite for your package
 
-## Directory Structure
+You need five config files at the **root of your package** (alongside `src/`), not inside `src/`:
 
-To maintain organization and manage these assets effectively, developers typically structure them within dedicated directories in the project's `Resources\assets` directory. For instance:
-
-- `/Resources/assets/js`: Holds JavaScript files such as `app.js` for client-side scripting.
-- `/Resources/assets/css`: Contains CSS files like `app.css` for styling the application.
-- `/Resources/assets/images`: Stores image files used throughout the application.
-- `/Resources/assets/fonts`: Stores fonts used throughout the application.
-
-Here's the updated directory structure:
-
-```php
-└── packages
-    └── Webkul
-        └── PackageName
-            └── src
-                ├── ...
-                └── Resources
-                    ├── ...
-                    └── assets
-                        ├── css
-                        │   └── app.css
-                        ├── js
-                        │   └── app.js
-                        └── images
-                        └── fonts
-                    
-```
-The following JavaScript code snippet is used to track and publish all images and fonts in packages/Webkul/`<PackageName>`/Resources/assets/js/app.js:
-
-```js
-/**
- * This will track all the images and fonts for publishing.
-*/
-import.meta.glob(["../images/**", "../fonts/**"]);
+```text
+packages
+└── Webkul
+    └── Example
+        ├── composer.json
+        ├── package.json
+        ├── postcss.config.js
+        ├── tailwind.config.js
+        ├── vite.config.js
+        └── src
+            └── ...
 ```
 
-#### Explanation
-
-- This code utilizes the `import.meta.glob()` function, which is a feature in JavaScript for importing multiple modules using glob patterns.
-
-- `"../images/**"` : Matches all files and directories within the images directory and its subdirectories.
-
-- `"../fonts/**"` : Matches all files and directories within the fonts directory and its subdirectories.
-
-
-
-## Configure Compiling Assets
-
-To compile the assets, perform the following steps:
-
-## Create Configuration Files
-
-First, create the following configuration files in the root directory of your package, specifically inside `packages/Webkul/<PackageName>`
-
-- `composer.json`
-- `package.json`
-- `postcss.config.js`
-- `tailwind.config.js`
-- `vite.config.js`
-
-
-### Set Up composer.json
-
-Here the configuration of composer.json you can customize for your configuration
+### `composer.json`
 
 ```json
 {
-    "name": "krayin/<PackageName>",
+    "name": "krayin/example",
     "license": "MIT",
     "authors": [
-        {
-            "name": "krayin",
-            "email": "support@krayin.com"
-        }
+        { "name": "krayin", "email": "support@krayin.com" }
     ],
     "require": {},
     "autoload": {
         "psr-4": {
-            "Webkul\\<PackageName>\\": "src/"
+            "Webkul\\Example\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Webkul\\<PackageName>\\Providers\\<PackageName>ServiceProvider"
-            ],
-            "aliases": {}
+                "Webkul\\Example\\Providers\\ExampleServiceProvider"
+            ]
         }
     },
     "minimum-stability": "dev"
 }
-
 ```
-#### Explanation
 
-- This section explains how to set up a composer.json file, which is used by Composer (a PHP dependency manager) to manage your project's dependencies and auto-loading.
-
-Key parts of the configuration:
-
-- `name`: The package name, using the format krayin/`<PackageName>`. Replace `<PackageName>` with your actual package name.
-
-- `license`: Specifies the license type (MIT here).
-
-- `authors`: Lists the package authors and their contact info.
-
-- `require`: Lists required PHP packages. It's empty here, but you can add dependencies as needed.
-
-- `autoload`: Uses PSR-4 auto-loading, mapping the namespace Webkul\ `<PackageName>`\ to the src/ directory. This helps Composer automatically load your PHP classes.
-
-- `extra`: Contains Laravel-specific configuration, registering your package's service provider so Laravel can use it.
-
-- `minimum-stability`: Set to dev, allowing installation of development versions of dependencies.
-
-
-### Set Up package.json
-
-Copy and paste the following code into your `package.json` file:
+### `package.json`
 
 ```json
 {
@@ -196,170 +150,110 @@ Copy and paste the following code into your `package.json` file:
     "dependencies": {
         "@vee-validate/i18n": "^4.9.1",
         "@vee-validate/rules": "^4.9.1",
-        "@vitejs/plugin-vue": "^4.2.3",
+        "@vitejs/plugin-vue": "^4.2.3"
     }
 }
-
 ```
-#### Explanation
 
-The `package.json` file includes the following:
+| Script | What it does |
+| --- | --- |
+| `npm run dev` | Starts the Vite dev server with hot-module-reload. |
+| `npm run build` | Produces optimised assets for production. |
 
--  Ensures the package is private and not published to a registry.
-
-- **Scripts** 
-    - `dev` Runs the Vite development server.
-
-    - `build` Builds the project for production using Vite.
-
-- **DevDependencies:** These are packages required during the development phase, including:
-    - `autoprefixer` Adds vendor prefixes to CSS rules.
-    - `axios` A promise-based HTTP client.
-    - `laravel-vite-plugin` Integrates Vite with Laravel.
-    - `postcss` A tool for transforming CSS with JavaScript plugins.
-    - `tailwindcss` A utility-first CSS framework.
-    - `vite` A frontend build tool.
-    - `vue` The progressive JavaScript framework.
-
-- **Dependencies:** These are essential packages required for the project to function, including:
-    - `@vee-validate/i18n` Internationalization for VeeValidate.
-    - `@vee-validate/rules` Validation rules for VeeValidate.
-    - `@vitejs/plugin-vue` Integrates Vue with Vite.
-
-
-
-
-### Set Up postcss.config.js
-
-Copy and paste the following code into your `postcss.config.js` file:
+### `postcss.config.js`
 
 ```js
 module.exports = ({ env }) => ({
-    plugins: [require("tailwindcss")(), require("autoprefixer")()],
+    plugins: [require('tailwindcss')(), require('autoprefixer')()],
 });
 ```
 
-#### Explanation
+Two plugins:
 
-The `postcss.config.js` file configures PostCSS with the following plugins:
+- **Tailwind CSS** &mdash; processes your utility classes.
+- **Autoprefixer** &mdash; adds vendor prefixes for older browsers.
 
-- `tailwindcss` Integrates Tailwind CSS.
-
-- `autoprefixer` Adds vendor prefixes to CSS rules to ensure cross-browser compatibility.
-
-### Set Up tailwind.config.js
-
-Copy and paste the following code into your `tailwind.config.js` file:
+### `tailwind.config.js`
 
 ```js
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    content: ["./src/Resources/**/*.blade.php", "./src/Resources/**/*.js"],
+    content: ['./src/Resources/**/*.blade.php', './src/Resources/**/*.js'],
 
     theme: {
         container: {
             center: true,
-
-            screens: {
-                "4xl": "1920px",
-            },
-
-            padding: {
-                DEFAULT: "16px",
-            },
+            screens: { '4xl': '1920px' },
+            padding: { DEFAULT: '16px' },
         },
-
         screens: {
-            sm: "525px",
-            md: "768px",
-            lg: "1024px",
-            xl: "1240px",
-            "2xl": "1440px",
-            "3xl": "1680px",
-            "4xl": "1920px",
+            sm: '525px',
+            md: '768px',
+            lg: '1024px',
+            xl: '1240px',
+            '2xl': '1440px',
+            '3xl': '1680px',
+            '4xl': '1920px',
         },
-
         extend: {
             colors: {},
-
             fontFamily: {
                 inter: ['Inter'],
-                icon: ['icomoon']
-            }
+                icon: ['icomoon'],
+            },
         },
     },
 
     darkMode: 'class',
-
     plugins: [],
-
-    safelist: [
-        {
-            pattern: /icon-/,
-        }
-    ]
+    safelist: [{ pattern: /icon-/ }],
 };
 ```
 
-The `tailwind.config.js` file configures Tailwind CSS for your project:
+| Key | Purpose |
+| --- | --- |
+| `content` | Files Tailwind scans for class names. Must include your Blade and JS. |
+| `theme.screens` | Custom breakpoints matching the rest of Krayin. |
+| `darkMode: 'class'` | Toggles dark mode via a CSS class, not a media query. |
+| `safelist` | Classes Tailwind should always emit, even if it can't see them in source (`icon-*` classes are added dynamically by [the menu config](./add-menu-in-admin.md#add-a-menu-icon)). |
 
-- `content` Specifies the files Tailwind should scan for class names to generate styles. In this case, it includes all Blade and JavaScript files in the src/Resources directory.
-
-- `theme` Allows customization of the default theme. The extend object is used to add or override default styles.
-
-- `plugins` An array where you can add Tailwind CSS plugins. Currently, it is empty.
-
-- `safelist` Allows you to whitelist classes that are not generated by Tailwind CSS. In this case, it whitelists classes with the prefix "icon-".
-
-By following these steps and setting up the tailwind.config.js file as shown, you’ll ensure that Tailwind CSS is properly integrated and configured in your project.
-
-
-### Set Up vite.config.js
-
-Copy and paste the following code into your `vite.config.js` file:
+### `vite.config.js`
 
 ```js
-import { defineConfig, loadEnv } from "vite";
-import vue from "@vitejs/plugin-vue";
-import laravel from "laravel-vite-plugin";
-import path from "path";
+import { defineConfig, loadEnv } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import laravel from 'laravel-vite-plugin';
+import path from 'path';
 
 export default defineConfig(({ mode }) => {
-    const envDir = "../../../";
+    const envDir = '../../../';
 
     Object.assign(process.env, loadEnv(mode, envDir));
 
     return {
-        build: {
-            emptyOutDir: true,
-        },
-
+        build: { emptyOutDir: true },
         envDir,
-
         server: {
-            host: process.env.VITE_HOST || "localhost",
+            host: process.env.VITE_HOST || 'localhost',
             port: process.env.VITE_PORT || 5173,
             cors: true,
         },
-
         plugins: [
             vue(),
-
             laravel({
-                hotFile: "../../../public/custom-package-vite.hot", // change the vite name from custom-package-vite.hot to your custom package name
-                publicDirectory: "publishable",
-                buildDirectory: "build",
+                hotFile: '../../../public/example-vite.hot',
+                publicDirectory: 'publishable',
+                buildDirectory: 'build',
                 input: [
-                    "src/Resources/assets/css/app.css",
-                    "src/Resources/assets/js/app.js",
+                    'src/Resources/assets/css/app.css',
+                    'src/Resources/assets/js/app.js',
                 ],
                 refresh: true,
             }),
         ],
-
         experimental: {
-            renderBuiltUrl(filename, { hostId, hostType, type }) {
-                if (hostType === "css") {
+            renderBuiltUrl(filename, { hostType }) {
+                if (hostType === 'css') {
                     return path.basename(filename);
                 }
             },
@@ -368,44 +262,63 @@ export default defineConfig(({ mode }) => {
 });
 ```
 
-#### Explanation
+::: warning Match the `hotFile` name everywhere
+The `hotFile` in `vite.config.js` and the `hot_file` value in `krayin-vite.php` must match exactly (just `.hot` vs without &mdash; the config strips the extension). A mismatch silently breaks hot reload.
+:::
 
-The `vite.config.js` file configures Vite for your project. Here are the key sections:
+## 🔌 Inject the assets into the admin layout
 
-- `defineConfig` A function that defines the configuration for Vite.
+### 1. Create a Blade partial
 
-- `loadEnv` Loads environment variables from a specific directory.
+`packages/Webkul/Example/src/Resources/views/example-style.blade.php`:
 
-- `emptyOutDir` Ensures the output directory is cleaned before building.
-
-- `envDir` Specifies the directory for environment variables.
-
-- `host` The host address for the development server.
-
-- `port` The port for the development server.
-
-- `plugins` An array of plugins used by Vite. The laravel-vite-plugin integrates Vite with Laravel.
-
-- `experimental` Experimental features, such as custom handling of built URLs for CSS.
-
-
-## Load Assets in Blade File
-
-### Step 1: Create a Blade File
-
-Create a new Blade file in your package's resources/views directory. For example, create a file named `custom-package-style.blade.php` and paste the below code in it and replace the `custom-package` with your custom package name.
-
-```php
-{{ vite()->set(['src/Resources/assets/css/app.css', 'src/Resources/assets/js/app.js'], 'custom-package') }}
-```
-### Step 2: Render the Blade File using EventServiceProvider
-
-In your package's EventServiceProvider provider which is placed in packages/Webkul/`<PackageName>`/src/Providers/EventServiceProvider.php, include this code in the `boot` method:
-
-```php
-Event::listen('admin.layout.head.before', function ($viewRenderEventManager) {
-    $viewRenderEventManager->addTemplate('custom-package::path-to-file/custom-package-style.blade.php');
-});
-
+```blade
+{{ vite()->set(['src/Resources/assets/css/app.css', 'src/Resources/assets/js/app.js'], 'example') }}
 ```
 
+The `vite()` helper picks the right URL automatically &mdash; dev-server URL while `npm run dev` is running, hashed build URL otherwise.
+
+### 2. Register it via an event listener
+
+Inside `packages/Webkul/Example/src/Providers/EventServiceProvider.php`:
+
+```php
+use Illuminate\Support\Facades\Event;
+
+public function boot(): void
+{
+    Event::listen('admin.layout.head.before', function ($viewRenderEventManager) {
+        $viewRenderEventManager->addTemplate(
+            'example::example-style'
+        );
+    });
+}
+```
+
+Krayin's admin layout fires `admin.layout.head.before` as it renders &mdash; your listener inserts the partial inside `<head>`.
+
+## ⌨️ Build commands
+
+| Command | When to use it |
+| --- | --- |
+| `npm run dev` | While developing &mdash; gives you hot reload as you edit CSS / JS / Vue files. |
+| `npm run build` | Before deploying. Produces minified assets in `publishable/build/`. |
+
+After a production build, run the publish step so the assets are copied into `public/`:
+
+```bash
+php artisan vendor:publish --tag=public --force
+```
+
+## 🧪 Verify
+
+1. Start the dev server: `npm run dev` inside the package directory.
+2. Reload the admin and open DevTools → Network &mdash; your CSS/JS should be served from `localhost:5173`.
+3. Edit `app.css`, save, watch the admin re-style without a manual reload. If nothing reloads, check the `hotFile` name in both [krayin-vite.php](#register-the-package-with-krayin-vite) and [vite.config.js](#vite-config-js) match.
+
+For a production check: `npm run build && php artisan vendor:publish --tag=public --force`, then reload the admin &mdash; assets should be served from `public/example/build/` with hashed filenames.
+
+## 📝 Next steps
+
+- [Blade Components](./blade-components.md) &mdash; use Krayin's prebuilt admin components so you don't have to ship as much CSS yourself.
+- [Admin Menu](./add-menu-in-admin.md) &mdash; refer back to add a sidebar icon for your package once the assets are loaded.

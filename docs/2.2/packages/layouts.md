@@ -1,52 +1,75 @@
 # Layouts
 
-[[TOC]]
+The admin layout (`<x-admin::layouts>`) is the shared shell that wraps every page in the Krayin admin &mdash; sidebar, header, theming, dark-mode toggle, and the slots you use to plug in page-specific bits. This page shows how to wrap your package's [views](./views.md) in it.
 
-## Introduction
+For Blade-specific syntax, see the [Laravel Blade docs](https://laravel.com/docs/11.x/blade).
 
-Layouts in Krayin are fundamental to structuring your application's views in a consistent and reusable way. They provide a template for rendering HTML across multiple pages, ensuring a unified design and user experience. By defining layouts, you can streamline development, improve maintainability, and enhance the overall aesthetics of your web application.
+## 🧱 Wrap a view in the admin layout
 
-To learn in detail about Layouts, you can visit the Laravel documentation [here](https://laravel.com/docs/11.x/blade).
+Every admin Blade template should open with `<x-admin::layouts>` and close with `</x-admin::layouts>`. Anything between the tags becomes the page body:
 
-## Category Layout
-
-`@extends('category::layouts.master')` This `@extends` Blade directive to specify which layout the child view should "inherit".
-
-To extend the default layout of the Krayin admin panel, you'll create or modify the `index.blade.php` file located at `packages/Webkul/Category/src/Resources/views/admin/index.blade.php`. Below is a detailed breakdown of how to integrate and customize the layout:
-
-```html
+```blade
 <x-admin::layouts>
     <x-slot:title>
-        @lang('category::categories.index.title')
+        @lang('example::app.examples.index.title')
     </x-slot>
 
     @pushOnce('styles')
         <style>
-            /* your styles go here */
+            /* page-specific CSS */
         </style>
     @endPushOnce
 
-    <div class="container ">
-        <!-- your content goes here -->
+    <div class="container">
+        {{-- page content --}}
     </div>
 
     @pushOnce('scripts')
         <script>
-            /* your script goes here */
+            // page-specific JS
         </script>
     @endPushOnce
 </x-admin::layouts>
 ```
 
-| Prop Name   | Description                                                        |
-|-------------|--------------------------------------------------------------------|
-| **`<x-admin::layouts>`** | This Blade directive to specify which layout the child view should "inherit"   |
-| **`<x-slot:title>`** | This is used to define the title of the page.   |
-| **`@pushOnce('styles')`** | This is used to add additional css. |
-| **`@pushOnce('scripts')`** | This is used to add additional javascript. |
+### What each piece does
 
-::: warning
-Notice that there are translations used in the blade files, so you will also need to add the corresponding translations in **`lang/app.php`**.
+| Piece | Purpose |
+| --- | --- |
+| `<x-admin::layouts>` | The shared admin shell &mdash; sidebar, header, theme, slots. Wrap every admin page in this. |
+| `<x-slot:title>` | Sets the `<title>` of the page and the in-page heading area. |
+| `@pushOnce('styles')` | Inject a `<style>` block into the layout's `<head>`. The *Once* variant ensures it's emitted only once even if the partial is included multiple times. |
+| `@pushOnce('scripts')` | Inject a `<script>` block before `</body>`. Same dedup behaviour as `styles`. |
+
+::: warning Always use translation keys
+The example above pulls the title from `example::app.examples.index.title`. Hard-coded strings break multi-language sites. Add the matching key to your package's [language files](./localization.md).
 :::
 
-If you don't want to include these layouts, you can create your own master file inside the creation layouts directory inside `Resources\views\layouts\master.blade.php`
+## 🛠️ Build your own master layout
+
+If you need a layout that doesn't inherit from the admin shell &mdash; a print view, an embeddable iframe, a public webform &mdash; create one inside your package's `views/layouts/` folder:
+
+```text
+packages
+└── Webkul
+    └── Example
+        └── src
+            └── Resources
+                └── views
+                    └── layouts
+                        └── master.blade.php
+```
+
+Then extend it from any view with `@extends('example::layouts.master')`. Make sure your service provider has called `loadViewsFrom(__DIR__ . '/../Resources/views', 'example')` &mdash; that's what registers the `example::` namespace ([Views](./views.md#wire-the-views-into-the-service-provider)).
+
+## 🧪 Verify
+
+Open any page in your package &mdash; the sidebar, header, and dark-mode toggle should render. If you see a bare page or a `Component [x-admin::layouts] not found` error, double-check that:
+
+1. The Admin package is loaded (it's bundled with Krayin by default).
+2. You ran `php artisan view:clear` after your last change.
+
+## 📝 Next steps
+
+- [Blade Components](./blade-components.md) &mdash; the full library of reusable admin pieces (`<x-admin::breadcrumbs>`, `<x-admin::datagrid>`, `<x-admin::modal>`, …).
+- [Assets](./assets.md) &mdash; bundle your package's JS / CSS the right way instead of inlining `@pushOnce`.

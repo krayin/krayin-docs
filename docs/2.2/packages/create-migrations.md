@@ -1,50 +1,51 @@
 # Migrations
 
-[[TOC]]
+Migrations are version control for your database schema. Krayin uses Laravel's `Schema` facade, so the same migration runs unchanged across MySQL, MariaDB, PostgreSQL, and SQLite. This page picks up from [Routes](./routes.md) &mdash; next we'll create the `examples` table the controller will read from.
 
-## Introduction
+For deeper Laravel-specific guidance, see the [Laravel migrations docs](https://laravel.com/docs/11.x/migrations).
 
-Migrations are like version control for your database, allowing your team to define and share the application's database schema definition.
+## 📁 Create the migration file
 
-Krayin leverages the Laravel Schema facade to offer database-agnostic support for creating and manipulating tables across various database systems supported by Laravel. Migrations in Krayin utilize this powerful feature to manage database schema changes efficiently.
+There are two ways to generate the file. Pick the path you used in [Getting Started](./create-package.md).
 
-To understand Migrations in detail, you can visit the Laravel documentation [here](https://laravel.com/docs/10.x/migrations).
-
-Let's create a new migration file for your application. We will assume that the package name is "**Category**". Follow these steps:
-
-## Using Krayin Package Generator
-
-This command creates a new migration class in the **`packages/Webkul/Category/src/Database/Migrations`** directory.
+### Option A &mdash; Krayin Package Generator <small>*(recommended)*</small>
 
 ```bash
-php artisan package:make-migration CreateCategoryTable Webkul/Category
+php artisan package:make-migration CreateExamplesTable Webkul/Example
 ```
 
-- `CreateCategoryTable` Specifies the name of the migration file.
-- `Webkul/Category` Specifies the package name 
+| Argument | Meaning |
+| --- | --- |
+| `CreateExamplesTable` | Migration class name (will be timestamped) |
+| `Webkul/Example` | Target package |
 
-## Using Laravel Artisan Command
+The file lands in `packages/Webkul/Example/src/Database/Migrations/`.
 
-Create a `Database` directory in the `packages/Webkul/Category/src` path. Inside the `Database` directory, create `Migrations` and `Seeders` directories.
+### Option B &mdash; Laravel artisan
 
+If you're not using the generator, create the folder structure first:
+
+```text
+packages
+└── Webkul
+    └── Example
+        └── src
+            ├── ...
+            └── Database
+                ├── Migrations
+                └── Seeders
 ```
-└── packages
-    └── Webkul
-        └── Category
-            └── src
-                ├── ...
-                └── Database
-                    ├── Migrations
-                    └── Seeders
+
+Then generate the migration into that folder by passing `--path`:
+
+```bash
+php artisan make:migration create_examples_table \
+    --path=packages/Webkul/Example/src/Database/Migrations
 ```
 
-Run the following command with the `--path` option to specify where your migration file will be placed.
+## 🧱 Define the table schema
 
-  ```bash
-  php artisan make:migration create_categories_table --path=packages/Webkul/Category/src/Database/Migrations
-  ```
-
-To create a new database table Copy the code provided here and paste it into your migration file. The create method used on the Schema facade. The create method accepts two arguments: the first is the name of the table, while the second is a closure which receives a Blueprint object that may be used to define the new table:
+Open the new migration file and replace the generated body with your schema. The `Schema::create()` method takes a table name and a closure that receives a `Blueprint` for defining columns:
 
 ```php
 <?php
@@ -55,16 +56,11 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
+    public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('examples', function (Blueprint $table) {
             $table->id();
-            $table->integer('parent_id');
+            $table->unsignedBigInteger('parent_id')->nullable();
             $table->string('title')->nullable();
             $table->longText('description')->nullable();
             $table->tinyInteger('status')->default(0);
@@ -72,47 +68,66 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
+    public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('examples');
     }
 };
 ```
 
-### Loading Migration from Package
+::: tip Always implement `down()`
+The `down()` method must reverse whatever `up()` did. Skipping it makes `php artisan migrate:rollback` silently leave junk in the database.
+:::
 
-We need to add the migrations to our service provider to load them.
+## ⚙️ Wire the migrations into the service provider
+
+Open `packages/Webkul/Example/src/Providers/ExampleServiceProvider.php` and call `loadMigrationsFrom()` inside `boot()`:
 
 ```php
 <?php
 
-namespace Webkul\Category\Providers;
+namespace Webkul\Example\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class CategoryServiceProvider extends ServiceProvider
+class ExampleServiceProvider extends ServiceProvider
 {
-    /**
-     * Bootstrap services.
-    *
-    * @return void
-    */
-    public function boot()
-    {          
-        $this->loadMigrationsFrom(__DIR__ .'/../Database/Migrations');
+    public function boot(): void
+    {
+        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
     }
 }
 ```
 
-### Creating Tables from Migrations
+Without this call, Laravel never discovers the package's migration files.
 
-Run the following command to create the **`Category`** table in your database.
+## ⌨️ Run the migration
 
-  ```
-  php artisan migrate
-  ```
+Apply the migration to your database:
+
+```bash
+php artisan migrate
+```
+
+You should see the new migration listed as `Migrated`.
+
+To roll it back during development:
+
+```bash
+php artisan migrate:rollback
+```
+
+## 🧪 Verify
+
+Confirm the `examples` table exists:
+
+```bash
+php artisan migrate:status | grep CreateExamplesTable
+```
+
+You should see a `Ran` (or `✓`) marker against the migration name. If it shows `Pending`, the migration file wasn't picked up &mdash; re-check that `loadMigrationsFrom()` is in `boot()` and run `composer dump-autoload` followed by `php artisan migrate` again.
+
+## 📝 Next steps
+
+- [Models](./create-models.md) &mdash; create the Eloquent model that maps to this table.
+- [Repository](./store-data-through-repositories.md) &mdash; build the repository the controller will call.

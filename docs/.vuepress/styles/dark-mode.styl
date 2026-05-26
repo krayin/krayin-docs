@@ -1,0 +1,241 @@
+// Dark mode palette. Activated by <html class="dark"> (managed by ThemeToggle.vue).
+// Targets the surfaces the default VuePress theme hard-codes to light values
+// (body, navbar, sidebar, tables, blockquotes, custom blocks). Code blocks +
+// Monokai tabs are already dark in both themes, so they stay untouched.
+
+$dkBg          = #1a1c20  // page background
+$dkBgElev      = #22252b  // navbar / sidebar / table-zebra
+$dkBgInline    = #2a2d35  // inline code chip
+$dkFg          = #e6e6e6  // body text
+$dkFgMuted     = #9aa0a6  // secondary text (dates, captions)
+$dkBorder      = #333740
+$dkLink        = #5b8cff  // accent in dark mode (lighter version of #0041FF)
+$dkLinkHover   = #82a4ff
+
+html.dark
+  background-color $dkBg
+
+  body
+    background-color $dkBg
+    color $dkFg
+
+  // Headings
+  h1, h2, h3, h4, h5, h6
+    color $dkFg
+  h2
+    border-bottom-color $dkBorder
+
+  // Body links
+  a
+    color $dkLink
+  a:hover
+    color $dkLinkHover
+  p a code
+    color $dkLink
+
+  // Navbar + top-nav surfaces (the latter only renders on versioned pages).
+  .navbar
+    background-color $dkBgElev
+    border-bottom-color $dkBorder
+    // Swap the default Krayin logo for the dark-mode version. The `content`
+    // property on an <img> replaces the rendered source while leaving the
+    // element (and its sizing rules) untouched.
+    .logo
+      content url('/dark-logo.svg')
+  .top-nav
+    background-color #b86b18 // amber, slightly muted from light-mode #ffa423
+    color $dkFg
+    .nav-text
+      color $dkFg
+
+  // Left sidebar
+  .sidebar
+    background-color $dkBgElev
+    border-right-color $dkBorder
+  .sidebar-group .sidebar-group-items
+    color $dkFg
+  .sidebar a, .sidebar .sidebar-link
+    color $dkFg
+  .sidebar a:hover, .sidebar a.router-link-active, .sidebar .sidebar-link.active
+    color $dkLink
+
+  // Right-side "On this page" panel
+  .on-this-page
+    border-left-color $dkBorder
+  .on-this-page__title
+    color $dkFgMuted
+  .on-this-page__item a
+    color $dkFgMuted
+  .on-this-page__item--h3 a
+    color #788289
+  .on-this-page__item a:hover
+    color $dkLink
+  .on-this-page__item.is-active a
+    color $dkLink
+    border-left-color $dkLink
+
+  // Nav links + icons in the top bar.
+  // Use a brighter near-white than $dkFg so the menu items don't visually
+  // recede into the dark navbar — the default theme also restates color on
+  // hover/active, so we override both states explicitly.
+  .nav-links
+    a
+      color #f2f2f2
+    a:hover, a.router-link-active
+      color $dkLink
+    .repo-icon-link
+      color $dkFg
+      &:hover
+        color $dkLink
+    .translate-icon
+      color $dkFg
+      &:hover
+        color $dkLink
+    .theme-toggle
+      color $dkFg
+      &:hover
+        color $dkLink
+    select
+      background-color $dkBgInline
+      color $dkFg
+      border 1px solid $dkBorder
+
+  // Search box
+  .search-box input
+    background-color $dkBgInline
+    border 1px solid $dkBorder
+    color $dkFg
+    &::placeholder
+      color $dkFgMuted
+  .search-box .suggestions
+    background-color $dkBgElev
+    border 1px solid $dkBorder
+    color $dkFg
+  .search-box .suggestion
+    color $dkFg
+  .search-box .suggestion.focused
+    background-color $dkBgInline
+    color $dkLink
+
+  // Inline code (in body text)
+  :not(pre) > code
+    background-color $dkBgInline
+    color #e6db74
+
+  // Tables — only the zebra-stripe rule needs darkening; Krayin's tabs panels
+  // are already Monokai dark in both themes.
+  table
+    color $dkFg
+  tr
+    background-color transparent
+    border-top-color $dkBorder
+  tr:nth-child(2n)
+    background-color $dkBgInline
+  th, td
+    border-color $dkBorder
+
+  // Blockquotes + horizontal rules
+  blockquote
+    color $dkFgMuted
+    border-left-color $dkBorder
+  hr
+    border-top-color $dkBorder
+
+  // VuePress "::: tip / warning / danger" callouts
+  .custom-block.tip
+    background-color #18342b
+    border-color #2a8559
+    color $dkFg
+  .custom-block.warning
+    background-color #3d3318
+    border-color #d4a73a
+    color $dkFg
+  .custom-block.danger
+    background-color #3a1b1b
+    border-color #d04848
+    color $dkFg
+
+  // Translate dropdown
+  .translate-dropdown
+    background-color $dkBgElev
+    border-color $dkBorder
+    li
+      color $dkFg
+    li:hover
+      background-color $dkBgInline
+      color $dkLink
+
+  // Page-edit / page-nav footer
+  .page-edit
+    color $dkFgMuted
+    border-top-color $dkBorder
+  .page-edit .edit-link a
+    color $dkLink
+  .page-nav
+    border-top-color $dkBorder
+  .page-nav .inner a
+    color $dkLink
+
+  // kbd elements
+  kbd
+    background $dkBgInline
+    border-color $dkBorder
+    color $dkFg
+
+  // Home page (Home.vue uses `lighten($textColor, X%)` everywhere — that
+  // computes against the *original* dark `$textColor`, so on a dark page bg
+  // the result looks washed out. Restate these in dark-mode-appropriate
+  // tones so the hero description, feature cards, and footer stay legible.
+  .home
+    .hero
+      h1
+        color $dkFg
+      .description
+        color $dkFgMuted
+    .features
+      border-top-color $dkBorder
+    .feature
+      h2
+        color $dkFg
+      p
+        color $dkFgMuted
+    .footer
+      border-top-color $dkBorder
+      color $dkFgMuted
+
+  // Custom CTA banner + Resources grid (see home.styl).
+  .krayin-cta
+    background linear-gradient(135deg, #1d2230 0%, #1a2540 100%)
+    .krayin-cta__title
+      color $dkFg
+    .krayin-cta__lead
+      color $dkFgMuted
+
+  .krayin-btn--primary
+    background $dkLink
+    color #fff
+    box-shadow 0 4px 10px rgba(91, 140, 255, .25)
+    &:hover
+      background $dkLinkHover
+      box-shadow 0 6px 14px rgba(91, 140, 255, .35)
+
+  .krayin-btn--secondary
+    background $dkBgElev
+    color $dkLink
+    border-color $dkLink
+    &:hover
+      background $dkBgInline
+      color $dkLink
+
+  // Quick-access menu
+  .krayin-quick__title
+    color $dkFg
+  .krayin-quick__lead
+    color $dkFgMuted
+  .krayin-quick__heading
+    color $dkFg
+    border-bottom-color $dkBorder
+  .krayin-quick__list a
+    color $dkFgMuted
+    &:hover
+      color $dkLink

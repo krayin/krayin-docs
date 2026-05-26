@@ -1,162 +1,170 @@
 # Upgrade Guide
 
-[[TOC]]
+Krayin upgrades follow Laravel's standard *download new code, run migrations, republish assets* shape &mdash; the goal of this page is to spell out the exact order so nothing gets reset and your local storage / custom views survive.
 
-## Upgrade Steps
+Before you start, make a full backup of:
 
-To upgrade your current version to the latest version of Krayin, follow these steps:
+- Your existing project directory.
+- Your database (a `mysqldump` is enough).
+- `storage/app/public/` &mdash; user-uploaded files live here.
 
-1. Download the latest version of Krayin from one of the following links:
-   - [Download From Official Krayin Site](https://krayincrm.com/download/)
-   - [Download From GitHub](https://github.com/krayin/laravel-crm)
+If you skip a backup and the upgrade goes sideways, there's nothing to roll back to.
 
-2. Extract the downloaded Krayin zip file to the desired deployment location.
+::: tip Working dir
+The rest of this page assumes you've opened a command line at the project root of the **new** Krayin install &mdash; the directory that holds `composer.json`, `artisan`, and the `packages/` folder. Adjust paths accordingly.
+:::
 
-3. Open the terminal and navigate to the root dictory of the extracted Krayin dictory.
+## ⬇️ 1. Get the latest Krayin
 
-4. Run the following command in the terminal:
+Pick one source:
 
-   ```sh
-   composer create-project
-   ```
+- **Official site** &mdash; [Download Krayin](https://krayincrm.com/download/).
+- **GitHub release** &mdash; [krayin/laravel-crm releases](https://github.com/krayin/laravel-crm).
 
-   This command will install the necessary dependencies for the latest version of Krayin.
+Extract the archive into the directory you want the new install to live in.
 
-5. Open the **`.env`** file in your project's root dictory. Provide the database credentials of your old project, which you want to upgrade using Krayin.
+## ⚙️ 2. Install dependencies
 
-6. Run one of the following commands to cache the new changes:
+Inside the new project directory:
 
-   ```sh
-   php artisan optimize
+```bash
+composer create-project
+```
 
-   # -- OR --
+Composer pulls every PHP dependency that ships with the new Krayin release into `vendor/`.
 
-   php artisan config:cache
-   ```
+## 🔑 3. Point the new install at your existing data
 
-   These commands will cache the configuration files and optimize the project.
+Open the `.env` file in the new project root and copy the **database credentials** from your old install:
 
-7. Now, your project is ready to run the migration command. Execute the following command in the terminal:
+```ini
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=krayin
+DB_USERNAME=krayin
+DB_PASSWORD=secret
+```
 
-   ```sh
-   php artisan migrate
-   ```
+Also copy across any custom values you set in the old `.env` &mdash; mail, queue, cache, app key. Don't regenerate `APP_KEY` if your old install set one; that key is used to decrypt existing sessions and cookies.
 
-   ::: danger
-   Be cautious when using the seeder command as it may reset settings and categories. Add default settings manually if necessary.
-   :::
+## 🧱 4. Cache the new config
 
-8. Create a symbolic link to link public assets to the storage dictory by running the following command:
+```bash
+php artisan optimize
+```
 
-   ```sh
-   php artisan storage:link
-   ```
+Or, if you only want the config cache and skip route/view caching:
 
-9. Copy the contents of the previous version's dictory (e.g., **`old-project/storage/app/public`**) to the corresponding dictory in the latest version (e.g., **`new-project/storage/app/public`**).
+```bash
+php artisan config:cache
+```
 
-   ::: tip
-   If your existing project depends on local storage, has changed paths, or requires previous logs, ensure to include those as well.
-   :::
+## 🗄️ 5. Run pending migrations
 
-10. Once the copying is complete, publish the new files by running the following command:
+```bash
+php artisan migrate
+```
 
-    ```sh
-    php artisan vendor:publish --all
-    ```
+This applies every migration that's new in the upgrade target. Your existing data stays in place &mdash; only schema changes run.
 
-    ::: warning
-    Avoid using the **`--force`** flag, as it will reset all your views. Only use it if you understand the consequences.
-    :::
+::: danger Never run `db:seed` on an upgrade
+The seeders set up default roles, pipelines, and configuration values. Running them on top of an existing install can overwrite custom settings. If a release introduces seed data you actually need, the release notes will call out exactly which seeder to run with `--class=...`.
+:::
 
-11. Congratulations! Your project is now upgraded to the latest version of Krayin. However, keep in mind that if you have made significant customizations, ensure compatibility with the latest version.
+## 🔗 6. Re-link the storage directory
 
-## Composer Dependencies
+```bash
+php artisan storage:link
+```
 
-This documentation compares the dependencies between the old and latest versions of a Laravel-based project and provides guidance on the differences and upgrade paths.
+This recreates `public/storage` as a symlink to `storage/app/public`, the way Laravel expects.
 
-### Differences in Composer Dependencies
+## 📁 7. Restore uploaded files
 
-Here’s a detailed comparison between the two projects:
+Copy the contents of the **old** install's `storage/app/public/` over the **new** install's same directory:
 
-| Dependency                               | Old Project Version              | Latest Project Version           | Difference/Notes                                         |
-|------------------------------------------|----------------------------------|----------------------------------|---------------------------------------------------------|
-| **PHP**                                  | `^8.1`                           | `^8.1`                           | No change                                                |
-| **barryvdh/laravel-dompdf**              | `^master.0`                         | `^master.0`                         | No change                                                |
-| **diglactic/laravel-breadcrumbs**        | `^8.0`                           | `^8.0`                           | No change                                                |
-| **doctrine/dbal**                        | `^3.0`                           | `^3.0`                           | No change                                                |
-| **guzzlehttp/guzzle**                    | `^7.0.1`                         | `^7.0.1`                         | No change                                                |
-| **khaled.alshamaa/ar-php**               | **Not Present**                  | `^6.3`                           | Newly added in the latest project.                       |
-| **konekt/concord**                       | `^1.10`                          | `^1.10`                          | No change                                                |
-| **krayin/rest-api**                      | `dev-master`                     | **Removed**                      | The `krayin/rest-api` package is not included in the latest project. |
-| **laravel/framework**                    | `^10.0`                          | `^10.0`                          | No change                                                |
-| **laravel/sanctum**                      | `^3.2`                           | `^3.2`                           | No change                                                |
-| **laravel/tinker**                       | `^2.5`                           | `^2.5`                           | No change                                                |
-| **laravel/ui**                           | `^4.0`                           | `^4.5`                           | Upgraded from `^4.0` to `^4.5`                           |
-| **maatwebsite/excel**                    | `^3.1`                           | `^3.1`                           | No change                                                |
-| **mpdf/mpdf**                            | **Not Present**                  | `^8.2`                           | Newly added in the latest project.                       |
-| **prettus/l5-repository**                | `^2.7.9`                         | `^2.7.9`                         | No change                                                |
+```bash
+cp -R /path/to/old-krayin/storage/app/public/. /path/to/new-krayin/storage/app/public/
+```
 
-### Differences in Development Dependencies
+::: tip Local-storage paths
+If your existing install also reads from a different `storage/` path (custom uploads, logs you want to preserve), copy those across too. Anything left only in the old project's `storage/` is lost when you cut over.
+:::
 
-| Dependency                               | Old Project Version              | Latest Project Version           | Difference/Notes                                         |
-|------------------------------------------|----------------------------------|----------------------------------|---------------------------------------------------------|
-| **barryvdh/laravel-debugbar**            | `^3.6`                           | `^3.6`                           | No change                                                |
-| **fakerphp/faker**                       | `^1.9.1`                         | `^1.9.1`                         | No change                                                |
-| **krayin/krayin-package-generator**      | `dev-master`                     | `dev-master`                     | No change                                                |
-| **laravel/pint**                         | **Not Present**                  | `^1.16`                          | Newly added in the latest project.                       |
-| **laravel/sail**                         | `^1.0.1`                         | `^1.0.1`                         | No change                                                |
-| **mockery/mockery**                      | `^1.4.2`                         | `^1.4.2`                         | No change                                                |
-| **nunomaduro/collision**                 | `^7.0`                           | `^7.0`                           | No change                                                |
-| **pestphp/pest**                         | `^2.6`                           | `^2.6`                           | No change                                                |
-| **pestphp/pest-plugin-laravel**          | `^2.1`                           | `^2.1`                           | No change                                                |
-| **phpunit/phpunit**                      | `^10.0`                          | `^10.0`                          | No change                                                |
-| **spatie/laravel-ignition**              | `^master`                           | `^master`                           | No change                                                |
+## 📦 8. Publish vendor assets
 
-### Differences in Autoloading
+```bash
+php artisan vendor:publish --all
+```
 
-- **New Packages in Latest Project:**
-  - `"Webkul\\Warehouse\\": "packages/Webkul/Warehouse/src",`
-  - `"Webkul\\Automation\\": "packages/Webkul/Automation/src",`
-  - `"Webkul\\DataGrid\\": "packages/Webkul/DataGrid/src"`
+This copies new translation strings, config defaults, and view stubs into your `resources/` and `config/` directories.
 
-### Summary of Changes
+::: warning Don't pass `--force`
+`--force` overwrites every published file &mdash; including any view you've customised. Only use it if you're knowingly wiping your customisations.
+:::
 
-1. **Removed Packages:**
-   - `krayin/rest-api` has been removed in the latest project.
+## ✅ 9. Done
 
-2. **Added Packages:**
-   - `khaled.alshamaa/ar-php` was added in the latest project.
-   - `mpdf/mpdf` was added in the latest project.
-   - `laravel/pint` was added as a new development dependency.
+Browse the admin and confirm everything renders. If something looks off, the most common culprits are:
 
-3. **Updated Packages:**
-   - `laravel/ui` was upgraded from version `^4.0` to `^4.5`.
+- Stale config &mdash; run `php artisan optimize:clear` to flush every cache and try again.
+- Missing migration &mdash; `php artisan migrate:status` shows whether anything is pending.
+- View overrides under `resources/views/vendor/` that don't match the new package version &mdash; re-publish just that package's views and re-apply your changes.
 
-4. **New Autoloaded Packages:**
-   - Added new autoload paths for `Webkul\\Warehouse`, `Webkul\\Automation`, and `Webkul\\DataGrid`.
+## 📋 Dependency reference
 
-### Upgrade Instructions
+The composer + npm package lists move forward with each release. The table below shows the *kind* of change to look out for when reading the release notes &mdash; specific version numbers shift with every release, so always cross-check against the new `composer.json`.
 
-To upgrade your project to the latest dependencies, follow these steps:
+### Composer dependencies &mdash; typical changes
 
-1. **Update `composer.json`:**
-   - Replace the old package list with the updated one provided in the latest project.
+| Type of change | Example | What to do |
+| --- | --- | --- |
+| **Added** | `mpdf/mpdf` introduced for PDF generation. | Run `composer install`; new packages are pulled automatically. |
+| **Removed** | `krayin/rest-api` is no longer bundled &mdash; it's a separate package now. | If you used the bundled version, install it explicitly with `composer require krayin/rest-api`. |
+| **Upgraded** | `laravel/ui ^4.0` &rarr; `^4.5`. | `composer update`; check the upgraded package's own changelog for breaking changes. |
+| **No change** | `laravel/framework`, `prettus/l5-repository`, etc. | Nothing to do. |
 
-2. **Run Composer Update:**
-   - Execute the following command to update your dependencies:
-     ```bash
-     composer update
-     ```
+### Autoload paths
 
-3. **Verify Autoloading:**
-   - Ensure that the new autoload paths are properly configured by running:
-     ```bash
-     composer dump-autoload
-     ```
+New packages that ship inside core Krayin add new entries to the root `composer.json` `autoload.psr-4` map:
 
-4. **Test Your Project:**
-   - After updating dependencies, thoroughly test your project to ensure that the changes do not introduce any issues.
+```json
+"Webkul\\Warehouse\\": "packages/Webkul/Warehouse/src",
+"Webkul\\Automation\\": "packages/Webkul/Automation/src",
+"Webkul\\DataGrid\\": "packages/Webkul/DataGrid/src"
+```
 
-### Conclusion
+When you upgrade, your `composer.json` should match the upstream one. If you copied the file from the old project, diff it against the new project's `composer.json` and merge any new autoload entries by hand. Then:
 
-By following these instructions, your project will be updated to use the latest dependencies and autoload configurations. Ensure that you perform adequate testing after the update to confirm everything is functioning as expected.
+```bash
+composer dump-autoload
+```
+
+### Dev dependencies
+
+Notable dev-tool additions over recent versions:
+
+- **`laravel/pint`** &mdash; the formatter Krayin now uses. Run `vendor/bin/pint` before sending a PR (see [Contribution Guide](./contribution-guide.md#-pint-formatting)).
+- **`pestphp/pest` + `pestphp/pest-plugin-laravel`** &mdash; test runner used by the [agent-skills `pest-testing`](../introduction/skills.md) skill.
+
+## 🧪 Verify
+
+After the upgrade:
+
+```bash
+php artisan migrate:status   # all migrations should show "Ran"
+php artisan optimize:clear   # flush every cache
+php artisan route:list       # quick sanity check that routes still resolve
+```
+
+Then exercise the parts of the admin you customise &mdash; create a lead, send an email, run a DataGrid filter. If a published view looks broken, re-publish just that package's views and re-apply your changes against the new template:
+
+```bash
+php artisan vendor:publish --provider="Webkul\Admin\Providers\AdminServiceProvider" --tag=views --force
+```
+
+## 📝 Next steps
+
+- [Contribution Guide](./contribution-guide.md) &mdash; if the upgrade surfaced a bug or missing feature, this is the workflow for sending a fix upstream.
+- [Best Security Practices](../digging-deeper/security-practice.md) &mdash; revisit after every major upgrade; new releases sometimes change recommended headers or hardening defaults.

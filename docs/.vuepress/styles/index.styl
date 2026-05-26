@@ -1,0 +1,150 @@
+@require './home'
+@require './dark-mode'
+
+// Anchor-link offset: the admin theme has a ~60px sticky header. Without this,
+// clicking an in-page heading anchor scrolls the heading behind the bar.
+h1, h2, h3, h4, h5, h6
+  scroll-margin-top 80px
+
+// Three-column layout (Bagisto-style): left sidebar + centred content + right
+// "On this page" TOC. The TOC is `position: fixed` and ~16rem wide, so reserve
+// matching right-padding on the page so content doesn't slide under it. On
+// narrower screens (<= 1199px) the TOC hides itself (see OnThisPage.vue) — we
+// don't apply the padding there.
+@media (min-width: 1200px)
+  .page
+    padding-right 17rem
+
+// Centred search input. The default VuePress 1.x SearchBox renders an input
+// with `.search-box input`; centring its placeholder + typed text matches the
+// requested top-bar layout.
+.search-box
+  input
+    text-align center
+
+// Monokai-themed OS tabs.
+//
+// Palette
+//   bg          #272822  (panel + active tab)
+//   bg-dark     #1e1f1c  (tab strip behind inactive tabs)
+//   fg          #f8f8f2  (active tab + body text)
+//   muted       #75715e  (inactive tab text — monokai comment color)
+//   pink        #f92672  (active tab accent underline)
+//   yellow      #e6db74  (inline code text)
+//   cyan        #66d9ef  (links)
+//   green       #a6e22e  (hover)
+
+$mkBg       = #282c34
+$mkBgDark   = #1e1f1c
+$mkFg       = #f8f8f2
+$mkMuted    = #75715e
+$mkPink     = #f92672
+$mkYellow   = #e6db74
+$mkCyan     = #66d9ef
+$mkGreen    = #a6e22e
+
+.tabs-component
+  margin 1.5em 0
+  border-radius 6px
+  overflow hidden
+  box-shadow 0 1px 2px rgba(0, 0, 0, .1)
+
+.tabs-component-tabs
+  display flex
+  flex-wrap wrap
+  align-items stretch
+  background $mkBgDark
+  border 0
+  border-radius 0
+  margin 0
+  padding 0
+  list-style none
+
+.tabs-component-tab
+  background transparent
+  border 0
+  border-radius 0
+  color $mkMuted
+  font-size 13px
+  font-weight 600
+  list-style none
+  margin 0
+  padding 0
+  position relative
+  transition color .15s ease, background-color .15s ease
+  &:hover
+    color $mkGreen
+  &.is-active
+    background $mkBg
+    color $mkFg
+    &::after
+      content ''
+      position absolute
+      left 0
+      right 0
+      bottom 0
+      height 2px
+      background $mkPink
+  &.is-disabled *
+    color $mkMuted
+    opacity .5
+    cursor not-allowed !important
+
+.tabs-component-tab-a
+  align-items center
+  color inherit
+  display flex
+  padding .6em 1.1em
+  text-decoration none
+
+.tabs-component-panels
+  background $mkBg
+  color $mkFg
+  border 0
+  border-radius 0
+  box-shadow none
+  padding 1em 1.25em
+
+  // Code blocks already render with their own dark theme — let them sit flush
+  // and edge-to-edge, without competing rounded corners.
+  div[class*="language-"]
+    margin .5em -1.25em
+    border-radius 0
+    &:first-child
+      margin-top -1em
+    &:last-child
+      margin-bottom -1em
+
+  pre[class*="language-"]
+    border-radius 0
+
+  // Inline / text content inside the dark panel. vue-tabs-component wraps each
+  // tab body in a `.tabs-component-panel`, so use descendant selectors instead
+  // of direct-child ones.
+  p,
+  ul,
+  ol,
+  blockquote
+    margin .5em 0
+    color $mkFg
+    &:first-child
+      margin-top 0
+    &:last-child
+      margin-bottom 0
+
+  // Inline `code` chips inside text content (e.g. `nginx.conf`) — make them
+  // pop as Monokai yellow strings on the darker tab-strip background.
+  p code,
+  ul code,
+  ol code,
+  blockquote code
+    background $mkBgDark
+    color $mkYellow
+    padding .1em .4em
+    border-radius 3px
+    font-size .85em
+
+  a
+    color $mkCyan
+    &:hover
+      color $mkGreen

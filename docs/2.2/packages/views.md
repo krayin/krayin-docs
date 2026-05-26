@@ -1,179 +1,113 @@
 # Views
 
-[[TOC]]
+Views are the Blade templates your [controller](./controllers.md) returns. Each Krayin package owns its own view folder and registers a **view namespace** so callers can reference them with `package::path.to.view`.
 
-## Introduction
+For Blade-specific syntax, see the [Laravel views](https://laravel.com/docs/11.x/views) and [Blade docs](https://laravel.com/docs/11.x/blade).
 
-Views in Laravel are responsible for separating the application's logic from the presentation layer. They provide a clean way to manage and organize the HTML content of your application. Views are typically stored in the `resources/views` directory and are rendered using the Blade templating engine, which offers a simple and powerful way to create dynamic content.
+## 📁 Create the views folder
 
-By using views, you can create reusable templates and components, making your code more maintainable and easier to understand. Blade templates allow you to use control structures like loops and conditionals, as well as to include other templates, which helps to keep your views organized and modular.
+By convention each package's templates live under `src/Resources/views/`, with one folder per Blade group:
 
-To learn in detail about Views, you can visit the Laravel documentation [here](https://laravel.com/docs/11.x/views).
+```text
+packages
+└── Webkul
+    └── Example
+        └── src
+            ├── ...
+            └── Resources
+                └── views
+                    └── admin
+                        ├── index.blade.php
+                        ├── create.blade.php
+                        └── edit.blade.php
+```
 
-Here's a basic example of a Blade template:
+### Standard Blade files
 
-## Directory Structure
+Krayin uses a consistent naming convention for CRUD pages:
 
-To organize the views for our `Category` package, we need to set up a specific directory structure. Follow the steps below to create the necessary directories.
+| File | Used for | Controller action |
+| --- | --- | --- |
+| `index.blade.php` | List view (with [DataGrid](./datagrid.md)) | `index()` |
+| `create.blade.php` | Create form | `create()` |
+| `edit.blade.php` | Edit form | `edit()` |
+| `show.blade.php` | Detail view (optional) | `show()` |
 
-#### Create the `Resources` Directory
+## 🧱 Write a basic template
 
-- Navigate to the `packages/Webkul/Category/src` directory.
-- Create a directory named `Resources`.
+Wrap your content in the shared admin [layout component](./layouts.md) so it picks up the sidebar, header, and theming for free:
 
-#### Create the `views` Directory
-
-- Inside the `Resources` directory, create another directory named `views` and inside the views directory create category directory.
-- Inside the `views/category` directory, create a file named `index.blade.php`, `create.blade.php`, `edit.blade.php` .
-
-The updated directory structure will look like this:
-
-```bash
-  └── packages
-      └── Webkul
-          └── Category
-              └── src
-                  ├── ...
-                  └── Resources
-                      └── views
-                          └── category
-                              ├── create.blade.php
-                              ├── edit.blade.php
-                              └── index.blade.php
-  ```
-
-### Adding HTML Content
-
-Below is an example of basic HTML content that you can add to each `index.blade.php` file.
-
-#### `index.blade.php` in the `category` Directory
-
-```html
+```blade
 <x-admin::layouts>
     <x-slot:title>
-        @lang('category::app.categories.index.title')
+        @lang('example::app.examples.index.title')
     </x-slot>
 
-    <!-- Content -->
-    <div class="flex gap-4">
-
+    <div class="flex justify-between items-center max-sm:flex-wrap gap-4">
+        <p class="text-xl font-bold dark:text-white">
+            @lang('example::app.examples.index.title')
+        </p>
     </div>
+
+    {{-- Page content goes here --}}
 </x-admin::layouts>
 ```
 
-## Load Views from Package
+Common pieces &mdash; `<x-admin::layouts>`, breadcrumbs, datagrid, buttons &mdash; are documented in the [Blade Components guide](./blade-components.md).
 
-To make the views in our package accessible, we need to register them in the service provider's `boot` method. This involves updating the `CategoryServiceProvider.php` file to include the view loading logic. Follow the steps below:
+## ⚙️ Register the views with the service provider
 
-#### Open the Service Provider File
-
-- Navigate to the `packages/Webkul/Category/src/Providers` directory.
-- Open the `CategoryServiceProvider.php` file.
-
-#### Update the `boot` Method
-
-- Inside the `boot` method of the `CategoryServiceProvider` class, add the logic to load views from the package.
-
-#### Updated `CategoryServiceProvider.php`
-
-Here is the updated code for `CategoryServiceProvider.php`:
+The view namespace is what lets you write `view('example::admin.index')`. Register it in `boot()`:
 
 ```php
 <?php
 
-namespace Webkul\Category\Providers;
+namespace Webkul\Example\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class CategoryServiceProvider extends ServiceProvider
+class ExampleServiceProvider extends ServiceProvider
 {
-    /**
-     * Bootstrap services.
-     *
-     * @return void
-     */
-    public function boot()
+    public function boot(): void
     {
-        // ... 
-
-        $this->loadViewsFrom(__DIR__ . '/../Resources/views', 'category');
+        $this->loadViewsFrom(__DIR__ . '/../Resources/views', 'example');
     }
 }
 ```
 
-#### Explanation
+`loadViewsFrom()` takes the absolute path to the views folder and a short namespace (`'example'`). After this, anywhere in the app can render your templates with the `example::` prefix.
 
-- The `namespace` keyword defines the namespace for the `CategoryServiceProvider` class, which is `Webkul\Category\Providers`.
-- The `CategoryServiceProvider` class extends Laravel's base `ServiceProvider` class.
-- The `boot` method is used to bootstrap any application services.
-- Inside the `boot` method, we use the `$this->loadViewsFrom` method to register the views from the package.
-- The `loadViewsFrom` method takes two arguments:
+## 🔌 Render a view from a controller
 
-    - The path to the views directory within the package: `__DIR__ . '/../Resources/views'`.
-    - A namespace for the views: `'category'`.
-
-## Rendering Views
-
-In Laravel applications, views are typically rendered from controller methods using the `view` helper function. This section describes how views are invoked and passed data from a controller.
+The `view()` helper takes the namespaced view name and an optional data array:
 
 ```php
-<?php
-
-namespace Webkul\Category\Http\Controllers;
-
-use Illuminate\View\View;
-use Webkul\Category\Http\Controllers\Controller;
-use Webkul\Category\Repository\CategoryRepository;
-
-class CategoryController extends Controller
+public function index()
 {
-    /**
-     * Create a controller instance.
-     * 
-     * @return void
-     */
-    public function __construct(protected CategoryRepository $categoryRepository)
-    {
-    }
+    $examples = $this->exampleRepository->with('children')->all();
 
-    /**
-     * Display the listing of the resource.
-     */
-    public function index(): View
-    {
-        $categories = $this->categoryRepository->with(['author'])->all();
-
-        return view('category::category.index', compact('categories'));
-    }
+    return view('example::admin.index', compact('examples'));
 }
 ```
 
-#### Explanation
+The variables passed in via `compact()` (or as a plain array) become available inside the Blade template as `$examples`, etc.
 
-- The `view` helper function in Laravel is used within the `index` method of the `CategoryController` to render the `category::category.index` view.
+## 🧪 Verify
 
-- It accepts two parameters the name of the view (`category::category.index`) and an array of data (`compact('categories')`) to pass to the `view`.
+Visit the route from your browser:
 
-## Blade File Naming Convention
+```text
+http://your-krayin.local/admin/examples
+```
 
-Krayin utilizes Blade templates to handle `listing`, `creation`, and `updating` operations for resources like products, leads, persons, organizations, and categories. This section provides a detailed guide on how to implement these operations using Blade templates within your Krayin package.
+You should see the rendered template. If you get a `View [example::admin.index] not found.` error, check:
 
-### Listing (Index Blade):
+1. The view file actually exists at the path Laravel is looking at.
+2. `loadViewsFrom()` is in the service provider's `boot()` method, not `register()`.
+3. Run `php artisan view:clear` to drop any cached compiled views.
 
-- The `index.blade.php` template is used to display a list of all records (categories).
+## 📝 Next steps
 
-- The controller's `index` method fetches all categories and passes them to the view.
-
-### Creation (Create Blade):
-
-- The `create.blade.php` template contains a form for creating new records.
-
-- The controller's `create` method renders this view.
-
-### Updating (Edit Blade):
-
-- The `edit.blade.php` template contains a form for editing existing records.
-
-- The controller's `edit` method fetches the specific categories and passes it to the view.
-
-By following these steps, you can effectively utilize Blade templates in Krayin for listing, creating, and updating resources, ensuring a structured and maintainable approach to managing CRUD operations within your application.
+- [Layouts](./layouts.md) &mdash; the shared `<x-admin::layouts>` wrapper used above.
+- [Blade Components](./blade-components.md) &mdash; full list of reusable admin UI primitives (breadcrumbs, datagrid, modals, etc.).
+- [Localization](./localization.md) &mdash; replace hard-coded strings with `@lang('example::app.…')` keys.

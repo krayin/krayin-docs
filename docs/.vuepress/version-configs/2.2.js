@@ -20,7 +20,7 @@ module.exports = [
         collapsable: true,
         children: setVersionPrefix([
             ['prologue/upgrade-guide', 'Upgrade Guide'],
-            ['prologue/contribution-guide', ' Contribution Guide']
+            ['prologue/contribution-guide', 'Contribution Guide']
         ])
     },
     {
@@ -30,6 +30,8 @@ module.exports = [
         children: setVersionPrefix([
             ['introduction/requirements', 'Requirements'],
             ['introduction/installation', 'Installation'],
+            ['introduction/skills', 'Agent Skills'],
+            ['introduction/ai-context', 'AI Context Files'],
         ]),
     },
     {
@@ -37,9 +39,8 @@ module.exports = [
         path: setVersionPrefix('architecture'),
         collapsable: true,
         children: setVersionPrefix([
-            ['architecture/packages', 'Packages'],
-            ['architecture/repository-pattern', 'Repository Pattern'],
-            ['architecture/modular-design', 'Modular Design']
+            ['architecture/overview', 'Overview'],
+            ['architecture/packages', 'Packages']
         ]),
     },
     {
@@ -66,17 +67,17 @@ module.exports = [
     },
     {
         title: 'Digging Deeper',
-        path: setVersionPrefix('advanced'),
+        path: setVersionPrefix('digging-deeper'),
         collapsable: true,
         children: setVersionPrefix([
-            ['advanced/ai-powered-lead-generation', 'AI-Powered Lead Generation'],
-            ['advanced/security-practice', 'Best Security Practices'],
-            ['advanced/data-transfer', 'Data Transfer'],
-            ['advanced/email-inbound-parse', 'Email Inbound Parse'],
-            ['advanced/events', 'Events Listeners'],
-            ['advanced/events-and-campaigns', 'Events and Campaigns'],
-            ['advanced/helpers', 'Helpers'],
-            ['advanced/override-a-layout', 'Override a Layout'],
+            ['digging-deeper/ai-powered-lead-generation', 'AI-Powered Lead Generation'],
+            ['digging-deeper/security-practice', 'Best Security Practices'],
+            ['digging-deeper/data-transfer', 'Data Transfer'],
+            ['digging-deeper/email-inbound-parse', 'Email Inbound Parse'],
+            ['digging-deeper/events', 'Events Listeners'],
+            ['digging-deeper/events-and-campaigns', 'Events and Campaigns'],
+            ['digging-deeper/helpers', 'Helpers'],
+            ['digging-deeper/override-a-layout', 'Override a Layout'],
         ])
     },
     {
@@ -84,8 +85,8 @@ module.exports = [
         path: setVersionPrefix('custom-attributes'),
         collapsable: true,
         children: setVersionPrefix([
-            ['custom-attributes/uses', 'How to use custom attribute'],
-            ['custom-attributes/custom-attribute', 'Make Model With Custom Attribute'],
+            ['custom-attributes/custom-attribute', 'How to use custom attribute'],
+            ['custom-attributes/model-custom-attribute', 'Make Model With Custom Attribute'],
         ]),
     },
     {

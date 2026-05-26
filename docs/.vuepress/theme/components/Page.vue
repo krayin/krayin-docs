@@ -8,15 +8,18 @@
     <PageNav v-bind="{ sidebarItems }" />
 
     <slot name="bottom" />
+
+    <OnThisPage />
   </main>
 </template>
 
 <script>
 import PageEdit from '@theme/components/PageEdit.vue'
 import PageNav from '@theme/components/PageNav.vue'
+import OnThisPage from '@theme/components/OnThisPage.vue'
 
 export default {
-  components: { PageEdit, PageNav },
+  components: { PageEdit, PageNav, OnThisPage },
   props: ['sidebarItems']
 }
 </script>
