@@ -1,0 +1,69 @@
+# Krayin CRM Developer Portal
+
+> Krayin is a free and open-source CRM framework for SMEs and enterprises, built on Laravel 11 (PHP 8.3+), Vue.js 3, and Tailwind CSS. It is admin-only (no customer-facing storefront) and is structured as a collection of Laravel packages under the `Webkul/` namespace, each implementing one business domain (Lead, Contact, Activity, Quote, Product, ...).
+
+This file gives AI coding assistants a curated map of Krayin's developer documentation so they can produce code that matches Krayin's conventions: Concord model proxies + contracts, Prettus repositories, Blade Components, attribute-driven entities, and the event/listener system.
+
+The canonical URL for this file is `https://devdocs.krayincrm.com/llms.txt`. Pair it with `https://devdocs.krayincrm.com/llms-full.txt` when an assistant supports a larger context window.
+
+## Introduction
+
+- [Requirements](https://devdocs.krayincrm.com/2.2/introduction/requirements.html): PHP, web server, database, Composer, Node, OpenSSL, and PHP-extension prerequisites.
+- [Installation](https://devdocs.krayincrm.com/2.2/introduction/installation.html): Composer-create, GUI installer, Docker, and Cloud install methods.
+- [Agent Skills](https://devdocs.krayincrm.com/2.2/introduction/skills.html): `npx skills add krayin/agent-skills` for Claude Code / Cursor.
+
+## Architecture
+
+- [Overview](https://devdocs.krayincrm.com/2.2/architecture/overview.html): Modular package structure, Component-Based admin UI, Event-Driven design, Prettus Repository pattern, Concord model proxies + contracts.
+- [Packages](https://devdocs.krayincrm.com/2.2/architecture/packages.html): Reference of every bundled package &mdash; Activity, Admin, Attribute, Automation, Contact, Core, DataGrid, DataTransfer, Email, EmailTemplate, Installer, Lead, Marketing, Product, Quote, Tag, User, Warehouse, WebForm.
+
+## Package Development
+
+- [Getting Started](https://devdocs.krayincrm.com/2.2/packages/create-package.html): Scaffold a `Webkul/<PackageName>` package, register its service provider, and wire it into `bootstrap/providers.php` (or `config/app.php` on legacy installs).
+- [Admin Menu](https://devdocs.krayincrm.com/2.2/packages/add-menu-in-admin.html): Register a sidebar entry via `config/admin-menu.php` merged into `menu.admin`.
+- [Assets](https://devdocs.krayincrm.com/2.2/packages/assets.html): Per-package Vite config, `krayin-vite` integration, HMR + production builds, asset publishing.
+- [Blade Components](https://devdocs.krayincrm.com/2.2/packages/blade-components.html): Use `<x-admin::layouts>`, `<x-admin::breadcrumbs>`, `<x-admin::datagrid.export>`, etc. Ship your own components from `Resources/views/components/`.
+- [Access Control List](https://devdocs.krayincrm.com/2.2/packages/create-acl.html): Define permissions via `config/acl.php` merged into `acl`; gate routes / views with `bouncer()->can(...)`.
+- [Models](https://devdocs.krayincrm.com/2.2/packages/create-models.html): Three-part Concord model: Contract (interface), Model (Eloquent), Proxy (`extends ModelProxy`). Register in `ModuleServiceProvider::$models`.
+- [Migrations](https://devdocs.krayincrm.com/2.2/packages/create-migrations.html): Load from `Database/Migrations/` via `loadMigrationsFrom()` in `boot()`.
+- [Controllers](https://devdocs.krayincrm.com/2.2/packages/controllers.html): Admin / shop split; constructor-promote repository dependencies; return `view('package::path')` or `datagrid(...)`.
+- [DataGrid](https://devdocs.krayincrm.com/2.2/packages/datagrid.html): Build paginated, filterable, sortable tables from any Eloquent repository.
+- [Layouts](https://devdocs.krayincrm.com/2.2/packages/layouts.html): Extend or override the admin layout for package screens.
+- [Localization](https://devdocs.krayincrm.com/2.2/packages/localization.html): Multi-language strings via `Resources/lang/<locale>/app.php`, loaded with `loadTranslationsFrom()` and accessed with `trans('package::app.path')`.
+- [Routes](https://devdocs.krayincrm.com/2.2/packages/routes.html): Split admin / shop routes; apply `admin` middleware; honour `config('app.admin_url')` for the prefix.
+- [Repository](https://devdocs.krayincrm.com/2.2/packages/store-data-through-repositories.html): Extend `Webkul\Core\Eloquent\Repository`; `model()` returns the Contract FQCN; standard CRUD + `findWhere`, `paginate`, `with`.
+- [Validation](https://devdocs.krayincrm.com/2.2/packages/validation.html): Form Requests under `Http/Requests/`, plus the request-validation conventions used across the CRM.
+- [Views](https://devdocs.krayincrm.com/2.2/packages/views.html): Blade templates under `Resources/views/`, loaded via `loadViewsFrom()` with a namespace prefix.
+
+## Digging Deeper
+
+- [AI-Powered Lead Generation](https://devdocs.krayincrm.com/2.2/digging-deeper/ai-powered-lead-generation.html): Turn uploaded documents into leads via OpenRouter.
+- [Best Security Practices](https://devdocs.krayincrm.com/2.2/digging-deeper/security-practice.html): Production hardening &mdash; HTTPS, admin-IP whitelist, HTTP security headers, server hardening.
+- [Data Transfer](https://devdocs.krayincrm.com/2.2/digging-deeper/data-transfer.html): Queued CSV/XLSX import for leads, persons, and products.
+- [Email Inbound Parse](https://devdocs.krayincrm.com/2.2/digging-deeper/email-inbound-parse.html): SendGrid Inbound Parse and Webklex IMAP drivers for inbound mail.
+- [Events Listeners](https://devdocs.krayincrm.com/2.2/digging-deeper/events.html): The full table of `<entity>.<action>.before` / `.after` events; how to attach listeners from an `EventServiceProvider`.
+- [Events and Campaigns](https://devdocs.krayincrm.com/2.2/digging-deeper/events-and-campaigns.html): Schedule recurring email campaigns from CRM events via the Marketing package and `php artisan campaign:process`.
+- [Helpers](https://devdocs.krayincrm.com/2.2/digging-deeper/helpers.html): The `core()` global helper (timezones, locales, countries/states, currency, dates, config, singletons).
+- [Override a Layout](https://devdocs.krayincrm.com/2.2/digging-deeper/override-a-layout.html): Override controllers (container bind), models (Concord), views (publish to `vendor/`), or inject snippets via `view_render_event`.
+
+## Custom Attributes
+
+- [How to use custom attribute](https://devdocs.krayincrm.com/2.2/custom-attributes/custom-attribute.html): Create attributes in `Settings > Attributes`; pick a type (text, textarea, price, boolean, date, datetime, email, phone, select, multiselect, lookup, image, file, address, subheading); toggle `Quick Add` to expose the field in the quick-create modal.
+- [Make Model With Custom Attribute](https://devdocs.krayincrm.com/2.2/custom-attributes/model-custom-attribute.html): Register an entity type via `Config/attribute_entity_types.php`, add the `CustomAttribute` trait, persist values via `AttributeValueRepository::save($data, $id)`.
+
+## Krayin APIs
+
+- [Explore REST API](https://devdocs.krayincrm.com/2.2/api/getting-started-with-the-api.html): Install `krayin/rest-api`, configure Sanctum stateful domains, run `php artisan krayin-rest-api:install`, browse the L5-Swagger UI at `/api/admin/documentation`, authenticate via `POST /api/admin/login`.
+
+## Prologue
+
+- [Upgrade Guide](https://devdocs.krayincrm.com/2.2/prologue/upgrade-guide.html): Version-to-version upgrade instructions.
+- [Contribution Guide](https://devdocs.krayincrm.com/2.2/prologue/contribution-guide.html): How to contribute code and skills to Krayin.
+
+## Optional
+
+- [Krayin CRM source code](https://github.com/krayin/laravel-crm): The main Laravel application. Packages live under `packages/Webkul/`.
+- [Krayin REST API package](https://github.com/krayin/rest-api): The separately-installable Sanctum + L5-Swagger REST API.
+- [Krayin agent skills](https://github.com/krayin/agent-skills): `crm-package-development` and `pest-testing` skill bundles for Claude Code and Cursor.
+- [Krayin user guide](https://docs.krayincrm.com/): End-user (non-developer) documentation.
+- [Krayin community forum](https://forums.krayincrm.com/): Support and discussion.
