@@ -1,53 +1,28 @@
-name: Deploy to GitHub Pages
-
+name: Deploy to GitHub pages
 on:
   push:
     branches:
       - master
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: true
-
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
+  publish-docs:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      # https://github.com/actions/checkout
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
         with:
-          node-version: 20
-          cache: npm
+          persist-credentials: false
 
-      - name: Install dependencies
-        run: npm install
+      - name: NPM install 📦
+        uses: bahmutov/npm-install@v1
 
-      - name: Build docs
-        run: |
-          export NODE_OPTIONS=--openssl-legacy-provider
-          npm run docs:build --no-cache
+      - name: Build docs 🏗
+        run: export NODE_OPTIONS=--openssl-legacy-provider && npm run docs:build --no-cache
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      # https://github.com/marketplace/actions/github-pages-action
+      - name: Deploy 🚀
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          path: ./docs/.vuepress/dist
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/.vuepress/dist
+          cname: devdocs.krayincrm.com
