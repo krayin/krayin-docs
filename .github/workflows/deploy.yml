@@ -1,25 +1,33 @@
 name: Deploy to GitHub pages
+
 on:
   push:
     branches:
       - master
+
 jobs:
   publish-docs:
     runs-on: ubuntu-latest
+
     steps:
-      # https://github.com/actions/checkout
       - name: Checkout 🛎️
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           persist-credentials: false
 
-      - name: NPM install 📦
-        uses: bahmutov/npm-install@v1
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies 📦
+        run: npm install
 
       - name: Build docs 🏗
-        run: export NODE_OPTIONS=--openssl-legacy-provider && npm run docs:build --no-cache
+        run: |
+          export NODE_OPTIONS=--openssl-legacy-provider
+          npm run docs:build --no-cache
 
-      # https://github.com/marketplace/actions/github-pages-action
       - name: Deploy 🚀
         uses: peaceiris/actions-gh-pages@v3
         with:
