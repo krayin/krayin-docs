@@ -1,63 +1,88 @@
 # Agent Skills
 
-[**krayin/agent-skills**](https://github.com/krayin/agent-skills) is a small, official package of *AI agent skills* &mdash; reusable bundles of Krayin-specific context that you install into Claude Code, Cursor, or any other compatible AI coding assistant. Once installed, the agent automatically picks the right skill when you're working on the matching task: scaffolding a package, writing a Pest test, debugging a migration.
+Krayin **2.2 ships AI agent skills as part of the core repo**. The moment you clone `krayin/laravel-crm`, your AI coding assistant &mdash; Claude Code, Cursor, Codex, GitHub Copilot, or Kilo Code &mdash; picks up Krayin-specific context automatically. No separate install, no `npx` command, no extra repository.
 
-Skills don't replace this documentation &mdash; they give the agent enough Krayin-aware context to *follow* the conventions documented here without you having to paste them into every prompt.
+Skills don't replace this documentation. They give the agent enough Krayin-aware context to *follow* the conventions documented here without you having to paste them into every prompt.
+
+> Before 2.2 these skills lived in the standalone [krayin/agent-skills](https://github.com/krayin/agent-skills) repo and were installed via `npx skills add`. That flow still works, but core Krayin 2.2 onwards ships the same skills in-tree &mdash; preferring the in-repo version is the recommended path.
 
 ## 🧩 What you get
 
+Two skills bundled inside Krayin 2.2's source tree:
+
 | Skill | Activates when... | Covers |
 | --- | --- | --- |
-| **`crm-package-development`** | You're creating or modifying CRM packages &mdash; migrations, models, repositories, routes, controllers, views, configs, menus, ACL, system configuration. | The full package-development surface: directory layout, contracts + proxies, repository pattern, admin menus, blade components, ACL wiring. |
-| **`pest-testing`** | You're writing tests, adding assertions, debugging test failures, or mentioning *test / spec / TDD / coverage / expects / assertion*. | Pest PHP idioms tuned for Krayin &mdash; feature vs unit tests, datasets, mocking, fixtures. |
+| **`crm-package-development`** | You're creating or modifying CRM packages &mdash; migrations, models, repositories, routes, controllers, views, configs, menus, ACL, system configuration. | The full package-development surface: directory layout, Concord contracts + proxies, the Prettus repository pattern, admin menus, Blade Components, ACL wiring. |
+| **`pest-testing`** | You're writing tests, adding assertions, debugging test failures, or mentioning *test / spec / TDD / coverage / expects / assertion*. | Pest PHP idioms tuned for Krayin &mdash; feature vs. unit tests, datasets, mocking, fixtures. |
 
-The skills are open-source &mdash; read what they actually tell the agent at the [agent-skills repo](https://github.com/krayin/agent-skills).
+Each skill is a Markdown file under the per-tool config directory (`.claude/skills/`, `.cursor/`, `.codex/`, `.kilocode/`). The top-level [`AGENTS.md`](https://github.com/krayin/laravel-crm/blob/2.2/AGENTS.md) at the repo root is the entry point that every AI tool reads to discover the skills.
 
-## ⌨️ 1. Install the skills
+## 🛠️ Supported AI tools
 
-The installer is run via `npx skills` from the [skills](https://github.com/anthropics/skills) tool. From the parent directory of your Krayin checkout:
+Any AI assistant that respects the standard `AGENTS.md` convention works out of the box. Confirmed integrations:
 
-```bash
-# Clone the skills repo locally so the installer can read it.
-git clone https://github.com/krayin/agent-skills.git
+| Tool | How it picks up the skills |
+| --- | --- |
+| **Claude Code** | Reads `.claude/skills/` automatically on session start. |
+| **Cursor** | Reads `.cursor/skills/` + `AGENTS.md`. |
+| **Codex (OpenAI)** | Reads `.codex/skills/` and `AGENTS.md`. |
+| **GitHub Copilot** | Reads `.github/skills/` and `AGENTS.md`. |
+| **Kilo Code** | Reads `.kilocode/skills/` and `AGENTS.md` |
 
-# Install every skill into your default agent.
-npx skills add ./agent-skills
-```
+If your tool reads `AGENTS.md` or one of the dot-directories above, you're set &mdash; no per-tool configuration on your side.
 
-That installs both skills (`crm-package-development` and `pest-testing`) into the agent the installer detects.
+## ⌨️ 1. Clone Krayin 2.2
 
-### Pick a specific agent
-
-If you have more than one AI assistant configured, target it explicitly:
-
-```bash
-npx skills add ./agent-skills -a claude-code
-npx skills add ./agent-skills -a cursor
-```
-
-### Install one skill at a time
-
-If you only do package work (no Pest tests) or vice versa, skip the one you don't need:
+That's it for setup. The skills are part of the source tree:
 
 ```bash
-npx skills add ./agent-skills --skill "crm-package-development"
-npx skills add ./agent-skills --skill "pest-testing"
+git clone --branch 2.2 https://github.com/krayin/laravel-crm.git
+cd laravel-crm
 ```
 
-::: tip Keep installed skills focused
-Skills consume context tokens every time the agent decides one is relevant. Installing only the skills you actually use keeps the agent's context window lean &mdash; faster responses, cheaper runs.
-:::
+Inside, you'll find:
+
+```text
+laravel-crm/
+├── AGENTS.md              # entry point — every AI tool reads this
+├── .ai/                   # generic AI rules
+├── .claude/skills/        # Claude Code skills
+├── .codex/                # Codex rules
+├── .cursor/               # Cursor rules
+├── .kilocode/             # Kilo Code rules
+├── bin/
+│   └── validate-skills.sh # sanity-check helper
+└── packages/Webkul/...
+```
+
+Open the directory in your AI-enabled IDE and the relevant skill activates the next time you ask a Krayin-specific question.
 
 ## 🧪 2. Verify
 
-Open your AI assistant inside the Krayin project and ask it to do something the skill should activate on. For `crm-package-development`:
+### A. Run the bundled validator
+
+The repo ships a shell script that checks every skill file is well-formed:
+
+```bash
+bash bin/validate-skills.sh
+```
+
+A clean exit (no errors) means the skill files are wired correctly.
+
+### B. Ask the agent something Krayin-specific
+
+Open your AI assistant inside the project and try:
 
 ```text
 Create a new package called Webkul/Example with a service provider.
 ```
 
-You should see the agent reference Krayin's package-development conventions automatically &mdash; correct `packages/Webkul/Example/src/Providers/ExampleServiceProvider.php` layout, the right service-provider boilerplate, the right composer autoload entry.
+You should see the agent automatically:
+
+- Place files under `packages/Webkul/Example/src/`.
+- Generate a three-part Concord model (Contract + Eloquent class + Proxy).
+- Extend `Webkul\Core\Eloquent\Repository` for the repository class, with `model()` returning the Contract FQCN.
+- Register the service provider in `bootstrap/providers.php` and the `ModuleServiceProvider` in `config/concord.php`.
 
 For `pest-testing`:
 
@@ -65,30 +90,30 @@ For `pest-testing`:
 Write a Pest feature test for the Lead create endpoint.
 ```
 
-The agent should reach for Pest's `it(...)` / `expect(...)` style and Krayin-appropriate setup (database refresh, admin auth helper).
+The agent should reach for Pest's `it(...)` / `expect(...)` style and Krayin-appropriate setup (`RefreshDatabase`, admin auth helper, repository assertions).
 
-If the agent doesn't seem to know about Krayin conventions, the skill didn't install correctly &mdash; re-run `npx skills add` and check the agent's skills/extensions panel for the new entries.
+If the suggestions look like generic Laravel (flat `app/` classes, no Contract/Proxy, no Concord registration), your tool isn't reading the in-repo skills &mdash; double-check that you opened the project at the *repo root* (not a sub-directory), and that `AGENTS.md` is present.
 
-## 🛠️ Supported assistants
+## 🔄 Keep the skills up to date
 
-The skills are designed for any tool that supports the *skills* protocol. Known-working integrations:
-
-- **Claude Code** &mdash; `npx skills add ./agent-skills -a claude-code`
-- **Cursor** &mdash; `npx skills add ./agent-skills -a cursor`
-- **GitHub Copilot** and other skills-aware assistants &mdash; install via the same command without `-a` and the installer auto-detects.
-
-## 🔄 Keep them up to date
-
-The skills evolve as Krayin's conventions evolve &mdash; pull and re-install periodically:
+Because the skills live inside the Krayin source tree, **upgrading Krayin upgrades the skills**. Pull the latest 2.2 and your AI tool starts using the new conventions immediately:
 
 ```bash
-cd agent-skills
-git pull
-npx skills add ./agent-skills
+git pull origin 2.2
+bash bin/validate-skills.sh
 ```
+
+If you maintain a long-lived fork of Krayin, periodically merge upstream so your AI tool isn't suggesting outdated patterns.
+
+## 💡 Tips
+
+- **Skills are per-project, not per-tool.** Cloning Krayin gives the skills to every AI assistant that supports `AGENTS.md` &mdash; you don't need to install or configure each one separately.
+- **Pair with [AI Context Files](./ai-context.md).** Skills give Claude Code / Cursor / Codex on-demand, deeply-scoped context. The `llms.txt` companion file is for tools that don't yet read `AGENTS.md` (ChatGPT web, in-house RAG, older Copilot setups).
+- **The standalone [krayin/agent-skills](https://github.com/krayin/agent-skills) repo still exists** for projects on older Krayin versions or developers who want the skills in a fresh project. The in-repo version is the source of truth from 2.2 onwards.
 
 ## 📝 Next steps
 
+- [AI Context Files](./ai-context.md) &mdash; `llms.txt` / `llms-full.txt` for AI tools that don't read `AGENTS.md`.
 - [Requirements](./requirements.md) &mdash; system prerequisites before you install Krayin itself.
 - [Installation](./installation.md) &mdash; install Krayin (the CRM).
-- [Package Development](../packages/create-package.md) &mdash; the conventions the `crm-package-development` skill teaches the agent.
+- [Package Development](../packages/create-package.md) &mdash; the conventions the `crm-package-development` skill teaches your agent.

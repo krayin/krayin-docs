@@ -1,18 +1,19 @@
 # Installation
 
-Krayin supports **three installation methods**. Pick the one that fits your environment &mdash; you only need to follow **one**.
+Krayin supports **four installation methods**. Pick the one that fits your environment &mdash; you only need to follow **one**.
 
 ::: tip Choose ONE installation method &mdash; not all
 | Method | Best for |
 | --- | --- |
-| **Method 1 &mdash; GUI Installer** | Beginners who prefer a browser-based setup wizard. |
-| **Method 2 &mdash; Composer CLI** *(Recommended)* | Developers comfortable with the command line &mdash; the standard Laravel workflow. |
-| **Method 3 &mdash; Docker** | Quickest start with zero local PHP / MySQL setup. |
+| **Method 1 &mdash; Getting Started Using AI** *(fastest with an AI assistant)* | Hand the install to Claude Code, Cursor, Codex, or any AI assistant. |
+| **Method 2 &mdash; GUI Installer** | Beginners who prefer a browser-based setup wizard. |
+| **Method 3 &mdash; Composer CLI** *(recommended for devs)* | Developers comfortable with the command line &mdash; the standard Laravel workflow. |
+| **Method 4 &mdash; Docker** | Quickest start with zero local PHP / MySQL setup. |
 
 You only need **one** of these methods to get Krayin running.
 :::
 
-## 📁 Where to install Krayin <small>*(Method 1 & 2)*</small>
+## 📁 Where to install Krayin <small>*(Method 2 & 3)*</small>
 
 Krayin lives inside your web server's **document root**.
 
@@ -77,7 +78,7 @@ sudo chown -R $USER:$USER /var/www
 
 ### Configure your web server to serve `public/`
 
-Methods 1 and 2 require pointing your web server at Krayin's **`public/`** folder. Pick the config that matches the web server you installed on the [Requirements page](./requirements.md).
+Methods 2 and 3 require pointing your web server at Krayin's **`public/`** folder. Pick the config that matches the web server you installed on the [Requirements page](./requirements.md).
 
 #### NGINX + PHP-FPM *(recommended)*
 
@@ -218,22 +219,67 @@ sudo nano /etc/hosts
 
 ## 🚀 Install Krayin
 
-Krayin ships four install paths. Pick the one that fits your workflow &mdash; they all produce the same running CRM, so the choice comes down to *how* you want to drive the install.
+Krayin ships five install paths. Pick the one that fits your workflow &mdash; they all produce the same running CRM, so the choice comes down to *how* you want to drive the install.
 
 | Method | Best for |
 | --- | --- |
-| **[Method 1 &mdash; GUI Installer](#method-gui-installer)** | First-time users who prefer a browser wizard. |
-| **[Method 2 &mdash; Composer CLI](#method-composer-cli-recommended)** *(recommended)* | Developers comfortable with the command line. Standard Laravel workflow. |
-| **[Method 3 &mdash; Docker](#method-docker)** | Anyone who wants a self-contained, throwaway environment with no host setup. |
-| **[Method 4 &mdash; Shared Hosting](#method-shared-hosting)** | Deploying onto cPanel / shared-hosting accounts (works with Method 1 or 2). |
+| **[Method 1 &mdash; Getting Started Using AI](#method-getting-started-using-ai)** | Driving the install from Claude Code, Cursor, Codex, or any AI assistant. |
+| **[Method 2 &mdash; GUI Installer](#method-gui-installer)** | First-time users who prefer a browser wizard. |
+| **[Method 3 &mdash; Composer CLI](#method-composer-cli-recommended)** *(recommended)* | Developers comfortable with the command line. Standard Laravel workflow. |
+| **[Method 4 &mdash; Docker](#method-docker)** | Anyone who wants a self-contained, throwaway environment with no host setup. |
+| **[Method 5 &mdash; Shared Hosting](#method-shared-hosting)** | Deploying onto cPanel / shared-hosting accounts (works with Method 2 or 3). |
 
-### 🪄 Method 1 — GUI Installer
+### 🤖 Method 1 — Getting Started Using AI
+
+If you're working inside Claude Code, Cursor, Codex, GitHub Copilot, or any AI assistant, hand off the whole install to the agent. Krayin publishes a machine-readable instructions file at a stable URL &mdash; point your assistant at it and ask it to install Krayin in the current directory.
+
+#### Available URLs
+
+| URL | Format | Best for |
+| --- | --- | --- |
+| [`https://devdocs.krayincrm.com/agents.txt`](https://devdocs.krayincrm.com/agents.txt) | Plain text | Agents that fetch URLs via `curl` / web tools. |
+| [`https://devdocs.krayincrm.com/for/agents.html`](https://devdocs.krayincrm.com/for/agents.html) | Rendered HTML | Reading it yourself, or for agents that prefer HTML. |
+
+Both contain the same content: prerequisite checks, `php.new` install commands per OS, the `composer create-project krayin/laravel-crm` + `php artisan krayin-crm:install` flow, sensible defaults, and post-install verification steps.
+
+#### How to use it
+
+Paste a prompt like this into your AI assistant:
+
+```text
+Use https://devdocs.krayincrm.com/agents.txt to install Krayin CRM in
+this directory. Default to "example-crm" as the project name.
+```
+
+The agent will:
+
+1. Check whether the directory already has a Krayin install (and skip the rest if so).
+2. Verify `php` / `composer` / `node` / database availability, install anything missing via `php.new`.
+3. Run `composer create-project krayin/laravel-crm example-crm`.
+4. Run `php artisan krayin-crm:install`, asking you only for database credentials and admin user details.
+5. Start `php artisan serve` and tell you where to sign in.
+
+::: tip In-repo agent skills load automatically afterwards
+Krayin 2.2 ships its agent skills inside the repo (`AGENTS.md` at the root, plus `.claude/skills/`, `.cursor/`, `.codex/`, `.kilocode/`). After install, any follow-up question your AI assistant asks about Krayin is answered against those skills &mdash; so the next prompts ("scaffold a Lead package", "write a Pest test") produce Krayin-idiomatic code without extra setup. See [Agent Skills](./skills.md) for details.
+:::
+
+::: warning Verify what the agent runs
+Agents can misread instructions or pick up stale context. Skim the commands the assistant proposes before approving them &mdash; especially anything that touches your database or shell config.
+:::
+
+---
+
+**&mdash; OR &mdash;**
+
+---
+
+### 🪄 Method 2 — GUI Installer
 
 To install Krayin using our browser-based GUI installer, follow either of the sub-options below.
 
 ##### Sub-option 1A &mdash; Composer create-project
 
-- Open your command line and `cd` into the web-server document root from the [Where to install Krayin](#where-to-install-krayin-needed-for-method-1-method-2) section above (for example, `cd /var/www/` on Ubuntu with NGINX).
+- Open your command line and `cd` into the web-server document root from the [Where to install Krayin](#where-to-install-krayin-method) section above (for example, `cd /var/www/` on Ubuntu with NGINX).
 
 - Run the following command to download and install Krayin into a new `laravel-crm/` folder:
 
@@ -251,7 +297,7 @@ Otherwise you can download the zip file and install it using the following steps
 
 - [Download Krayin](https://krayincrm.com/download/) from our website.
 
-- Extract the contents of the downloaded archive into your web-server document root from the [Where to install Krayin](#where-to-install-krayin-needed-for-method-1-method-2) section &mdash; e.g. extract into `/var/www/laravel-crm/` on Ubuntu.
+- Extract the contents of the downloaded archive into your web-server document root from the [Where to install Krayin](#where-to-install-krayin-method) section &mdash; e.g. extract into `/var/www/laravel-crm/` on Ubuntu.
 
 - On the command line, navigate into that extracted project folder:
 
@@ -279,11 +325,11 @@ Ensure that Composer is installed on your system.
 
 ---
 
-### ⌨️ Method 2 — Composer CLI <small>*(Recommended)*</small>
+### ⌨️ Method 3 — Composer CLI <small>*(Recommended)*</small>
 
 This is the **standard Laravel workflow** and the recommended path for most developers. You install Krayin via Composer and complete setup through interactive command-line prompts &mdash; no browser wizard needed.
 
-- Open your command line and `cd` into the web-server document root from the [Where to install Krayin](#where-to-install-krayin-needed-for-method-1-method-2) section above (for example, `cd /var/www/` on Ubuntu with NGINX).
+- Open your command line and `cd` into the web-server document root from the [Where to install Krayin](#where-to-install-krayin-method) section above (for example, `cd /var/www/` on Ubuntu with NGINX).
 
 - Run the following command to download and install Krayin into a new `laravel-crm/` folder:
 
@@ -357,7 +403,7 @@ This is the **standard Laravel workflow** and the recommended path for most deve
 
 ---
 
-### 🐳 Method 3 — Docker
+### 🐳 Method 4 — Docker
 
 [Docker](https://www.docker.com/) is an open platform for developing, shipping, and running applications. Docker enables you to separate your applications from your infrastructure so you can deliver software quickly. With Docker, you can manage your infrastructure in the same ways you manage your applications. Docker can also be used for defining and running multi-container Docker applications using the Docker Compose tool.
 
@@ -498,9 +544,9 @@ The Krayin GitHub Docker repository automatically handles the system requirement
 
 ---
 
-### ☁️ Method 4 — Shared Hosting
+### ☁️ Method 5 — Shared Hosting
 
-The steps below describe how to deploy Krayin onto a shared-hosting account &mdash; this is a **deployment scenario**, not a separate install method. You can pair it with any of the three methods above (typically Method 1 or Method 2).
+The steps below describe how to deploy Krayin onto a shared-hosting account &mdash; this is a **deployment scenario**, not a separate install method. You can pair it with any of the methods above (typically Method 2 or Method 3).
 
 ##### 1. Download Krayin
 
