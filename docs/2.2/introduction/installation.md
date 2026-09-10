@@ -361,6 +361,10 @@ This is the **standard Laravel workflow** and the recommended path for most deve
     - Please enter your database password : 
     ```
 
+    ::: tip Database connection
+    Select **`mysql`** if you installed MySQL, or **`mariadb`** if you installed MariaDB. See [Supported Database Servers](./requirements.md#supported-database-servers) for the versions each one needs.
+    :::
+
 - For Create your admin credentials
     ```bash
     - Enter the name of the admin user :

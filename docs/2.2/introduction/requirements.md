@@ -334,12 +334,18 @@ CLI `php artisan ...` commands pick up the new settings automatically &mdash; no
 
 ## 🗄️ Supported Database Servers
 
-Krayin supports two database servers: **MySQL 8.0.32+** **OR** **MariaDB 10.3+**. Use **collation `utf8mb4_unicode_ci`** for proper Unicode / multilingual support.
+Krayin supports two database servers: **MySQL 8.0.32+** **OR** **MariaDB 11.4 LTS+**. Use **collation `utf8mb4_unicode_ci`** for proper Unicode / multilingual support.
 
 ::: tip Choose ONE database &mdash; not both
-Krayin connects to a single database server. Pick either **MySQL** **OR** **MariaDB**.
+Krayin connects to a single database server. Pick either **MySQL** **OR** **MariaDB**. Both are fully supported &mdash; neither is preferred over the other.
 
 **Recommended:** MySQL 8.0.32+ &mdash; the default Laravel database with the widest hosting and tooling support.
+:::
+
+::: warning Set `DB_CONNECTION` to match your database
+In your `.env` file, use `DB_CONNECTION=mysql` for MySQL and `DB_CONNECTION=mariadb` for MariaDB.
+
+Both values will connect to a MariaDB server, but only `mariadb` makes Laravel use the MariaDB driver and SQL grammar. If you are already running Krayin on MariaDB with `DB_CONNECTION=mysql`, change it and run `php artisan config:clear`.
 :::
 
 ### Install MySQL 8.0.32 or higher <small>*(Recommended)*</small>
@@ -374,7 +380,21 @@ sudo apt install mysql-server
 
 ---
 
-### Install MariaDB 10.3 or higher
+### Install MariaDB 11.4 LTS or higher
+
+Use a currently maintained **LTS** release. **MariaDB 11.8 LTS is recommended.**
+
+| Version | Support status | Use it? |
+| --- | --- | --- |
+| 10.3 / 10.4 / 10.5 / 10.6 | End of life | No |
+| 10.11 LTS | Supported until Feb 2028 | Works, but short runway |
+| **11.4 LTS** | Supported until May 2029 | Yes |
+| **11.8 LTS** | Supported until June 2028 | Yes &mdash; recommended |
+| 12.3 LTS | Supported until June 2029 | Newest, less widely deployed |
+
+::: warning Older versions are end of life
+MariaDB 10.6 and everything below it no longer receive security fixes. Earlier versions of this page listed 10.3 as the minimum &mdash; that guidance is outdated. Start at 11.4 LTS.
+:::
 
 Official downloads: [mariadb.org/download](https://mariadb.org/download/)
 
@@ -382,20 +402,47 @@ Official downloads: [mariadb.org/download](https://mariadb.org/download/)
 
 ::: tab macOS
 ```bash
-brew install mariadb
+brew install mariadb@11.8
 ```
 :::
 
 ::: tab "Windows PowerShell"
-Download the MSI installer from [mariadb.org/download](https://mariadb.org/download/).
+Download the MSI installer for an LTS release from [mariadb.org/download](https://mariadb.org/download/).
 :::
 
 ::: tab Linux
-Set up the [MariaDB repository](https://mariadb.org/download/?t=repo-config), then:
+Set up the [MariaDB repository](https://mariadb.org/download/?t=repo-config) pinned to an LTS version, then install:
 
 ```bash
-sudo apt install mariadb-server
+curl -LsS https://r.mariadb.com/downloads/mariadb_repo_setup | sudo bash -s -- --mariadb-server-version=11.8
+sudo apt update && sudo apt install mariadb-server
 ```
 :::
 
 ::::
+
+Verify the installed version:
+
+```bash
+mariadb --version
+```
+
+#### Create the database
+
+Create the database with the collation Krayin expects before running the installer:
+
+```sql
+CREATE DATABASE krayin
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
+```
+
+::: tip Moving an existing MySQL database to MariaDB?
+A plain `mysqldump` from MySQL 8 will not import. MySQL stamps every table with the `utf8mb4_0900_ai_ci` collation, which does not exist in MariaDB, so each `CREATE TABLE` fails. Rewrite it first:
+
+```bash
+sed -i 's/utf8mb4_0900_ai_ci/utf8mb4_unicode_ci/g' krayin.sql
+```
+
+Do not plan the move around replication &mdash; row-based replication of `JSON` columns does not work from MySQL to MariaDB.
+:::
