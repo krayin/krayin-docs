@@ -72,12 +72,15 @@ module.exports = [
         children: setVersionPrefix([
             ['digging-deeper/ai-powered-lead-generation', 'AI-Powered Lead Generation'],
             ['digging-deeper/security-practice', 'Best Security Practices'],
+            ['digging-deeper/dashboard-reporting', 'Dashboard Reporting'],
             ['digging-deeper/data-transfer', 'Data Transfer'],
             ['digging-deeper/email-inbound-parse', 'Email Inbound Parse'],
             ['digging-deeper/events', 'Events Listeners'],
             ['digging-deeper/events-and-campaigns', 'Events and Campaigns'],
             ['digging-deeper/helpers', 'Helpers'],
+            ['digging-deeper/notifications', 'Notifications'],
             ['digging-deeper/override-a-layout', 'Override a Layout'],
+            ['digging-deeper/quick-add', 'Quick Add'],
         ])
     },
     {
